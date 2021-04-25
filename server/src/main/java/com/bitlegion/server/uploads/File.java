@@ -1,5 +1,7 @@
 package com.bitlegion.server.uploads;
 
+import java.nio.file.Paths;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,6 +66,10 @@ public class File {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getFileLocation() {
+        return Paths.get("user--" + this.getAccount().getId().toString(), this.slug).toString();
     }
 
     @Override
