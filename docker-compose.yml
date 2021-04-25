@@ -8,6 +8,8 @@ services:
     build:
       context: server
       dockerfile: Dockerfile
+    environment:
+      spring.profiles.active: dev
     ports:
       - "8000:8000"
     depends_on:
