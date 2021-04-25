@@ -3,6 +3,7 @@ package com.example.server.Accounts;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,22 +18,24 @@ public class UserModel {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String name;
 
+    @Column(unique = true)
     private String email;
 
     private String bio;
 
-    // @OneToMany
-    // private Collection<FileModel> fileModel = new ArrayList<FileModel>();
+    @OneToMany
+    private Collection<FileModel> fileModels = new ArrayList<FileModel>();
 
-    // public Collection<FileModel> getFileModel() {
-    // return this.fileModel;
-    // }
+    public Collection<FileModel> getFileModels() {
+        return this.fileModels;
+    }
 
-    // public void setFileModel(Collection<FileModel> fileModel) {
-    // this.fileModel = fileModel;
-    // }
+    public void setFileModels(Collection<FileModel> fileModels) {
+        this.fileModels = fileModels;
+    }
 
     public Integer getId() {
         return id;
@@ -65,4 +68,11 @@ public class UserModel {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", email='" + getEmail() + "'" + ", bio='"
+                + getBio() + "'" + ", fileModels='" + getFileModels() + "'" + "}";
+    }
+
 }
