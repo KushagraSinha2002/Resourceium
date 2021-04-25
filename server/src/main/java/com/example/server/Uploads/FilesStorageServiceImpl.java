@@ -34,26 +34,19 @@ public class FilesStorageServiceImpl implements FilesStorageService {
         }
     }
 
+    // This method creates a folder for the user and uploads the file with a unique
+    // slug attached to it. It then returns the new filename.
     @Override
-    public void save(MultipartFile file) {
+    public String smartSave(MultipartFile file, Integer userID) {
         try {
-            Path source = this.root.resolve(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), source);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
-        }
-    }
-
-    public void smartSave(MultipartFile file, Integer userID) {
-        try {
-            UUID slug = UUID.randomUUID();
-            File userDirectory = new File(Paths
-                    .get(this.root.toString(), "user--" + userID.toString(), "slug--" + slug.toString()).toString());
+            File userDirectory = new File(Paths.get(this.root.toString(), "user--" + userID.toString()).toString());
             userDirectory.mkdirs();
             Path destination = Paths.get(userDirectory.toString(), file.getOriginalFilename());
-            System.out.println(destination);
+            UUID slug = UUID.randomUUID();
+            String fileName = "slug--" + slug.toString() + "--" + file.getOriginalFilename();
+            destination = Paths.get(userDirectory.toString(), fileName);
             Files.copy(file.getInputStream(), destination);
+            return fileName.toString();
         } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException("Could not store the file. Error: " + e.getMessage());
