@@ -1,7 +1,5 @@
 package com.bitlegion.server.accounts;
 
-import java.util.Optional;
-
 import com.bitlegion.server.uploads.ResponseMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
