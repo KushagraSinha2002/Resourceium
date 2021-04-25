@@ -9,9 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FilesStorageService {
     public void init();
 
-    public void save(MultipartFile file);
-
-    public void smartSave(MultipartFile file, Integer userID);
+    public String smartSave(MultipartFile file, Integer userID);
 
     public Resource load(String filename);
 
