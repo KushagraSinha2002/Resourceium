@@ -1,6 +1,5 @@
 package com.bitlegion.server.accounts;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Column;
