@@ -1,7 +1,5 @@
 package com.example.server.Uploads;
 
-import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,22 +14,19 @@ public class FileModel {
 
     private String name;
 
-    private String url;
-
     @Column(unique = true)
-    private UUID slug;
+    private String slug;
 
     public FileModel(String name, String url, Integer id) {
         this.id = id;
         this.name = name;
-        this.url = url;
     }
 
-    public UUID getSlug() {
-        return slug;
+    public String getSlug() {
+        return this.slug;
     }
 
-    public void setSlug(UUID slug) {
+    public void setSlug(String slug) {
         this.slug = slug;
     }
 
@@ -54,11 +49,9 @@ public class FileModel {
         this.name = name;
     }
 
-    public String getUrl() {
-        return this.url;
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", slug='" + getSlug() + "'" + "}";
     }
 
-    public void setUrl(String url) {
-        this.url = url;
-    }
 }
