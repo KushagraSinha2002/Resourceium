@@ -1,7 +1,10 @@
 package com.example.server.Uploads;
 
-import java.util.UUID;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import com.example.server.Accounts.UserModel;
+import com.example.server.Accounts.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -28,16 +31,28 @@ public class FilesController {
     @Autowired
     private FileRepository fileRepository;
 
-    @PostMapping("/upload")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam MultipartFile file) {
+    @Autowired
+    private UserRepository userRepository;
+
+    @PostMapping("/upload/{userID}")
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam MultipartFile file, @PathVariable Integer userID) {
+        Optional<UserModel> userModel = userRepository.findById(userID);
         String message = "";
+
+        if (!userModel.isPresent()) {
+            message = "The requested user does not exist";
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+        }
+
         try {
-            String filename = storageService.smartSave(file, 1);
+            UserModel userObj = userModel.get();
+            String filename = storageService.smartSave(file, userObj.getId());
             FileModel fileModel = new FileModel();
             fileModel.setName(file.getOriginalFilename());
             fileModel.setSlug(filename);
-            System.out.println(filename);
+            userObj.getFileModels().add(fileModel);
             fileRepository.save(fileModel);
+            userRepository.save(userObj);
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
@@ -62,7 +77,6 @@ public class FilesController {
         });
 
         return fileInfos;
-
     }
 
     @GetMapping("/files/{filename:.+}")
