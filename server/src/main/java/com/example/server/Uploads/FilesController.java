@@ -32,18 +32,16 @@ public class FilesController {
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam MultipartFile file) {
         String message = "";
         try {
+            String filename = storageService.smartSave(file, 1);
             FileModel fileModel = new FileModel();
-            UUID slug = UUID.randomUUID();
-            String name = file.getOriginalFilename() + "--" + slug;
-            fileModel.setName(name);
-            fileModel.setSlug(slug);
+            fileModel.setName(file.getOriginalFilename());
+            fileModel.setSlug(filename);
+            System.out.println(filename);
             fileRepository.save(fileModel);
-            // storageService.save(file);
-            storageService.smartSave(file, 1);
-
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
@@ -60,7 +58,7 @@ public class FilesController {
         }).collect(Collectors.toList());
 
         fileRepository.findAll().forEach(s -> {
-            System.out.println(s.getName());
+            System.out.println(s);
         });
 
         return fileInfos;
