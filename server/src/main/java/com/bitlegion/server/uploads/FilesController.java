@@ -57,7 +57,6 @@ public class FilesController {
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             message = "Could not upload the file: " + file.getOriginalFilename() + "!";
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
         }
@@ -68,12 +67,14 @@ public class FilesController {
         return fileRepository.findAll();
     }
 
-    @GetMapping("/{filename:.+}")
+    @GetMapping("/download/{userId}/{filename:.+}")
     @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable String filename) {
-        Resource file = storageService.load(filename);
+    public ResponseEntity<Resource> getFile(@PathVariable Integer userId, @PathVariable String filename) {
+        Account userModel = userRepository.findById(userId).get();
+        File fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
+        Resource file = storageService.load(fileModel.getFileLocation());
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileModel.getName() + "\"")
                 .body(file);
     }
 }
