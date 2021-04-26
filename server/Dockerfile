@@ -1,7 +1,7 @@
 #### Stage 1: Build the application
 FROM openjdk:15-alpine
 
-# Set the maven version and
+# Set the maven version and add it to $PATH
 ARG MAVEN_VERSION=3.6.1
 ENV MAVEN_HOME /usr/lib/mvn
 ENV PATH $MAVEN_HOME/bin:$PATH
