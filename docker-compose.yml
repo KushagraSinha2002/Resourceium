@@ -1,10 +1,7 @@
 version: "3.8"
 
-# Define services
 services:
-  # App backend service
   server:
-    # Configuration for building the docker image for the backend service
     build:
       context: server
       dockerfile: Dockerfile
@@ -13,25 +10,25 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - database # This service depends on mysql. Start that first.
+      - database
     volumes:
       - ./server/:/app
       - server_data:/root/.m2/repository
 
-  # Frontend Service
   client:
     build:
       context: client
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+    environment:
+      API_URL: http://localhost:8000/
     depends_on:
       - server
     volumes:
       - ./client/:/app
-      - /app/node_modules
+      - client_data:/app/node_modules
 
-  # Database Service (Mysql)
   database:
     image: mysql:latest
     ports:
@@ -48,3 +45,4 @@ services:
 volumes:
   db_data:
   server_data:
+  client_data:
