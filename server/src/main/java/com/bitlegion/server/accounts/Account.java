@@ -1,6 +1,5 @@
 package com.bitlegion.server.accounts;
 
-import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
@@ -14,9 +13,6 @@ import javax.persistence.OneToMany;
 
 import com.bitlegion.server.uploads.Upload;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import at.favre.lib.crypto.bcrypt.BCrypt;
-import at.favre.lib.crypto.bcrypt.BCrypt.HashData;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Account {
@@ -40,9 +36,6 @@ public class Account {
     }
 
     public void setPassword(String password) {
-        HashData s = BCrypt.withDefaults().hashRaw(6, "abcdabcdabcdabcd".getBytes(),
-                password.getBytes(StandardCharsets.UTF_8));
-        System.out.println(s);
         try {
             this.password = PasswordHash.createHash(password).toString();
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
