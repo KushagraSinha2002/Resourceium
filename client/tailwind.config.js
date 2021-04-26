@@ -1,15 +1,17 @@
+const ignisnents = require('ignisnents/dist/tailwind-preset.js')
+
 module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   mode: 'jit',
-  purge: {
-    content: [
-      'components/**/*.vue',
-      'layouts/**/*.vue',
-      'pages/**/*.vue',
-      'plugins/**/*.js',
-      'nuxt.config.js',
-    ]
-  },
+  presets: [ignisnents],
+  purge: [
+    'components/**/*.vue',
+    'layouts/**/*.vue',
+    'pages/**/*.vue',
+    'plugins/**/*.js',
+    'nuxt.config.js',
+    'node_modules/ignisnents/src/components/**/*.vue',
+  ],
   theme: {
     extend: {},
   },
