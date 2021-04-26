@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.bitlegion.server.uploads.File;
+import com.bitlegion.server.uploads.Upload;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -28,7 +28,7 @@ public class Account {
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
-    private Collection<File> files;
+    private Collection<Upload> files;
 
     public Integer getId() {
         return id;
@@ -62,11 +62,11 @@ public class Account {
         this.email = email;
     }
 
-    public Collection<File> getFiles() {
+    public Collection<Upload> getFiles() {
         return this.files;
     }
 
-    public void setFiles(Collection<File> fileModels) {
+    public void setFiles(Collection<Upload> fileModels) {
         this.files = fileModels;
     }
 

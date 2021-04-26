@@ -11,7 +11,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,8 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping(path = "/files")
-@CrossOrigin("http://localhost:3000")
+@RequestMapping(path = "/uploads")
 public class FilesController {
 
     @Autowired
@@ -47,7 +45,7 @@ public class FilesController {
         try {
             Account userObj = userModel.get();
             String filename = storageService.smartSave(file, userObj.getId());
-            File fileModel = new File();
+            Upload fileModel = new Upload();
             fileModel.setName(file.getOriginalFilename());
             fileModel.setSlug(filename);
             fileModel.setAccount(userObj);
@@ -63,7 +61,7 @@ public class FilesController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<File> getListFiles() {
+    public @ResponseBody Iterable<Upload> getListFiles() {
         return fileRepository.findAll();
     }
 
@@ -71,7 +69,7 @@ public class FilesController {
     @ResponseBody
     public ResponseEntity<Resource> getFile(@PathVariable Integer userId, @PathVariable String filename) {
         Account userModel = userRepository.findById(userId).get();
-        File fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
+        Upload fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
         Resource file = storageService.load(fileModel.getFileLocation());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileModel.getName() + "\"")
