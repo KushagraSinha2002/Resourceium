@@ -18,7 +18,7 @@ do
 
     CONTENTS="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10000 ; echo '')"
     echo "${CONTENTS}" >> /tmp/file.txt
-    curl -s -i -X POST -H "Content-Type: multipart/form-data" "${BASE_URL}/files/upload/${RANDOM_USER}" -F "file=@/tmp/file.txt" -o /dev/null
+    curl -s -i -X POST -H "Content-Type: multipart/form-data" "${BASE_URL}/uploads/upload/${RANDOM_USER}" -F "file=@/tmp/file.txt" -o /dev/null
     rm /tmp/file.txt
 done
 echo "Uploaded ${TOTAL} files!"
