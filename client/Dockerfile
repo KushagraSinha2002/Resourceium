@@ -1,4 +1,4 @@
-FROM node:15.14-buster-slim
+FROM node:15.14-alpine
 
 ENV APP_ROOT /app
 
