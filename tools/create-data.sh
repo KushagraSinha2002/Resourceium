@@ -6,9 +6,10 @@ for i in $(seq 1 $TOTAL);
 do
     USERNAME="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 20 ; echo '')"
     EMAIL="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 15 ; echo '')@email.com"
+    PASSWORD="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 15 ; echo '')@email.com"
     BIO="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 100 ; echo '')"
 
-    curl -X POST "${BASE_URL}/accounts/new/" -d "name=${USERNAME}&email=${EMAIL}&bio=${BIO}"
+    curl -X POST "${BASE_URL}/accounts/register/" -d "name=${USERNAME}&email=${EMAIL}&password=${PASSWORD}"
     echo
 done
 
