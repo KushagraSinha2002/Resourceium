@@ -17,4 +17,4 @@ WORKDIR /app
 RUN mvn dependency:go-offline -B --fail-never
 
 # Run the development command
-ENTRYPOINT [ "mvn", "spring-boot:run" ]
+CMD [ "mvn", "spring-boot:run" ]
