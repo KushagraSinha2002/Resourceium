@@ -1,6 +1,6 @@
 package com.bitlegion.server.accounts;
 
-import com.bitlegion.server.uploads.ResponseMessage;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,10 +53,17 @@ public class AccountsController {
     @PostMapping(path = "/login")
     public ResponseEntity<ResponseMessage> loginUser(@RequestParam String name, @RequestParam String password) {
         String message = "";
-        Account newUser = accountRepository.findByName(name).get();
+        Optional<Account> maybeUser = accountRepository.findByName(name);
+        if (maybeUser.isEmpty()) {
+            message = "No such user found";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+        Account newUser = maybeUser.get();
         if (newUser.verifyPassword(password)) {
             message = "The user was authenticated successfully";
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ResponseMessage(message).setUserId(Optional.ofNullable(newUser.getId()))
+                            .setUsername(Optional.ofNullable(newUser.getName())));
         }
         message = "The credentials you provided were incorrect";
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
