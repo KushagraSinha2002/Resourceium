@@ -7,7 +7,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
@@ -63,5 +63,15 @@ export default {
   },
   generate: {
     subFolders: false,
+  },
+  pwa: {
+    icon: {
+      fileName: 'icon.png',
+    },
+    manifest: {
+      name: 'Resourceium',
+      short_name: 'Resourceium',
+      description: 'Store all your precious resources at one place',
+    },
   },
 }
