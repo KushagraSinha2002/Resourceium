@@ -4,7 +4,7 @@ RUN bash -c "source /home/gitpod/.sdkman/bin/sdkman-init.sh && sdk install java 
 
 ENV ROOT_PASSWORD=password
 ENV PASSWORD=password
-ENV DATABSE_USER=username
-ENV DATABASE_NAME=server_db
+ENV DATABASE_USER=gitpod
+ENV DATABASE_NAME=new_db
 
 RUN bash -c "/workspace/Resourceium/tools/init-db.sh"
