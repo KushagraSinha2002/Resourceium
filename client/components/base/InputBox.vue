@@ -12,7 +12,7 @@
     />
     <label
       :for="name"
-      class="absolute top-0 p-2 text-lg text-gray-500 capitalize duration-150 bg-white bg-opacity-0 sm:p-3 md:p-4 cursor-text origin-0 rounded-xl"
+      class="absolute top-0 p-2 font-mono text-lg text-gray-500 capitalize duration-150 bg-white bg-opacity-0 sm:p-3 md:p-4 cursor-text origin-0 rounded-xl"
     >
       {{ name }}
     </label>
@@ -46,6 +46,6 @@ export default {
 <style scoped>
 .input-outline input:focus-within ~ label,
 .input-outline input:not(:placeholder-shown) ~ label {
-  @apply transform scale-75 -translate-y-4 z-0 ml-0.5 sm:ml-1 md:ml-2 px-1 py-0 text-blue-700 bg-opacity-100;
+  @apply font-sans transform scale-75 -translate-y-4 z-0 ml-0.5 sm:ml-1 md:ml-2 px-1 py-0 text-blue-700 bg-opacity-100;
 }
 </style>

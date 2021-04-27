@@ -14,7 +14,7 @@ export default {
   css: ['~/assets/css/global.scss'],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~/plugins/ignisnents.js'],
+  plugins: ['~/plugins/ignisnents.js', '~/plugins/alerts.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -35,6 +35,8 @@ export default {
     '@nuxtjs/pwa',
     // https://axios.nuxtjs.org
     '@nuxtjs/axios',
+    // https://google-fonts.nuxtjs.org/
+    '@nuxtjs/google-fonts',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -49,4 +51,13 @@ export default {
     },
   },
   target: 'static',
+  googleFonts: {
+    families: {
+      'Original Surfer': true,
+    },
+    display: 'swap',
+  },
+  generate: {
+    subFolders: false,
+  },
 }

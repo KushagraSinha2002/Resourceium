@@ -3,18 +3,8 @@
     <form class="flex flex-col max-w-sm space-y-5" @submit.prevent="submitForm">
       <base-input-box v-model="formData.name" name="username"></base-input-box>
       <base-input-box
-        v-model="formData.email"
-        name="email"
-        input-type="email"
-      ></base-input-box>
-      <base-input-box
         v-model="formData.password"
         name="password"
-        input-type="password"
-      ></base-input-box>
-      <base-input-box
-        v-model="formData.password2"
-        name="confirm password"
         input-type="password"
       ></base-input-box>
       <button
@@ -34,29 +24,42 @@ export default {
     return {
       formData: {
         name: '',
-        email: '',
         password: '',
-        password2: '',
       },
     }
   },
-  head: () => ({ title: 'Register' }),
+  head: () => ({ title: 'Login' }),
+  mounted() {
+    if (
+      window.localStorage.getItem('username') &&
+      window.localStorage.getItem('userId')
+    ) {
+      this.$addAlert({
+        severity: 'warning',
+        messageHeading: 'Logged In',
+        messageBody: 'You are already logged in',
+        active: true,
+      })
+      this.redirectHome()
+    }
+  },
   methods: {
+    redirectHome() {
+      this.$router.push({ name: 'index' })
+    },
     submitForm() {
       const formData = this.formData
-      if (formData.password !== formData.password2) {
-        alert('The two passwords do not match')
-      }
       this.$axios
-        .$post('/accounts/register', null, { params: formData })
-        .then((_result) => {
+        .$post('/accounts/login', null, { params: formData })
+        .then((result) => {
           this.$addAlert({
             severity: 'info',
-            messageHeading: 'Registration successful',
-            messageBody: 'Please login with your new account now',
+            messageHeading: 'Login successful',
             active: true,
           })
-          this.$router.push({ name: 'accounts-login' })
+          window.localStorage.setItem('username', result.username)
+          window.localStorage.setItem('userId', result.userId)
+          this.redirectHome()
         })
         .catch((err) => {
           this.$addAlert({

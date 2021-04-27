@@ -13,7 +13,11 @@ module.exports = {
     'node_modules/ignisnents/src/components/**/*.vue',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        styled: ['Original Surfer', 'cursive'],
+      },
+    },
   },
   variants: {
     extend: {},
