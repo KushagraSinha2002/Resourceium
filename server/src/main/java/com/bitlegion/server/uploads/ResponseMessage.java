@@ -4,7 +4,7 @@ public class ResponseMessage {
     private String message;
 
     public ResponseMessage(String message) {
-        this.message = message;
+        this.setMessage(message);
     }
 
     public String getMessage() {
@@ -14,5 +14,4 @@ public class ResponseMessage {
     public void setMessage(String message) {
         this.message = message;
     }
-
 }
