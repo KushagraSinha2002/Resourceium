@@ -1,7 +1,7 @@
 <template>
   <!-- Giving the div a fixed width prevents the last alert from shrinking when we dismiss it.  -->
-  <!-- Remove the `w-64` class, and trigger an alert, and dismiss it, to see what I mean. -->
-  <div id="alert--area" class="fixed z-10 w-72">
+  <!-- Remove the `max-w-[18rem]` class, and trigger an alert, and dismiss it, to see what I mean. -->
+  <div id="alert--area" class="fixed z-10 max-w-[18rem]">
     <transition-group name="alert" tag="div">
       <div
         v-for="alert in activeAlertsGetter"
@@ -23,7 +23,7 @@
             <div class="block text-lg font-semibold underline">
               {{ alert.messageHeading }}
             </div>
-            <div class="block text-sm">
+            <div v-if="alert.messageBody" class="block text-sm">
               {{ alert.messageBody }}
             </div>
           </div>
