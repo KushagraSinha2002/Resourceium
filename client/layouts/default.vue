@@ -1,6 +1,7 @@
 <template>
   <div :class="mode !== 'production' ? 'debug-screens' : ''">
-    <Alerts></Alerts>
+    <alerts></alerts>
+    <nav-bar></nav-bar>
     <Nuxt />
   </div>
 </template>
