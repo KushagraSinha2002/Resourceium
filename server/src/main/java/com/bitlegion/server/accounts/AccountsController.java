@@ -65,7 +65,6 @@ public class AccountsController {
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Account> getAllUsers() {
         // This returns a JSON or XML with the users
-        // userRepository.deleteAll();
         return accountRepository.findAll();
     }
 }
