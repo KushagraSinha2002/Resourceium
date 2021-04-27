@@ -35,6 +35,8 @@ export default {
     '@nuxtjs/pwa',
     // https://axios.nuxtjs.org
     '@nuxtjs/axios',
+    // https://google-fonts.nuxtjs.org/
+    '@nuxtjs/google-fonts',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -49,4 +51,13 @@ export default {
     },
   },
   target: 'static',
+  googleFonts: {
+    families: {
+      'Original Surfer': true,
+    },
+    display: 'swap',
+  },
+  generate: {
+    subFolders: false,
+  },
 }
