@@ -6,5 +6,3 @@ ENV ROOT_PASSWORD=password
 ENV PASSWORD=password
 ENV DATABASE_USER=gitpod
 ENV DATABASE_NAME=new_db
-
-RUN bash -c "/workspace/Resourceium/tools/init-db.sh"
