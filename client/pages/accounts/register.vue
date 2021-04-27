@@ -40,6 +40,7 @@ export default {
       },
     }
   },
+  head: () => ({ title: 'Register' }),
   methods: {
     submitForm() {
       const formData = this.formData
@@ -55,6 +56,7 @@ export default {
             messageBody: 'Please login with your new account now',
             active: true,
           })
+          this.$router.push({ name: 'accounts-login' })
         })
         .catch((err) => {
           this.$addAlert({
