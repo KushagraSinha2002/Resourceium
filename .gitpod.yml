@@ -3,4 +3,3 @@ image:
 
 tasks:
   - init: bash -c "/workspace/Resourceium/tools/init-db.sh"
-  - command: gp env -e API_URL="$(gp url 8000)"

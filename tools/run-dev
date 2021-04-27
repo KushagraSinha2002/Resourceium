@@ -8,4 +8,4 @@ frontend_folder="client"
 
 # Start all the servers
 { cd "$backend_folder" && mvn spring-boot:run -Dspring-boot.run.profiles=dev,gitpod & \
-  cd "$frontend_folder" && yarn install && yarn dev; }
+  cd "$frontend_folder" && yarn install && API_URL="$(gp url 8000)" yarn dev; }
