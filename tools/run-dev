@@ -7,5 +7,5 @@ backend_folder="server"
 frontend_folder="client"
 
 # Start all the servers
-{ cd "$backend_folder" && mvn spring-boot:run & \
+{ cd "$backend_folder" && mvn spring-boot:run -Dspring-boot.run.profiles=dev,gitpod & \
   cd "$frontend_folder" && yarn install && yarn dev; }
