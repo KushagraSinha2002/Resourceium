@@ -1,5 +1,6 @@
 package com.bitlegion.server.uploads;
 
+import java.util.List;
 import java.util.Optional;
 
 import com.bitlegion.server.accounts.Account;
@@ -34,8 +35,12 @@ public class FilesController {
     @Autowired
     private AccountRepository userRepository;
 
+    // This endpoint can be used to append a number of files for the user with ID
+    // `userID`
     @PostMapping("/upload/{userID}")
-    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam MultipartFile file, @PathVariable Integer userID) {
+    public ResponseEntity<ResponseMessage> uploadFile(@RequestParam List<MultipartFile> files,
+            @PathVariable Integer userID) {
+
         Optional<Account> userModel = userRepository.findById(userID);
         String message = "";
 
@@ -44,22 +49,25 @@ public class FilesController {
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         }
 
-        try {
-            Account userObj = userModel.get();
-            String filename = storageService.smartSave(file, userObj.getId());
-            Upload fileModel = new Upload();
-            fileModel.setName(file.getOriginalFilename());
-            fileModel.setSlug(filename);
-            fileModel.setAccount(userObj);
-            userObj.getFiles().add(fileModel);
-            fileRepository.save(fileModel);
-            userRepository.save(userObj);
-            message = "Uploaded the file successfully: " + file.getOriginalFilename();
-            return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
-        } catch (Exception e) {
-            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        Account user = userModel.get();
+        for (int i = 0; i < files.size(); i++) {
+            MultipartFile file = files.get(i);
+            try {
+                String filename = storageService.smartSave(file, user.getId());
+                Upload fileModel = new Upload();
+                fileModel.setName(file.getOriginalFilename());
+                fileModel.setSlug(filename);
+                fileModel.setAccount(user);
+                user.getFiles().add(fileModel);
+                fileRepository.save(fileModel);
+            } catch (Exception e) {
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            }
         }
+        userRepository.save(user);
+        message = "Uploaded " + files.size() + " files successfully!";
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     }
 
     @GetMapping("/all")
