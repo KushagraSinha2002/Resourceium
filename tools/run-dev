@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
 # This script will be used to spin up the development servers for all the Resourceium applications
 
-# change to the project folder
-cd "$HOME/Resourceium"
-
 # directory path of django development server
-backend_folder="backend"
+backend_folder="server"
 # directory path of nuxt development server
-frontend_folder="frontend"
-# directory path of documentation development server
-documentation_folder="docs"
+frontend_folder="client"
 
 # Start all the servers
-{ cd "$backend_folder" && poetry run python3 manage.py runserver 0.0.0.0:8000 & \
-  cd "$frontend_folder" && yarn dev; }
-# { cd "$backend_folder" && poetry run python3 manage.py runserver 0.0.0.0:8000 & \
-#   cd "$frontend_folder" && yarn dev & \
-#   cd "$documentation_folder" && yarn start; }
+{ cd "$backend_folder" && mvn spring-boot:run & \
+  cd "$frontend_folder" && yarn install && yarn dev; }
