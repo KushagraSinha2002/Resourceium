@@ -58,7 +58,7 @@ public class AccountsController {
             message = "The user was authenticated successfully";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
         }
-        message = "The user was not authenticated successfully";
+        message = "The credentials you provided were incorrect";
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
     }
 
