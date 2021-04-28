@@ -3,3 +3,4 @@ image:
 
 tasks:
   - init: bash -c "/workspace/Resourceium/tools/init-db.sh"
+  - command: git config --global pull.rebase true
