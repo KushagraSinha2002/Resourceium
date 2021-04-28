@@ -4,3 +4,16 @@ image:
 tasks:
   - init: bash -c "/workspace/Resourceium/tools/init-db.sh"
   - command: git config --global pull.rebase true
+
+ports:
+  - port: 3000
+    visibility: public
+  - port: 8000
+    visibility: public
+
+vscode:
+  extensions:
+    - redhat.java
+    - octref.vetur
+    - bradlc.vscode-tailwindcss
+    - dbaeumer.vscode-eslint
