@@ -2,7 +2,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: bash -c "/workspace/Resourceium/tools/init-db.sh && git config --global pull.rebase true
+  - init: bash -c "/workspace/Resourceium/tools/init-db.sh && git config --global pull.rebase true"
 
 ports:
   - port: 3000
