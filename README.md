@@ -1,5 +1,7 @@
 # Resourceium
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/KushagraSinha2002/Resourceium)
+
 A web based note taking application. The users can first create an account with
 **Inscribe**. After they have logged in using their newly created account, they can create
 notes, diary entries, journal records and much more. These notes will be saved to a
