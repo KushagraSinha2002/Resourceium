@@ -64,6 +64,9 @@ export default {
   generate: {
     subFolders: false,
   },
+  env: {
+    baseUrl: process.env.API_URL || 'http://localhost:8000',
+  },
   pwa: {
     icon: {
       fileName: 'icon.png',
