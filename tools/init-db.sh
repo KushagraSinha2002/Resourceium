@@ -1,19 +1,10 @@
 #!/usr/bin/env bash
 
-if [ -z "$1" ];
-    then PASSWORD="${MYSQL_PASSWORD}"
-    else PASSWORD="$1"
-fi
+PASSWORD="${1:-MYSQL_PASSWORD}"
 
-if [ -z "$2" ];
-    then MAIN_DB="${MYSQL_DATABASE}"
-    else MAIN_DB="$2"
-fi
+MAIN_DB="${2:-MYSQL_DATABASE}"
 
-if [ -z "$3" ];
-    then DB_USER="${MYSQL_USER}"
-    else DB_USER="$3"
-fi
+DB_USER="${3:-MYSQL_USER}"
 
 mysql -u root <<MYSQL_SCRIPT
 CREATE DATABASE $MAIN_DB;
