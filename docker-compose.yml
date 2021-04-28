@@ -30,19 +30,18 @@ services:
       - client_data:/app/node_modules
 
   database:
-    image: mysql:latest
+    image: postgres:alpine
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_PASSWORD: password
-      MYSQL_USER: username
-      MYSQL_DATABASE: server_db
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: username
+      POSTGRES_DB: server_db
     volumes:
-      - db_data:/var/lib/mysql
+      - data:/var/lib/postgresql/data
 
 # Volumes
 volumes:
-  db_data:
   server_data:
   client_data:
+  data:
