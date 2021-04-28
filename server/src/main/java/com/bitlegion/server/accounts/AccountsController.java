@@ -26,8 +26,21 @@ public class AccountsController {
             @RequestParam String password) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
-        System.out.println(password);
         String message = "";
+
+        if ((name.length() == 0)) {
+            message = "You provided an invalid name";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+        if ((password.length() == 0)) {
+            message = "You provided an invalid password";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+        if ((name.length() == 0)) {
+            message = "You provided an invalid name";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+
         try {
             Account newUser = new Account();
             if (accountRepository.findByEmail(email).isPresent()) {
