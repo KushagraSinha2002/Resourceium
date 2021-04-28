@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-@CrossOrigin
 @Controller
 @RequestMapping(path = "/uploads")
+@CrossOrigin
 public class FilesController {
 
     @Autowired
@@ -75,9 +75,9 @@ public class FilesController {
         return fileRepository.findAll();
     }
 
-    @GetMapping("/download/{userId}/{filename:.+}")
+    @GetMapping("/download")
     @ResponseBody
-    public ResponseEntity<Resource> getFile(@PathVariable Integer userId, @PathVariable String filename) {
+    public ResponseEntity<Resource> getFile(@RequestParam Integer userId, @RequestParam String filename) {
         Account userModel = userRepository.findById(userId).get();
         Upload fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
         Resource file = storageService.load(fileModel.getFileLocation());
