@@ -14,7 +14,6 @@
           multiple
           name="files"
           :disabled="isSaving"
-          class="input-file"
           @change="handleFileChange"
         />
         <button type="submit" class="bg-blue-300 border border-black">
