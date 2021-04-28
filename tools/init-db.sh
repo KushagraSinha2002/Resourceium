@@ -6,7 +6,7 @@ MAIN_DB="${2:-$DB_DATABASE}"
 
 DB_USER="${3:-$DB_USER}"
 
-cat << EOF | su - postgres -c psql
+psql -U gitpod << SQL_COMMANDS
 -- Create the database user:
 CREATE ROLE "$DB_USER" WITH LOGIN CREATEDB ENCRYPTED PASSWORD '$PASSWORD';
 -- Create the database:
@@ -17,4 +17,4 @@ CREATE DATABASE "$MAIN_DB" WITH OWNER="$DB_USER"
                                   TEMPLATE=template0;
 -- Grant necessary privileges
 GRANT ALL PRIVILEGES ON DATABASE "$MAIN_DB" TO "$DB_USER";
-EOF
+SQL_COMMANDS
