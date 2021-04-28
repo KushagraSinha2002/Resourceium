@@ -77,5 +77,4 @@ public class Upload {
         return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", slug='" + getSlug() + "'" + ", user='"
                 + getAccount().getName() + "'" + "}";
     }
-
 }
