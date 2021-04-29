@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -80,6 +82,29 @@ public class AccountsController {
         }
         message = "The credentials you provided were incorrect";
         return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+    }
+
+    @PutMapping(path = "/update/{userID}")
+    public ResponseEntity<ResponseMessage> updateUser(@RequestParam(required = false) String password,
+            @RequestParam(required = false) String bio, @PathVariable Integer userID) {
+        String message = "";
+
+        Optional<Account> maybeUser = accountRepository.findById(userID);
+        if (maybeUser.isEmpty()) {
+            message = "No such user found";
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        }
+        Account user = maybeUser.get();
+
+        if (password != null) {
+            user.setPassword(password);
+        }
+        if (bio != null) {
+            user.setBio(bio);
+        }
+        accountRepository.save(user);
+        message = "The user was updated successfully";
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     }
 
     @GetMapping(path = "/all")

@@ -20,10 +20,10 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Column(unique = true)
+    @Column(unique = true, updatable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true, updatable = false)
     private String email;
 
     private String bio;
