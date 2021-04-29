@@ -15,8 +15,10 @@
 
 ## Built With
 
-- [django](https://www.djangoproject.com/) - The main web framework used
-- [Bootstrap](https://getbootstrap.com/) - Used as the main UI framework
+- [Spring Boot](https://spring.io/) - JAVA
+- [Tailwind](https://tailwindcss.com/) - Used as the main UI framework
+- [Nuxtjs](https://nuxtjs.org/) - frontend framework
+- [Heroku](https://www.heroku.com/) - Web Hosting
 
 ## Contributing
 
