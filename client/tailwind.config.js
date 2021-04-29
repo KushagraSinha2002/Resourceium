@@ -16,6 +16,13 @@ module.exports = {
     extend: {
       fontFamily: {
         styled: ['Original Surfer', 'cursive'],
+        poppins: ['Poppins', 'sans-serif'],
+      },
+      colors: {
+        primary: '#502427',
+        'light-black': '#333333',
+        'dark-black': '#1D1D1F',
+        'cream-white': '#FAFAFA',
       },
     },
   },
