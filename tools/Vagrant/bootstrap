@@ -5,6 +5,18 @@ set -e
 
 curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sh -s -- --yes
 
+# Edit the following to change the version of PostgreSQL that is installed
+PG_VERSION=13
+
+PG_REPO_APT_SOURCE=/etc/apt/sources.list.d/pgdg.list
+if [ ! -f "$PG_REPO_APT_SOURCE" ]
+then
+  # Add PG apt repo:
+  echo "deb http://apt.postgresql.org/pub/repos/apt/ $(lsb_release -cs)-pgdg main" > "$PG_REPO_APT_SOURCE"
+  # Add PGDG repo key:
+  wget --quiet -O - https://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | apt-key add -
+fi
+
 export DEBIAN_FRONTEND=noninteractive
 
 PROVISIONED_ON=/etc/vm_provision_on_timestamp
@@ -27,15 +39,34 @@ curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 # Update package list
 apt-get update
-curl -fsSL https://get.docker.com | sh
-sudo usermod -aG docker vagrant
-curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
 
 # Install postgresql, python3.9 and fish shell (required for development)
-apt-get -y install "yarn" "bat" "fish" "nodejs" "gcc" "g++" "make" "exa" "neovim" "python3" "python3-pip" "openjdk-15-jdk" "openjdk-15-jre"
+apt-get -y install "yarn" "bat" "fish" "nodejs" "gcc" "g++" "make" "postgresql-$PG_VERSION" "postgresql-contrib-$PG_VERSION" "exa" "neovim" "python3" "python3-pip" "openjdk-15-jdk" "openjdk-15-jre" "maven"
 
 printr -c yellow -f bold "Environment packages installed successfully!"
+
+PG_CONF="/etc/postgresql/$PG_VERSION/main/postgresql.conf"
+PG_HBA="/etc/postgresql/$PG_VERSION/main/pg_hba.conf"
+PG_DIR="/var/lib/postgresql/$PG_VERSION/main"
+
+# Edit postgresql.conf to change listen address to '*':
+sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/" "$PG_CONF"
+
+# Append to pg_hba.conf to add password auth:
+echo "host    all             all             all                     md5" >> "$PG_HBA"
+
+# Explicitly set default client_encoding
+echo "client_encoding = utf8" >> "$PG_CONF"
+
+# Restart so that all new config is loaded:
+service postgresql restart
+
+DB_PASSWORD=password
+DB_USER=username
+DB_DATABASE=server_db
+ROOT_USER=postgres
+
+su - $ROOT_USER -c "/home/vagrant/Resourceium/tools/init-db.sh $DB_PASSWORD $DB_DATABASE $DB_USER"
 
 echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf
 sudo sysctl -p

@@ -6,7 +6,9 @@ MAIN_DB="${2:-$DB_DATABASE}"
 
 DB_USER="${3:-$DB_USER}"
 
-psql -U gitpod << SQL_COMMANDS
+ROOT_USER="${4:-gitpod}"
+
+psql -U "${ROOT_USER}" << SQL_COMMANDS
 -- Create the database user:
 CREATE ROLE "$DB_USER" WITH LOGIN CREATEDB ENCRYPTED PASSWORD '$PASSWORD';
 -- Create the database:
