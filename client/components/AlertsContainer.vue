@@ -27,7 +27,7 @@
           class="w-full my-3"
         >
           <div
-            class="flex justify-between p-3 space-x-3 border-4 rounded-lg shadow-xl bg-opacity-20"
+            class="relative flex justify-between p-3 space-x-3 border-4 rounded-lg shadow-xl bg-opacity-20"
             :class="{
               'border-green-400': alert.severity === 'success',
               'border-blue-400': alert.severity === 'info',
@@ -44,7 +44,7 @@
               </div>
             </div>
             <icons-time
-              class="cursor-pointer"
+              class="absolute p-1 bg-black rounded-full cursor-pointer -top-4 -right-3"
               @click.native="closeAlert(alert.id)"
             ></icons-time>
           </div>

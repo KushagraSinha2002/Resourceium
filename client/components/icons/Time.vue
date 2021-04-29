@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ig-icon name="x" size="lg" variant="black"></ig-icon>
+    <ig-icon name="x" size="base" no-color class="text-white"></ig-icon>
   </div>
 </template>
 
