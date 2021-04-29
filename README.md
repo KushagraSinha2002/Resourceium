@@ -2,7 +2,7 @@
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/KushagraSinha2002/Resourceium)
 
-the idea behind resource pooling is that through modern scalable systems involved in cloud computing and software as a service (SaaS), providers can create a sense of infinite or immediately available resources by controlling resource adjustments at a meta level. This allows customers to change their levels of service at will without being subject to any of the limitations of physical or virtual resources
+ Resourceium is an unified platform that will enable people to pool resources together so that they spend more time actually using these resources and less time trying to find them online. Anything and everything that can be represented in a digital format, can be shared as a resource on our platform
 ## Summary
 
 - [Resourceium](#resourceium)
