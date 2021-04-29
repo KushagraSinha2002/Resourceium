@@ -57,8 +57,8 @@ export default {
             messageHeading: 'Login successful',
             active: true,
           })
-          window.localStorage.setItem('username', result.username)
-          window.localStorage.setItem('userId', result.userId)
+          window.localStorage.setItem('username', result.name)
+          window.localStorage.setItem('userId', result.id)
           this.redirectHome()
         })
         .catch((err) => {
