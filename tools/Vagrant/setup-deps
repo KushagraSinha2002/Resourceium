@@ -17,7 +17,6 @@ sudo ln -s /usr/bin/batcat /usr/bin/bat
 rm -rf $HOME/.config
 git clone https://github.com/IgnisDa/linux-configs.git $HOME/.config
 
-
 # load the custom scripts and make only files which contain `~ADD_SCRIPT~` in them
 # executable
 CUSTOM_SCRIPTS_DIR="$HOME/custom-scripts"
@@ -32,10 +31,6 @@ done
 curl -fsSL https://starship.rs/install.sh > /tmp/install.sh
 chmod +x /tmp/install.sh
 /tmp/install.sh --force
-
-# rust installer
-curl https://sh.rustup.rs -sSf | sh -s -- -y
-source "$HOME/.cargo/env"
 
 # set the default interactive shell as fish
 rm -rf "$HOME/.bashrc"
