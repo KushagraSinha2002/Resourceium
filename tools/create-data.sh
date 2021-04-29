@@ -18,8 +18,8 @@ do
     RANDOM_USER="$(shuf -i 1-$TOTAL -n 1)"
 
     CONTENTS="$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10000 ; echo '')"
-    echo "${CONTENTS}" >> /tmp/file.txt
-    curl -s -i -X POST -H "Content-Type: multipart/form-data" "${BASE_URL}/uploads/upload/${RANDOM_USER}" -F "file=@/tmp/file.txt" -o /dev/null
-    rm /tmp/file.txt
+    FILE_1="/tmp/$(tr -dc A-Za-z0-9 </dev/urandom | head -c 10 ; echo '').txt"
+    echo "${CONTENTS}" >> "$FILE_1"
+    curl -s -i -X POST -H "Content-Type: multipart/form-data" "${BASE_URL}/uploads/upload/${RANDOM_USER}" -F "files=@$FILE_1" -o /dev/null
 done
 echo "Uploaded ${TOTAL} files!"
