@@ -1,5 +1,6 @@
 package com.bitlegion.server.accounts;
 
+import java.lang.StackWalker.Option;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,22 +67,16 @@ public class AccountsController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<ResponseMessage> loginUser(@RequestParam String name, @RequestParam String password) {
-        String message = "";
+    public ResponseEntity<Account> loginUser(@RequestParam String name, @RequestParam String password) {
         Optional<Account> maybeUser = accountRepository.findByName(name);
         if (maybeUser.isEmpty()) {
-            message = "No such user found";
-            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+            return ResponseEntity.notFound().build();
         }
-        Account newUser = maybeUser.get();
-        if (newUser.verifyPassword(password)) {
-            message = "The user was authenticated successfully";
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ResponseMessage(message).setUserId(Optional.ofNullable(newUser.getId()))
-                            .setUsername(Optional.ofNullable(newUser.getName())));
+        Account user = maybeUser.get();
+        if (user.verifyPassword(password)) {
+            return ResponseEntity.status(HttpStatus.OK).body(user);
         }
-        message = "The credentials you provided were incorrect";
-        return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+        return ResponseEntity.badRequest().build();
     }
 
     @PutMapping(path = "/update/{userID}")
@@ -105,6 +100,15 @@ public class AccountsController {
         accountRepository.save(user);
         message = "The user was updated successfully";
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+    }
+
+    @GetMapping(path = "/{userID}")
+    public ResponseEntity<Account> getUserDetails(@PathVariable Integer userID) {
+        Optional<Account> maybeUser = accountRepository.findById(userID);
+        if (maybeUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(maybeUser.get());
     }
 
     @GetMapping(path = "/all")
