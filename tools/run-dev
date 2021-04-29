@@ -6,6 +6,11 @@ backend_folder="server"
 # directory path of nuxt development server
 frontend_folder="client"
 
+if command -v gp &>/dev/null;
+  then URL="$(gp url 8000)"
+  else URL="http://localhost:8000/"
+fi
+
 # Start all the servers
 { cd "$backend_folder" && mvn spring-boot:run -Dspring-boot.run.profiles=dev,gitpod & \
-  cd "$frontend_folder" && yarn install && API_URL="$(gp url 8000)" yarn dev; }
+  cd "$frontend_folder" && yarn install && API_URL="${URL}" yarn dev; }
