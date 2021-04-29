@@ -1,6 +1,5 @@
 package com.bitlegion.server.accounts;
 
-import java.lang.StackWalker.Option;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,7 +112,6 @@ public class AccountsController {
 
     @GetMapping(path = "/all")
     public @ResponseBody Iterable<Account> getAllUsers() {
-        // This returns a JSON or XML with the users
         return accountRepository.findAll();
     }
 }
