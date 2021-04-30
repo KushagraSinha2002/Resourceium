@@ -58,7 +58,7 @@ export default {
   googleFonts: {
     families: {
       'Original Surfer': true,
-      Poppins: [600],
+      Poppins: true,
     },
     display: 'swap',
   },
