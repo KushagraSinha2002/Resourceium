@@ -14,7 +14,7 @@
         </div>
         <input
           id="username"
-          v-model="formData.name"
+          v-model="formData.username"
           type="text"
           placeholder="Resourceium username"
           class="px-4 py-2 border rounded-lg appearance-none border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
@@ -23,7 +23,7 @@
         <input
           id="password"
           v-model="formData.password"
-          type="text"
+          type="password"
           placeholder="Password"
           class="px-4 py-2 border rounded-lg appearance-none border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
         />
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       formData: {
-        name: '',
+        username: '',
         password: '',
       },
     }
@@ -89,6 +89,7 @@ export default {
     },
     submitForm() {
       const formData = this.formData
+      console.log(formData)
       this.$axios
         .$post('/accounts/login', null, { params: formData })
         .then((result) => {
