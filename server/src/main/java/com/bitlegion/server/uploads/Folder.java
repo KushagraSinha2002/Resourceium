@@ -16,20 +16,93 @@ import com.bitlegion.server.accounts.Account;
 
 @Entity
 public class Folder {
-    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String description;
+
     private String title;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date DateOfUpload;
+    private Date dateOfUpload;
 
-    //if the boolean alue is true then the folder is private and only for yhe user.
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastEdited;
+
+    // if the boolean value is true then the folder is private and only for the
+    // user.
     private Boolean hidden;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public Date getLastEdited() {
+        return this.lastEdited;
+    }
+
+    public void setLastEdited(Date lastEdited) {
+        this.lastEdited = lastEdited;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Date getDateOfUpload() {
+        return this.dateOfUpload;
+    }
+
+    public void setDateOfUpload(Date dateOfUpload) {
+        this.dateOfUpload = dateOfUpload;
+    }
+
+    public Boolean isHidden() {
+        return this.hidden;
+    }
+
+    public Boolean getHidden() {
+        return this.hidden;
+    }
+
+    public void setHidden(Boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public Account getAccount() {
+        return this.account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", title='" + getTitle()
+                + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", lastEdited='" + getLastEdited() + "'"
+                + ", hidden='" + isHidden() + "'" + ", account='" + getAccount() + "'" + "}";
+    }
+
 }
