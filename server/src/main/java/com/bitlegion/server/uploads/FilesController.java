@@ -54,7 +54,7 @@ public class FilesController {
             MultipartFile file = files.get(i);
             try {
                 String filename = storageService.smartSave(file, user.getId());
-                Upload fileModel = new Upload();
+                File fileModel = new File();
                 fileModel.setName(file.getOriginalFilename());
                 fileModel.setSlug(filename);
                 fileModel.setAccount(user);
@@ -71,7 +71,7 @@ public class FilesController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<Upload> getListFiles() {
+    public @ResponseBody Iterable<File> getListFiles() {
         return fileRepository.findAll();
     }
 
@@ -79,7 +79,7 @@ public class FilesController {
     @ResponseBody
     public ResponseEntity<Resource> getFile(@RequestParam Integer userId, @RequestParam String filename) {
         Account userModel = userRepository.findById(userId).get();
-        Upload fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
+        File fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
         Resource file = storageService.load(fileModel.getFileLocation());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileModel.getName() + "\"")

@@ -14,7 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.bitlegion.server.uploads.Upload;
+import com.bitlegion.server.uploads.File;
+import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity // This tells Hibernate to make a table out of this class
@@ -45,7 +46,11 @@ public class Account {
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
-    private Collection<Upload> files;
+    private Collection<File> files;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private Collection<Folder> folders;
 
     public String getPassword() {
         return this.password;
@@ -132,12 +137,20 @@ public class Account {
         this.bio = bio;
     }
 
-    public Collection<Upload> getFiles() {
+    public Collection<File> getFiles() {
         return this.files;
     }
 
-    public void setFiles(Collection<Upload> files) {
+    public void setFiles(Collection<File> files) {
         this.files = files;
+    }
+
+    public Collection<Folder> getFolders() {
+        return this.folders;
+    }
+
+    public void setFolders(Collection<Folder> folders) {
+        this.folders = folders;
     }
 
     @Override
