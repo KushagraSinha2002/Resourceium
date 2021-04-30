@@ -12,7 +12,7 @@ public class Groups {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private String groupname;
+    private String name;
 
     private String description;
 
@@ -20,8 +20,12 @@ public class Groups {
         return id;
     }
 
-    public String getGroupname() {
-        return groupname;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -30,10 +34,6 @@ public class Groups {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public void setGroupname(String groupname) {
-        this.groupname = groupname;
     }
 
     public void setDescription(String description) {
