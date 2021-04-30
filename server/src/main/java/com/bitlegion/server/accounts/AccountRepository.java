@@ -13,7 +13,7 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
     @Query("SELECT a FROM Account a where a.email = :email")
     public Optional<Account> findByEmail(@Param("email") String email);
 
-    @Query("SELECT a FROM Account a where a.name = :name")
-    public Optional<Account> findByName(@Param("name") String name);
+    @Query("SELECT a FROM Account a where a.username = :username")
+    public Optional<Account> findByUsername(@Param("username") String username);
 
 }

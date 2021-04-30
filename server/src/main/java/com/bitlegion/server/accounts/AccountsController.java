@@ -1,5 +1,6 @@
 package com.bitlegion.server.accounts;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,22 +25,35 @@ public class AccountsController {
     private AccountRepository accountRepository;
 
     @PostMapping(path = "/register") // Map ONLY POST Requests
-    public ResponseEntity<ResponseMessage> addNewUser(@RequestParam String name, @RequestParam String email,
-            @RequestParam String password) {
+    public ResponseEntity<ResponseMessage> addNewUser(@RequestParam String username, @RequestParam String email,
+            @RequestParam String password, @RequestParam Date dateOfBirth, @RequestParam String firstName,
+            @RequestParam String lastName) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
 
-        if ((name.length() == 0)) {
+        if (username.length() == 0) {
             message = "You provided an invalid name";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
-        if ((password.length() == 0)) {
+        if (password.length() == 0) {
             message = "You provided an invalid password";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
-        if ((name.length() == 0)) {
+        if (username.length() == 0) {
             message = "You provided an invalid name";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+        if (lastName.length() == 0) {
+            message = "You provided an invalid last name";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+        if (firstName.length() == 0) {
+            message = "You provided an invalid first name";
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
+        if (dateOfBirth.after(new Date())) {
+            message = "Invalid date of birth detected";
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
 
@@ -49,13 +63,16 @@ public class AccountsController {
                 message = "A user with email " + email + " already exists";
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage(message));
             }
-            if (accountRepository.findByName(name).isPresent()) {
-                message = "A user with name " + name + " already exists";
+            if (accountRepository.findByUsername(username).isPresent()) {
+                message = "A user with name " + username + " already exists";
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage(message));
             }
-            newUser.setName(name);
+            newUser.setUsername(username);
             newUser.setEmail(email);
             newUser.setPassword(password);
+            newUser.setDateOfBirth(dateOfBirth);
+            newUser.setFirstName(firstName);
+            newUser.setLastName(lastName);
             accountRepository.save(newUser);
             message = "The user was created successfully!";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
@@ -67,7 +84,7 @@ public class AccountsController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<Account> loginUser(@RequestParam String name, @RequestParam String password) {
-        Optional<Account> maybeUser = accountRepository.findByName(name);
+        Optional<Account> maybeUser = accountRepository.findByUsername(name);
         if (maybeUser.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
