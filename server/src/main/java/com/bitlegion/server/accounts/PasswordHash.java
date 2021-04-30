@@ -174,13 +174,14 @@ public class PasswordHash {
                     System.out.println("FAILURE: GOOD PASSWORD NOT ACCEPTED!");
                     failure = true;
                 }
+                System.out.print(".");
             }
             if (failure)
-                System.out.println("TESTS FAILED!");
+                System.out.println("\nTESTS FAILED!");
             else
-                System.out.println("TESTS PASSED!");
+                System.out.println("\nTESTS PASSED!");
         } catch (Exception ex) {
-            System.out.println("ERROR: " + ex);
+            System.out.println("\nERROR: " + ex);
         }
     }
 
