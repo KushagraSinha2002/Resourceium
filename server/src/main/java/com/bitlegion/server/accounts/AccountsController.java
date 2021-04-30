@@ -86,8 +86,8 @@ public class AccountsController {
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<Account> loginUser(@RequestParam String name, @RequestParam String password) {
-        Optional<Account> maybeUser = accountRepository.findByUsername(name);
+    public ResponseEntity<Account> loginUser(@RequestParam String username, @RequestParam String password) {
+        Optional<Account> maybeUser = accountRepository.findByUsername(username);
         if (maybeUser.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
