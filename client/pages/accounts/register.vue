@@ -161,6 +161,7 @@ export default {
       for (const country in countries) {
         countryList.push(countries[country].name)
       }
+      countryList.sort((val1, val2) => val1.localeCompare(val2))
       return countryList
     },
   },
