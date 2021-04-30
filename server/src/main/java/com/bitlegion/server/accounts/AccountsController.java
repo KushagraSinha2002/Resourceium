@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -26,8 +27,9 @@ public class AccountsController {
 
     @PostMapping(path = "/register") // Map ONLY POST Requests
     public ResponseEntity<ResponseMessage> addNewUser(@RequestParam String username, @RequestParam String email,
-            @RequestParam String password, @RequestParam Date dateOfBirth, @RequestParam String firstName,
-            @RequestParam String lastName, @RequestParam String country) {
+            @RequestParam String password,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateOfBirth,
+            @RequestParam String firstName, @RequestParam String lastName, @RequestParam String country) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
