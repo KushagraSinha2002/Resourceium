@@ -27,7 +27,7 @@ public class AccountsController {
     @PostMapping(path = "/register") // Map ONLY POST Requests
     public ResponseEntity<ResponseMessage> addNewUser(@RequestParam String username, @RequestParam String email,
             @RequestParam String password, @RequestParam Date dateOfBirth, @RequestParam String firstName,
-            @RequestParam String lastName) {
+            @RequestParam String lastName, @RequestParam String country) {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
@@ -73,6 +73,7 @@ public class AccountsController {
             newUser.setDateOfBirth(dateOfBirth);
             newUser.setFirstName(firstName);
             newUser.setLastName(lastName);
+            newUser.setCountry(country);
             accountRepository.save(newUser);
             message = "The user was created successfully!";
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));

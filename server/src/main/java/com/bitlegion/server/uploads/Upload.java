@@ -75,6 +75,6 @@ public class Upload {
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", slug='" + getSlug() + "'" + ", user='"
-                + getAccount().getName() + "'" + "}";
+                + getAccount().getUsername() + "'" + "}";
     }
 }

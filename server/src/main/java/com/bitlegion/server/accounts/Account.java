@@ -38,6 +38,8 @@ public class Account {
 
     private String bio;
 
+    private String country;
+
     @Column(nullable = false)
     private String password;
 
@@ -47,6 +49,14 @@ public class Account {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
     }
 
     public void setPassword(String password) {
@@ -134,8 +144,8 @@ public class Account {
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
                 + "'" + ", username='" + getUsername() + "'" + ", dateOfBirth='" + getDateOfBirth() + "'" + ", email='"
-                + getEmail() + "'" + ", bio='" + getBio() + "'" + ", password='" + getPassword() + "'" + ", files='"
-                + getFiles() + "'" + "}";
+                + getEmail() + "'" + ", bio='" + getBio() + "'" + ", country='" + getCountry() + "'" + ", password='"
+                + getPassword() + "'" + ", files='" + getFiles() + "'" + "}";
     }
 
 }
