@@ -4,7 +4,7 @@
   >
     <div class="w-full px-6 sm:w-1/2 sm:px-0">
       <form
-        class="flex flex-col font-poppins max-w-sm sm:max-w-[25rem] md:max-w-md mx-auto md:text-xl sm:text-lg space-y-16"
+        class="flex flex-col font-poppins max-w-sm sm:max-w-[25rem] md:max-w-md mx-auto md:text-xl sm:text-lg space-y-10 sm:space-y-16"
         @submit.prevent="submitForm"
       >
         <div class="flex flex-col w-full space-y-5">
@@ -19,7 +19,7 @@
               v-model="formData.username"
               type="text"
               placeholder="Resourceium username"
-              class="w-full px-4 py-2 border appearance-none rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
+              class="w-full px-4 py-2 bg-transparent border appearance-none rounded-15px hover:shadow-lg border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
             />
             <label for="username" class="hidden">Username</label>
           </div>
@@ -29,7 +29,7 @@
               v-model="formData.password"
               type="password"
               placeholder="Password"
-              class="w-full px-4 py-2 border appearance-none rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
+              class="w-full px-4 py-2 bg-transparent border appearance-none rounded-15px hover:shadow-lg border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
             />
             <label for="password" class="hidden">Password</label>
           </div>
@@ -98,7 +98,6 @@ export default {
     },
     submitForm() {
       const formData = this.formData
-      console.log(formData)
       this.$axios
         .$post('/accounts/login', null, { params: formData })
         .then((result) => {
