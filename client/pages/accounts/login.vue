@@ -13,25 +13,30 @@
           >
             Please Sign In.
           </div>
-          <div>
-            <input
-              id="username"
-              v-model="formData.username"
-              type="text"
-              placeholder="Resourceium username"
-              class="w-full px-4 py-2 bg-transparent border appearance-none rounded-15px hover:shadow-lg border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-            />
-            <label for="username" class="hidden">Username</label>
-          </div>
-          <div>
-            <input
-              id="password"
-              v-model="formData.password"
-              type="password"
-              placeholder="Password"
-              class="w-full px-4 py-2 bg-transparent border appearance-none rounded-15px hover:shadow-lg border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-            />
-            <label for="password" class="hidden">Password</label>
+          <div class="flex flex-col space-y-5 sm:space-y-7">
+            <div>
+              <input
+                id="username"
+                v-model="formData.username"
+                type="text"
+                placeholder="Resourceium username"
+                class="w-full px-4 py-2 bg-transparent border appearance-none rounded-15px hover:shadow-lg border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
+              />
+              <label for="username" class="hidden">Username</label>
+            </div>
+            <div>
+              <input
+                id="password"
+                v-model="formData.password"
+                type="password"
+                placeholder="Password"
+                class="w-full px-4 py-2 bg-transparent border appearance-none rounded-15px hover:shadow-lg border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
+              />
+              <label for="password" class="hidden">Password</label>
+              <div class="mt-3 text-sm">
+                Your Resourceium username that you use to login.
+              </div>
+            </div>
           </div>
         </div>
         <div class="flex flex-col space-y-5">
