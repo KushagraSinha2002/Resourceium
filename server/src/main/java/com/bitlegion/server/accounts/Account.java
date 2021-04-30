@@ -3,6 +3,7 @@ package com.bitlegion.server.accounts;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.bitlegion.server.uploads.Upload;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,8 +23,15 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    private String firstName;
+
+    private String lastName;
+
     @Column(unique = true, updatable = false)
-    private String name;
+    private String username;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateOfBirth;
 
     @Column(unique = true, updatable = false)
     private String email;
@@ -30,6 +40,10 @@ public class Account {
 
     @Column(nullable = false)
     private String password;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private Collection<Upload> files;
 
     public String getPassword() {
         return this.password;
@@ -52,54 +66,76 @@ public class Account {
         }
     }
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    private Collection<Upload> files;
-
     public Integer getId() {
-        return id;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
+        return this.id;
     }
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Date getDateOfBirth() {
+        return this.dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getEmail() {
-        return email;
+        return this.email;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
+    public String getBio() {
+        return this.bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
     public Collection<Upload> getFiles() {
         return this.files;
     }
 
-    public void setFiles(Collection<Upload> fileModels) {
-        this.files = fileModels;
+    public void setFiles(Collection<Upload> files) {
+        this.files = files;
     }
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", email='" + getEmail() + "'" + ", bio='"
-                + getBio() + "'" + ", fileModels='" + getFiles() + "'" + "}";
+        return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
+                + "'" + ", username='" + getUsername() + "'" + ", dateOfBirth='" + getDateOfBirth() + "'" + ", email='"
+                + getEmail() + "'" + ", bio='" + getBio() + "'" + ", password='" + getPassword() + "'" + ", files='"
+                + getFiles() + "'" + "}";
     }
 
 }
