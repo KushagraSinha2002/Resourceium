@@ -1,8 +1,8 @@
 <template>
-  <div
-    class="flex items-center min-h-screen mx-auto bg-cream-white place-content-center sm:place-content-evenly"
-  >
-    <div class="container w-full px-6 sm:px-0">
+  <div class="h-screen mx-auto bg-cream-white">
+    <div
+      class="container flex items-center h-full px-6 mx-auto sm:px-0 place-content-center sm:place-content-evenly"
+    >
       <form
         class="flex flex-col font-poppins font-light max-w-sm sm:max-w-[25rem] md:max-w-md mx-auto space-y-5 md:text-xl sm:text-lg"
         @submit.prevent="submitForm"
@@ -11,7 +11,6 @@
           class="flex items-center justify-center mt-10 mb-5 space-x-4 text-3xl font-bold text-center sm:text-4xl sm:mb-10 font-poppins text-primary"
         >
           <div>Create your</div>
-
           <img
             :src="require('~/assets/images/logo.png')"
             alt="Resourceium logo"
@@ -19,7 +18,6 @@
             rel="preload"
             align="middle"
           />
-
           <div>ID.</div>
         </div>
         <NuxtLink
@@ -69,13 +67,13 @@
             id="country"
             v-model="formData.country"
             name="country"
-            class="w-full px-4 py-2 border rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
+            class="w-full px-4 py-2 bg-transparent border rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
           >
+            <option value="" selected disabled hidden>Select an Option</option>
             <option
               v-for="(country, index) in getCountryList"
               :key="index"
               :value="country"
-              class="w-full"
             >
               {{ country }}
             </option>
