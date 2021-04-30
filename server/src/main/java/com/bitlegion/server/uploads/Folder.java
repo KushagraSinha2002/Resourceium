@@ -1,5 +1,6 @@
 package com.bitlegion.server.uploads;
 
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -9,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.bitlegion.server.accounts.Account;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Folder {
@@ -38,12 +41,24 @@ public class Folder {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "folder")
+    private Collection<File> files;
+
     public Integer getId() {
         return this.id;
     }
 
     public Date getLastEdited() {
         return this.lastEdited;
+    }
+
+    public Collection<File> getFiles() {
+        return this.files;
+    }
+
+    public void setFiles(Collection<File> files) {
+        this.files = files;
     }
 
     public void setLastEdited(Date lastEdited) {

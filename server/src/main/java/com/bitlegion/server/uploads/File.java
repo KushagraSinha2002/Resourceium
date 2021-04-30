@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 import com.bitlegion.server.accounts.Account;
 
 @Entity
@@ -37,6 +36,10 @@ public class File {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "folder_id", referencedColumnName = "id")
+    private Folder folder;
+
     public Account getAccount() {
         return this.account;
     }
@@ -52,7 +55,6 @@ public class File {
     public void setDateOfUpload(Date dateOfUpload) {
         this.dateOfUpload = dateOfUpload;
     }
-
 
     public void setDescription(String description) {
         this.description = description;
@@ -98,9 +100,19 @@ public class File {
         return Paths.get("user--" + this.getAccount().getId().toString(), this.slug).toString();
     }
 
+    public Folder getFolder() {
+        return this.folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
+    }
+
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", slug='" + getSlug() + "'" + ", user='"
-                + getAccount().getUsername() + "'" + "}";
+        return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", dateOfUpload='"
+                + getDateOfUpload() + "'" + ", name='" + getName() + "'" + ", slug='" + getSlug() + "'" + ", account='"
+                + getAccount() + "'" + ", folder='" + getFolder().getTitle() + "'" + "}";
     }
+
 }
