@@ -33,6 +33,7 @@
             id="username"
             v-model="formData.username"
             type="text"
+            required
             placeholder="Username"
             class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
           />
@@ -44,6 +45,7 @@
               id="first-name"
               v-model="formData.firstName"
               type="text"
+              required
               placeholder="First Name"
               class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
             />
@@ -54,6 +56,7 @@
               id="last-name"
               v-model="formData.lastName"
               type="text"
+              required
               placeholder="Last Name"
               class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
             />
@@ -67,6 +70,7 @@
             id="country"
             v-model="formData.country"
             name="country"
+            required
             class="w-full px-4 py-2 bg-transparent border rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
           >
             <option value="" selected disabled hidden>Select an Option</option>
@@ -85,6 +89,7 @@
             id="date-of-birth"
             v-model="formData.dateOfBirth"
             type="text"
+            required
             onfocus="(this.type='date')"
             onblur="(this.type='text')"
             placeholder="Date of Birth"
@@ -97,6 +102,7 @@
             id="email"
             v-model="formData.email"
             type="email"
+            required
             placeholder="Email"
             class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
           />
@@ -110,6 +116,7 @@
               id="password"
               v-model="formData.password"
               type="password"
+              required
               placeholder="Password"
               class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
             />
@@ -120,6 +127,7 @@
               id="password2"
               v-model="formData.password2"
               type="password"
+              required
               placeholder="Confirm password"
               class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
             />
@@ -141,6 +149,21 @@ import { countries } from 'countries-list'
 
 export default {
   data() {
+    const mode = process.env.NODE_ENV
+    if (mode === 'development') {
+      return {
+        formData: {
+          username: 'Some username',
+          firstName: 'test',
+          lastName: 'Username',
+          email: 'email@hotmail.com',
+          dateOfBirth: '2002-12-12',
+          country: 'India',
+          password: '1',
+          password2: '1',
+        },
+      }
+    }
     return {
       formData: {
         username: '',
@@ -170,24 +193,28 @@ export default {
       const formData = this.formData
       if (formData.password !== formData.password2) {
         alert('The two passwords do not match')
+        return
       }
       this.$axios
         .$post('/accounts/register', null, { params: formData })
         .then((_result) => {
           this.$addAlert({
-            severity: 'info',
-            messageHeading: 'Registration successful',
-            messageBody: 'Please login with your new account now',
-            active: true,
+            message: 'Please login with your new account now',
+            type: 'success',
           })
           this.$router.push({ name: 'accounts-login' })
         })
         .catch((err) => {
+          let message = null
+          if (typeof err.response.data === 'object') {
+            message = err.response.data.message
+          } else {
+            message = JSON.parse(err.response.data.message)
+            message = message.join('\n')
+          }
           this.$addAlert({
-            severity: 'warning',
-            messageHeading: 'Invalid input',
-            messageBody: err.response.data.message,
-            active: true,
+            message,
+            type: 'danger',
           })
         })
     },
