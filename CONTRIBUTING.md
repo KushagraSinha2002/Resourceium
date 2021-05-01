@@ -23,7 +23,7 @@ permissions to these remotes.
 
 ```bash
 # add the frontend remote
-git remote add heroku-client https://git.heroku.com/resourceium-client.git
+git remote add heroku-client https://git.heroku.com/resourceium.git
 # NOTE: deployment is supported only from main and master branches
 # push the main branch to be deployed
 git subtree push --prefix client heroku-client main
