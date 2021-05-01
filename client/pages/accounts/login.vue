@@ -1,7 +1,7 @@
 <template>
-  <div class="container h-screen mx-auto">
+  <div class="h-screen bg-cream-white">
     <div
-      class="flex flex-wrap-reverse items-center h-full bg-cream-white place-content-center sm:place-content-evenly"
+      class="container flex flex-wrap-reverse items-center h-full mx-auto place-content-center sm:place-content-evenly"
     >
       <div class="w-full px-6 sm:w-1/2 sm:px-0">
         <form
@@ -109,21 +109,26 @@ export default {
         .$post('/accounts/login', null, { params: formData })
         .then((result) => {
           this.$addAlert({
-            severity: 'info',
-            messageHeading: 'Login successful',
-            active: true,
+            message: 'Login successful',
+            type: 'success',
           })
           window.localStorage.setItem('username', result.name)
           window.localStorage.setItem('userId', result.id)
           this.redirectHome()
         })
         .catch((err) => {
-          this.$addAlert({
-            severity: 'warning',
-            messageHeading: 'Invalid input',
-            messageBody: err.response.data.message,
-            active: true,
-          })
+          if (err.response.status === 404) {
+            this.$addAlert({
+              message: 'No such user found',
+              type: 'danger',
+            })
+          }
+          if (err.response.status === 400) {
+            this.$addAlert({
+              message: 'Incorrect credentials',
+              type: 'warning',
+            })
+          }
         })
     },
   },
