@@ -2,13 +2,17 @@ package com.bitlegion.server.uploads;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -39,6 +43,11 @@ public class Folder {
     // user.
     private Boolean hidden;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "folder_tags", joinColumns = { @JoinColumn(name = "folder_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "tag_id") })
+    private Set<Tag> tags;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
@@ -54,6 +63,30 @@ public class Folder {
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked;
+
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Collection<Favorite> getFavorites() {
+        return this.favorites;
+    }
+
+    public void setFavorites(Collection<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
+    public Collection<Liked> getLiked() {
+        return this.liked;
+    }
+
+    public void setLiked(Collection<Liked> liked) {
+        this.liked = liked;
+    }
 
     public Integer getId() {
         return this.id;
@@ -127,7 +160,9 @@ public class Folder {
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", title='" + getTitle()
                 + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", lastEdited='" + getLastEdited() + "'"
-                + ", hidden='" + isHidden() + "'" + ", account='" + getAccount() + "'" + "}";
+                + ", hidden='" + isHidden() + "'" + ", tags='" + getTags() + "'" + ", account='" + getAccount() + "'"
+                + ", files='" + getFiles() + "'" + ", favorites='" + getFavorites() + "'" + ", liked='" + getLiked()
+                + "'" + "}";
     }
 
 }
