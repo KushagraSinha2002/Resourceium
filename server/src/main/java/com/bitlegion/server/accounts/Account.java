@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.uploads.File;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -51,6 +52,10 @@ public class Account {
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private Collection<Folder> folders;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "account")
+    private Collection<Favorite> favorites;
 
     public String getPassword() {
         return this.password;

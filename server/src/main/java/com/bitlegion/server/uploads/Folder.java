@@ -15,6 +15,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.bitlegion.server.accounts.Account;
+import com.bitlegion.server.socials.Favorite;
+import com.bitlegion.server.socials.Liked;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -44,6 +46,14 @@ public class Folder {
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<File> files;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "folder")
+    private Collection<Favorite> favorites;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "folder")
+    private Collection<Liked> likeds;
 
     public Integer getId() {
         return this.id;
