@@ -1,12 +1,18 @@
-package com.bitlegion.server.groups;
+package com.bitlegion.server.discussions;
 
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+import com.bitlegion.server.accounts.Account;
 
 @Entity
-public class Groups {
+public class Discussion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -15,6 +21,9 @@ public class Groups {
     private String name;
 
     private String description;
+
+    @ManyToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
+    private Collection<Account> accounts;
 
     public Integer getId() {
         return id;
