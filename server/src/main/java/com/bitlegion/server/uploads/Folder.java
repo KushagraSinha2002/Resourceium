@@ -53,7 +53,7 @@ public class Folder {
 
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
-    private Collection<Liked> likeds;
+    private Collection<Liked> liked;
 
     public Integer getId() {
         return this.id;

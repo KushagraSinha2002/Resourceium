@@ -5,15 +5,18 @@ import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.uploads.File;
 import com.bitlegion.server.uploads.Folder;
@@ -44,6 +47,9 @@ public class Account {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany(targetEntity = Discussion.class, cascade = CascadeType.ALL)
+    private Collection<Discussion> discussions;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
