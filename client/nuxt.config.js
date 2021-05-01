@@ -78,4 +78,5 @@ export default {
       description: 'Store all your precious resources at one place',
     },
   },
+  watch: ['~/store/*.js'],
 }
