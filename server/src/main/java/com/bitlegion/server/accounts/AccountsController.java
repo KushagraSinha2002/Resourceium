@@ -1,5 +1,6 @@
 package com.bitlegion.server.accounts;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
@@ -33,6 +34,12 @@ public class AccountsController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
+        ArrayList<String> errors = PasswordValidator.Validator(password);
+
+        if (errors.size() > 0) {
+            message = String.join(",", errors);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
 
         if (username.length() == 0) {
             message = "You provided an invalid name";
