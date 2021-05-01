@@ -16,6 +16,9 @@ backend and frontend are deployed as two separate apps on Heroku. Since this is 
 they need to be pushed to their remotes using the subtree strategy since Heroku does not
 support deployment from monorepos.
 
+**NOTE**: You will need to change the remote URLs since only our team (BitLegion) has push
+permissions to these remotes.
+
 ### For the frontend
 
 ```bash
