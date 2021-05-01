@@ -3,7 +3,6 @@ package com.bitlegion.server.accounts;
 import java.util.ArrayList;
 
 //Program to validate Password
-
 public class PasswordValidator {
   public static ArrayList<String> errorStrings = new ArrayList<String>();
 
@@ -34,7 +33,7 @@ public class PasswordValidator {
 
       // Not even 1 integer
       if (flag == false) {
-        errorStrings.add("Password should have atleast one integer(0-9)");
+        errorStrings.add("Password should have at least one integer (0-9)");
       }
     }
 
@@ -56,7 +55,7 @@ public class PasswordValidator {
       }
 
       if (flag == false) {
-        errorStrings.add("Password should have atleast one Higher case letter(A-Z)");
+        errorStrings.add("Password should have at least one higher case letter (A-Z)");
       }
     }
 
@@ -77,7 +76,7 @@ public class PasswordValidator {
       }
 
       if (flag == false) {
-        errorStrings.add("Password should have atleast one Lower case letter(a-z)");
+        errorStrings.add("Password should have at least one lower case letter (a-z)");
       }
     }
 
@@ -88,11 +87,8 @@ public class PasswordValidator {
         || password.contains(")") || password.contains("-") || password.contains("+") || password.contains("/")
         || password.contains(",") || password.contains("<") || password.contains(">") || password.contains("?")
         || password.contains("|"))) {
-      errorStrings.add("Password should have atleast one special character");
+      errorStrings.add("Password should have at least one special character");
     }
-
-    if (errorStrings.size() > 0) {
-      return errorStrings;
-    }
+    return errorStrings;
   }
 }

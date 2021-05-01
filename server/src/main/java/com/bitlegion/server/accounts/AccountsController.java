@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,7 @@ public class AccountsController {
 
         ArrayList<String> errors = PasswordValidator.Validator(password);
         if (errors.size() > 0) {
-          message = JSONArray.toJSONString(errors);          
+          message = JSONArray.toJSONString(errors);
           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
 
