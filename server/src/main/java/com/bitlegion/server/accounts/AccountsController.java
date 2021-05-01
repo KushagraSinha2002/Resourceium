@@ -34,11 +34,11 @@ public class AccountsController {
         // @ResponseBody means the returned String is the response, not a view name
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
-        ArrayList<String> errors = PasswordValidator.Validator(password);
 
+        ArrayList<String> errors = PasswordValidator.Validator(password);
         if (errors.size() > 0) {
-            message = String.join(",", errors);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+          message = JSONArray.toJSONString(errors);          
+          return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
 
         if (username.length() == 0) {
