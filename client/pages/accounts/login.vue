@@ -35,7 +35,7 @@
                 />
                 <label for="password" class="hidden">Password</label>
                 <div class="mt-3 text-sm">
-                  Your Resourceium username that you use to login.
+                  Your Resourceium ID is the username you use to sign in.
                 </div>
               </div>
             </div>
