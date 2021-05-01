@@ -9,11 +9,11 @@
 		<relativePath/>
 		<!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.bitlegion</groupId>
 	<artifactId>server</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>server</name>
-	<description>Server side for Resourcecium</description>
+	<description>Server side for Resourceium</description>
 	<properties>
 		<java.version>15</java.version>
 	</properties>

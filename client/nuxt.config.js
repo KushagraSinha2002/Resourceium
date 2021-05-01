@@ -54,7 +54,7 @@ export default {
       poll: 1000,
     },
   },
-  target: 'static',
+  target: 'server',
   googleFonts: {
     families: {
       'Original Surfer': true,
