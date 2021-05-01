@@ -1,13 +1,16 @@
 package com.bitlegion.server.discussions;
 
-import java.util.Collection;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
 
 import com.bitlegion.server.accounts.Account;
 
@@ -22,8 +25,10 @@ public class Discussion {
 
     private String description;
 
-    @ManyToMany(targetEntity = Account.class, cascade = CascadeType.ALL)
-    private Collection<Account> accounts;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "discussion_accounts", joinColumns = {
+            @JoinColumn(name = "discussion_id") }, inverseJoinColumns = { @JoinColumn(name = "account_id") })
+    private Set<Account> accounts;
 
     public Integer getId() {
         return id;
@@ -48,4 +53,19 @@ public class Discussion {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Set<Account> getAccounts() {
+        return this.accounts;
+    }
+
+    public void setAccounts(Set<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    @Override
+    public String toString() {
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", description='" + getDescription() + "'"
+                + ", accounts='" + getAccounts() + "'" + "}";
+    }
+
 }

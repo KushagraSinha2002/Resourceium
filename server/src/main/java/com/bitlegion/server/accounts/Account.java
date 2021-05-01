@@ -4,10 +4,12 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -48,8 +50,8 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(targetEntity = Discussion.class, cascade = CascadeType.ALL)
-    private Collection<Discussion> discussions;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "accounts")
+    private Set<Discussion> discussions;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
@@ -112,6 +114,22 @@ public class Account {
         return this.lastName;
     }
 
+    public Set<Discussion> getDiscussions() {
+        return this.discussions;
+    }
+
+    public void setDiscussions(Set<Discussion> discussions) {
+        this.discussions = discussions;
+    }
+
+    public Collection<Favorite> getFavorites() {
+        return this.favorites;
+    }
+
+    public void setFavorites(Collection<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -169,7 +187,8 @@ public class Account {
         return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
                 + "'" + ", username='" + getUsername() + "'" + ", dateOfBirth='" + getDateOfBirth() + "'" + ", email='"
                 + getEmail() + "'" + ", bio='" + getBio() + "'" + ", country='" + getCountry() + "'" + ", password='"
-                + getPassword() + "'" + ", files='" + getFiles() + "'" + "}";
+                + getPassword() + "'" + ", discussions='" + getDiscussions() + "'" + ", files='" + getFiles() + "'"
+                + ", folders='" + getFolders() + "'" + ", favorites='" + getFavorites() + "'" + "}";
     }
 
 }
