@@ -1,36 +1,33 @@
 export const state = () => ({
-  alerts: [],
+  message: null,
+  timeOut: 2000,
+  show: false,
+  type: 'info',
 })
 
-export const getters = {
-  activeAlerts(state) {
-    const alerts = state.alerts.filter((alert) => {
-      return alert.active
-    })
-    return alerts
-  },
-}
-
 export const mutations = {
-  addAlert(state, alertObj) {
-    // add an alert to the vuex store
-    state.alerts.push(alertObj)
+  addAlert(state, payload) {
+    state.message = payload.message
+    payload.timeOut !== undefined
+      ? (state.timeOut = payload.timeOut)
+      : (state.timeOut = 2000)
+    state.show = true
+    payload.type !== undefined
+      ? (state.type = payload.type)
+      : (state.type = 'info')
   },
-  disableAlert(state, id) {
-    // sets the active state of a `id`th alert to `false`
-    const index = state.alerts.findIndex((alert) => alert.id === id)
-    state.alerts[index].active = false
+  disableAlert(state) {
+    state.message = null
+    state.timeOut = null
+    state.show = false
   },
 }
 
 export const actions = {
-  addAlert({ commit, state }, payload) {
-    // append an alert to the vuex store, along with it's correct `id`
-    const id = state.alerts.length
-    payload = { ...payload, id }
+  addAlert({ commit }, payload) {
     commit('addAlert', payload)
   },
-  disableAlert({ commit }, payload) {
-    commit('disableAlert', payload)
+  disableAlert({ commit }) {
+    commit('disableAlert')
   },
 }

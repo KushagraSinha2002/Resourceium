@@ -4,7 +4,7 @@ export default ({ store }, inject) => {
   inject('addAlert', (alert) => {
     store.dispatch('alerts/addAlert', alert)
   })
-  inject('disableAlert', (alertId) => {
-    store.dispatch('alerts/disableAlert', alertId)
+  inject('disableAlert', () => {
+    store.dispatch('alerts/disableAlert')
   })
 }
