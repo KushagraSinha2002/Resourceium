@@ -1,11 +1,20 @@
 package com.bitlegion.server.uploads;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 
+import org.apache.hc.client5.http.classic.methods.HttpPost;
+import org.apache.hc.client5.http.entity.mime.FileBody;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.HttpEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -52,9 +61,35 @@ public class FilesController {
         Account user = userModel.get();
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
+
+            Path filepath = Paths.get("/tmp", file.getOriginalFilename());
+            try {
+                file.transferTo(filepath);
+            } catch (Exception e) {
+                System.out.println("error: " + e.getMessage());
+            }
+            String url = System.getenv("STORAGE_SERVER") + "files/upload/";
+
+            try {
+                java.io.File fileObj = new java.io.File(filepath.toString());
+                try (CloseableHttpClient client = HttpClients.createDefault()) {
+                    HttpPost post = new HttpPost(url);
+                    HttpEntity entity = MultipartEntityBuilder.create().addPart("file", new FileBody(fileObj)).build();
+                    post.setEntity(entity);
+                    try {
+                        CloseableHttpResponse response = client.execute(post);
+                        System.out.println(response);
+                    } catch (Exception e) {
+                        System.out.println("error: " + e.getMessage());
+                    }
+                }
+                file.transferTo(filepath);
+            } catch (Exception e) {
+                System.out.println("error: " + e.getMessage());
+            }
             try {
                 String filename = storageService.smartSave(file, user.getId());
-                File fileModel = new File();
+                Document fileModel = new Document();
                 fileModel.setName(file.getOriginalFilename());
                 fileModel.setSlug(filename);
                 fileModel.setAccount(user);
@@ -71,7 +106,7 @@ public class FilesController {
     }
 
     @GetMapping("/all")
-    public @ResponseBody Iterable<File> getListFiles() {
+    public @ResponseBody Iterable<Document> getListFiles() {
         return fileRepository.findAll();
     }
 
@@ -79,7 +114,7 @@ public class FilesController {
     @ResponseBody
     public ResponseEntity<Resource> getFile(@RequestParam Integer userId, @RequestParam String filename) {
         Account userModel = userRepository.findById(userId).get();
-        File fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
+        Document fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
         Resource file = storageService.load(fileModel.getFileLocation());
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileModel.getName() + "\"")
