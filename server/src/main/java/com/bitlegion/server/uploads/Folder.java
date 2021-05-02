@@ -54,7 +54,7 @@ public class Folder {
 
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
-    private Collection<File> files;
+    private Collection<Document> documents;
 
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
@@ -96,12 +96,12 @@ public class Folder {
         return this.lastEdited;
     }
 
-    public Collection<File> getFiles() {
-        return this.files;
+    public Collection<Document> getFiles() {
+        return this.documents;
     }
 
-    public void setFiles(Collection<File> files) {
-        this.files = files;
+    public void setFiles(Collection<Document> files) {
+        this.documents = files;
     }
 
     public void setLastEdited(Date lastEdited) {

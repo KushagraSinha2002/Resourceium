@@ -20,7 +20,7 @@ import javax.persistence.TemporalType;
 
 import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.socials.Favorite;
-import com.bitlegion.server.uploads.File;
+import com.bitlegion.server.uploads.Document;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -56,7 +56,7 @@ public class Account {
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
-    private Collection<File> files;
+    private Collection<Document> documents;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
@@ -167,12 +167,12 @@ public class Account {
         this.bio = bio;
     }
 
-    public Collection<File> getFiles() {
-        return this.files;
+    public Collection<Document> getFiles() {
+        return this.documents;
     }
 
-    public void setFiles(Collection<File> files) {
-        this.files = files;
+    public void setFiles(Collection<Document> files) {
+        this.documents = files;
     }
 
     public Collection<Folder> getFolders() {
