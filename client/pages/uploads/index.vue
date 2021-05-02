@@ -12,13 +12,13 @@
 </template>
 
 <script>
-import { resolveURL, withQuery } from 'ufo'
+import { resolveURL } from 'ufo'
 
 export default {
   data() {
     return {
       files: [],
-      baseUrl: process.env.baseUrl,
+      storageServer: process.env.storageServer,
     }
   },
   mounted() {
@@ -28,10 +28,7 @@ export default {
   },
   methods: {
     getFileUrl(file) {
-      return withQuery(resolveURL(this.baseUrl, 'uploads', 'download'), {
-        userId: String(file.account.id),
-        filename: file.slug,
-      })
+      return resolveURL(this.storageServer, file.url)
     },
   },
 }
