@@ -18,7 +18,7 @@ import javax.persistence.TemporalType;
 import com.bitlegion.server.accounts.Account;
 
 @Entity
-public class File {
+public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -64,7 +64,7 @@ public class File {
         this.account = user;
     }
 
-    public File(String name, String url, Integer id) {
+    public Document(String name, String url, Integer id) {
         this.id = id;
         this.name = name;
     }
@@ -77,7 +77,7 @@ public class File {
         this.slug = slug;
     }
 
-    public File() {
+    public Document() {
     }
 
     public Integer getId() {
