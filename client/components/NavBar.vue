@@ -1,15 +1,61 @@
 <template>
   <div
-    class="flex w-full px-3 py-4 font-bold text-white font-styled bg-light-black"
+    class="flex items-center justify-between w-full px-3 py-1 font-bold text-white font-styled bg-light-black"
   >
-    <button @click="toggleSidebarMutation()">Toggle</button>
+    <NuxtLink :to="{ name: 'index' }">
+      <img
+        :src="require('~/assets/images/complete-logo.png')"
+        alt="resourceium logo"
+        class="hidden sm:block"
+      />
+      <img
+        :src="require('~/assets/images/logo-bg-white.png')"
+        alt="resourceium logo"
+        class="w-8 h-8 sm:hidden"
+      />
+    </NuxtLink>
+    <div class="flex items-center space-x-2 sm:space-x-4 2xl:space-x-6">
+      <NuxtLink
+        v-for="(social, index) in socials"
+        :key="index"
+        :to="{ name: 'index' }"
+      >
+        <FontAwesomeIcon
+          :icon="social.icon"
+          class="h-6 sm:h-8 text-dirty-gray"
+        ></FontAwesomeIcon>
+      </NuxtLink>
+    </div>
+    <div class="sm:hidden" @click="toggleSidebarMutation()">
+      <ig-icon
+        :name="show ? 'x' : 'menu'"
+        no-color
+        class="text-white"
+        size="lg"
+      ></ig-icon>
+    </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 
 export default {
+  data() {
+    return {
+      socials: [
+        { icon: ['fab', 'instagram'] },
+        { icon: ['fab', 'twitter'] },
+        { icon: ['far', 'envelope'] },
+        { icon: ['fab', 'whatsapp'] },
+      ],
+    }
+  },
+  computed: {
+    ...mapState({
+      show: (state) => state.sidebar.show,
+    }),
+  },
   methods: {
     ...mapMutations({
       toggleSidebarMutation: 'sidebar/toggleSidebar',
