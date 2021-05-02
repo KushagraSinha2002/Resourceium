@@ -80,11 +80,21 @@
 <script>
 export default {
   data() {
-    return {
-      formData: {
-        username: '',
-        password: '',
-      },
+    const mode = process.env.NODE_ENV
+    if (mode === 'development') {
+      return {
+        formData: {
+          username: '',
+          password: '1passWord$',
+        },
+      }
+    } else {
+      return {
+        formData: {
+          username: '',
+          password: '',
+        },
+      }
     }
   },
   head: () => ({ title: 'Login' }),
