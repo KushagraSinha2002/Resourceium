@@ -1,7 +1,9 @@
 <template>
   <div class="flex-grow w-full">
     <div class="flex flex-col w-full h-full px-4 mx-auto sm:w-10/12 2xl:w-9/12">
-      <div class="flex flex-wrap flex-grow space-y-10 sm:space-y-0">
+      <div
+        class="flex flex-wrap flex-grow mt-8 space-y-10 sm:space-y-0 sm:mt-0"
+      >
         <div
           class="flex flex-col items-center justify-center w-full space-y-10 sm:w-1/2 sm:space-y-14"
         >
@@ -35,7 +37,7 @@
           />
         </div>
       </div>
-      <div class="w-full h-0.5 bg-gray-500 rounded-full"></div>
+      <div class="w-full h-0.5 bg-gray-500 rounded-full hidden sm:block"></div>
       <div
         class="flex justify-between flex-none px-5 my-10 md:justify-around font-styled-code"
       >
