@@ -36,3 +36,23 @@ chmod +x /tmp/install.sh
 rm -rf "$HOME/.bashrc"
 ln -s "$HOME/.config/.bashrc" "$HOME/.bashrc"
 
+# directory path of django development server
+backend_folder="storage"
+# directory path of nuxt development server
+frontend_folder="client"
+
+# we prefer not to keep the virtual environment as a part of the synced directory for
+# performance reasons, hence we create a folder to store all of them and use symbolic links
+# for the project purposes
+# first we create a directory where our custom scripts are stored
+cd "$HOME/Resourceium"
+# install the dependencies for the django application
+cd "$backend_folder"
+poetry config virtualenvs.in-project "true"
+eval "$CUSTOM_SCRIPTS_DIR/setup"
+
+# change to the project folder
+cd "$HOME/Resourceium"
+# install the dependencies for the frontend application
+cd "$frontend_folder"
+eval "$CUSTOM_SCRIPTS_DIR/setup"

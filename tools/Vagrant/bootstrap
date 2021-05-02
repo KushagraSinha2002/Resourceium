@@ -78,6 +78,8 @@ timedatectl set-ntp true
 timedatectl set-timezone Asia/Kolkata
 date > "$PROVISIONED_ON"
 
+pip3 install poetry
+
 printr -c blue -f bold "
 Successfully created Resourceium development virtual machine
 "
