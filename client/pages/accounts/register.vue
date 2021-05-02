@@ -1,5 +1,5 @@
 <template>
-  <div class="h-screen mx-auto bg-cream-white">
+  <div class="bg-cream-white">
     <div
       class="container flex items-center h-full px-6 mx-auto sm:px-0 place-content-center sm:place-content-evenly"
     >
