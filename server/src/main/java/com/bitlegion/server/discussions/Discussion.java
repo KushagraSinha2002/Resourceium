@@ -2,15 +2,11 @@ package com.bitlegion.server.discussions;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.JoinColumn;
 
 import com.bitlegion.server.accounts.Account;
 
@@ -25,9 +21,7 @@ public class Discussion {
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "discussion_accounts", joinColumns = {
-            @JoinColumn(name = "discussion_id") }, inverseJoinColumns = { @JoinColumn(name = "account_id") })
+    @ManyToMany(mappedBy = "discussions")
     private Set<Account> accounts;
 
     public Integer getId() {
