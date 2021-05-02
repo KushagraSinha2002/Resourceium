@@ -28,6 +28,10 @@ printr "Successfully created server database"
 
 printr "Creating storage database"
 
+DJANGO_DATABASE_USER="admin-user"
+DJANGO_DATABASE_PASSWORD="admin-password"
+DJANGO_DATABASE_NAME="website-db"
+
 psql -U "${ROOT_USER}" << SQL_COMMANDS
 -- Database for the storage server->
 CREATE ROLE "$DJANGO_DATABASE_USER" WITH LOGIN CREATEDB ENCRYPTED PASSWORD '$DJANGO_DATABASE_PASSWORD';

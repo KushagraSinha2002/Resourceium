@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # This script will be used to spin up the development servers for all the Resourceium applications
 
-# directory path of django development server
+# directory path of java development server
 backend_folder="server"
 # directory path of nuxt development server
 frontend_folder="client"
+# directory path of django development server
+storage_folder="storage"
+
 
 if command -v gp &>/dev/null;
   then URL="$(gp url 8000)"
@@ -12,5 +15,6 @@ if command -v gp &>/dev/null;
 fi
 
 # Start all the servers
-{ cd "$backend_folder" && mvn spring-boot:run -Dspring-boot.run.profiles=dev,gitpod & \
+{ cd "$storage_folder" && poetry run python manage.py runserver 8080 & \
+  cd "$backend_folder" && mvn spring-boot:run -Dspring-boot.run.profiles=dev,gitpod & \
   cd "$frontend_folder" && yarn install && API_URL="${URL}" yarn dev; }

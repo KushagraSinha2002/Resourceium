@@ -26,7 +26,6 @@ then
   VM was already provisioned at: $(cat $PROVISIONED_ON)
   To run system updates manually login via 'vagrant ssh' and run 'apt-get update
 "
-  print_db_usage
   exit
 fi
 
