@@ -5,7 +5,12 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {
+        hid: 'description',
+        name: 'description',
+        content:
+          'Resourceium is an unified platform that will enable people to pool resources together so that they spend more time actually using these resources and less time trying to find them online.',
+      },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }],
   },
@@ -18,6 +23,7 @@ export default {
     '~/plugins/ignisnents.js',
     '~/plugins/alerts.js',
     '~/plugins/uploads.js',
+    '~/plugins/fontawesome.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
