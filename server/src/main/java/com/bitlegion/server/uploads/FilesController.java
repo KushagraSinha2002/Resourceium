@@ -14,10 +14,12 @@ import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
+import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
+import org.apache.hc.core5.http.io.entity.EntityUtils;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -35,8 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 @CrossOrigin
 public class FilesController {
 
-    @Autowired
-    private FilesStorageService storageService;
+    // @Autowired
+    // private FilesStorageService storageService;
 
     @Autowired
     private FileRepository fileRepository;
@@ -68,36 +70,38 @@ public class FilesController {
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
             }
-            String url = System.getenv("STORAGE_SERVER") + "files/upload/";
+            String URL = System.getenv("STORAGE_SERVER") + "files/upload/";
 
             try {
                 java.io.File fileObj = new java.io.File(filepath.toString());
                 try (CloseableHttpClient client = HttpClients.createDefault()) {
-                    HttpPost post = new HttpPost(url);
-                    HttpEntity entity = MultipartEntityBuilder.create().addPart("file", new FileBody(fileObj)).build();
+                    HttpPost post = new HttpPost(URL);
+                    HttpEntity entity = MultipartEntityBuilder.create()
+                            .addTextBody("user_id", user.getId().toString(), ContentType.APPLICATION_JSON)
+                            .addPart("file", new FileBody(fileObj)).build();
                     post.setEntity(entity);
                     try {
                         CloseableHttpResponse response = client.execute(post);
-                        System.out.println(response);
+                        HttpEntity entityResponse = response.getEntity();
+                        String result = EntityUtils.toString(entityResponse);
+                        JSONParser parser = new JSONParser();
+                        JSONObject json = (JSONObject) parser.parse(result);
+                        try {
+                            Document fileModel = new Document();
+                            fileModel.setName(file.getOriginalFilename());
+                            fileModel.setUrl((String) json.get("url"));
+                            fileRepository.save(fileModel);
+                        } catch (Exception e) {
+                            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                                    .body(new ResponseMessage(message));
+                        }
                     } catch (Exception e) {
                         System.out.println("error: " + e.getMessage());
                     }
                 }
-                file.transferTo(filepath);
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
-            }
-            try {
-                String filename = storageService.smartSave(file, user.getId());
-                Document fileModel = new Document();
-                fileModel.setName(file.getOriginalFilename());
-                fileModel.setSlug(filename);
-                fileModel.setAccount(user);
-                user.getFiles().add(fileModel);
-                fileRepository.save(fileModel);
-            } catch (Exception e) {
-                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
             }
         }
         userRepository.save(user);
@@ -110,14 +114,17 @@ public class FilesController {
         return fileRepository.findAll();
     }
 
-    @GetMapping("/download")
-    @ResponseBody
-    public ResponseEntity<Resource> getFile(@RequestParam Integer userId, @RequestParam String filename) {
-        Account userModel = userRepository.findById(userId).get();
-        Document fileModel = fileRepository.findBySlugAndUserID(filename, userModel.getId()).get();
-        Resource file = storageService.load(fileModel.getFileLocation());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileModel.getName() + "\"")
-                .body(file);
-    }
+    // @GetMapping("/download")
+    // @ResponseBody
+    // public ResponseEntity<Resource> getFile(@RequestParam Integer userId,
+    // @RequestParam String filename) {
+    // Account userModel = userRepository.findById(userId).get();
+    // Document fileModel = fileRepository.findBySlugAndUserID(filename,
+    // userModel.getId()).get();
+    // Resource file = storageService.load(fileModel.getFileLocation());
+    // return ResponseEntity.ok()
+    // .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
+    // fileModel.getName() + "\"")
+    // .body(file);
+    // }
 }
