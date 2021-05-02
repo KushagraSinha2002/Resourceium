@@ -35,19 +35,36 @@
           />
         </div>
       </div>
-      <div class="w-full h-0.5 bg-gray-400 rounded-full"></div>
-      <div class="flex justify-between flex-none px-5 my-10 font-styled-code">
+      <div class="w-full h-0.5 bg-gray-500 rounded-full"></div>
+      <div
+        class="flex justify-between flex-none px-5 my-10 md:justify-around font-styled-code"
+      >
         <div>
-          <base-animated-number :number="accountsCount"></base-animated-number>
-          <div class="text-lg text-light-black">People trust us</div>
+          <base-animated-number
+            class="md:text-right"
+            :number="accountsCount"
+          ></base-animated-number>
+          <div class="text-sm sm:text-base md:text-lg text-light-black">
+            People trust us
+          </div>
         </div>
         <div>
-          <base-animated-number :number="filesCount"></base-animated-number>
-          <div class="text-lg text-light-black">Files stored safely</div>
+          <base-animated-number
+            class="md:text-right"
+            :number="filesCount"
+          ></base-animated-number>
+          <div class="text-sm sm:text-base md:text-lg text-light-black">
+            Files stored safely
+          </div>
         </div>
         <div>
-          <base-animated-number :number="foldersCount"></base-animated-number>
-          <div class="text-lg text-light-black">Posts made</div>
+          <base-animated-number
+            class="md:text-right"
+            :number="foldersCount"
+          ></base-animated-number>
+          <div class="text-sm sm:text-base md:text-lg text-light-black">
+            Posts made
+          </div>
         </div>
       </div>
     </div>
