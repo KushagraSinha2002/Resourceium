@@ -11,7 +11,7 @@
       }"
     >
       <nav-bar class="flex-none"></nav-bar>
-      <div class="flex flex-grow">
+      <div class="relative flex flex-grow">
         <side-bar class="flex-none"></side-bar>
         <Nuxt class="flex-grow" />
       </div>
