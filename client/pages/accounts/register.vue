@@ -21,7 +21,7 @@
           <div>ID.</div>
         </div>
         <NuxtLink
-          :to="{ name: 'index' }"
+          :to="{ name: 'accounts-login' }"
           class="text-xs text-center hover:underline"
         >
           <div>Already have a Resourceium account?</div>
@@ -159,8 +159,8 @@ export default {
           email: 'email@hotmail.com',
           dateOfBirth: '2002-12-12',
           country: 'India',
-          password: '1',
-          password2: '1',
+          password: '1passWord$',
+          password2: '1passWord$',
         },
       }
     }

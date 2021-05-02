@@ -22,7 +22,7 @@
       >
         <FontAwesomeIcon
           :icon="social.icon"
-          class="h-6 sm:h-8 text-dirty-gray"
+          class="h-6 sm:h-8 text-dirty-gray hover:text-gray-200"
         ></FontAwesomeIcon>
       </NuxtLink>
     </div>

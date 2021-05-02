@@ -54,7 +54,10 @@
                 </NuxtLink>
               </div>
               <div>
-                <NuxtLink :to="{ name: 'index' }" class="hover:underline">
+                <NuxtLink
+                  :to="{ name: 'accounts-register' }"
+                  class="hover:underline"
+                >
                   Don't have a Resourceium account? Create one here.
                 </NuxtLink>
               </div>
