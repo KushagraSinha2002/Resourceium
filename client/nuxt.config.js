@@ -74,6 +74,7 @@ export default {
   },
   env: {
     baseUrl: process.env.API_URL || 'http://localhost:8000',
+    storageServer: process.env.STORAGE_SERVER,
   },
   pwa: {
     icon: {
