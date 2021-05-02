@@ -24,6 +24,7 @@ module.exports = {
         'light-black': '#333333',
         'dark-black': '#1D1D1F',
         'cream-white': '#FAFAFA',
+        'dirty-gray': '#B0B0B0',
       },
       borderRadius: {
         '15px': '15px',
