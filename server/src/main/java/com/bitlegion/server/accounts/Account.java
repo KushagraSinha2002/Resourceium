@@ -20,7 +20,6 @@ import javax.persistence.TemporalType;
 
 import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.socials.Favorite;
-import com.bitlegion.server.uploads.Document;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -53,10 +52,6 @@ public class Account {
     @ManyToMany
     @JoinTable(name = "discussion_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "discussion_id"))
     private Set<Discussion> discussions;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "account")
-    private Collection<Document> documents;
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
@@ -167,14 +162,6 @@ public class Account {
         this.bio = bio;
     }
 
-    public Collection<Document> getFiles() {
-        return this.documents;
-    }
-
-    public void setFiles(Collection<Document> files) {
-        this.documents = files;
-    }
-
     public Collection<Folder> getFolders() {
         return this.folders;
     }
@@ -188,8 +175,8 @@ public class Account {
         return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
                 + "'" + ", username='" + getUsername() + "'" + ", dateOfBirth='" + getDateOfBirth() + "'" + ", email='"
                 + getEmail() + "'" + ", bio='" + getBio() + "'" + ", country='" + getCountry() + "'" + ", password='"
-                + getPassword() + "'" + ", discussions='" + getDiscussions() + "'" + ", files='" + getFiles() + "'"
-                + ", folders='" + getFolders() + "'" + ", favorites='" + getFavorites() + "'" + "}";
+                + getPassword() + "'" + ", discussions='" + getDiscussions() + "'" + ", folders='" + getFolders() + "'"
+                + ", favorites='" + getFavorites() + "'" + "}";
     }
 
 }
