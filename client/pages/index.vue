@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen">
+  <div class="flex-grow w-full">
     <div class="flex flex-col w-full h-full px-4 mx-auto sm:w-10/12 2xl:w-9/12">
       <div class="flex flex-wrap flex-grow space-y-10 sm:space-y-0">
         <div
