@@ -4,13 +4,17 @@
       <alert v-if="show"></alert>
     </transition>
     <div
+      class="flex flex-col min-h-screen"
       :class="{
         'debug-screens': mode !== 'production',
         'filter blur-[2px]  sm:blur-[1px]': show,
       }"
     >
-      <nav-bar></nav-bar>
-      <Nuxt />
+      <nav-bar class="flex-none"></nav-bar>
+      <div class="flex flex-grow">
+        <side-bar class="flex-none"></side-bar>
+        <Nuxt class="flex-grow" />
+      </div>
     </div>
   </div>
 </template>
