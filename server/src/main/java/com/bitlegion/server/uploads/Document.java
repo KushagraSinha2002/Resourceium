@@ -1,7 +1,5 @@
 package com.bitlegion.server.uploads;
 
-import java.nio.file.Paths;
-
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -14,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-
-import com.bitlegion.server.accounts.Account;
 
 @Entity
 public class Document {
@@ -30,19 +26,11 @@ public class Document {
     private String name;
 
     @Column(unique = true)
-    private String slug;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "account_id", referencedColumnName = "id")
-    private Account account;
+    private String url;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
-
-    public Account getAccount() {
-        return this.account;
-    }
 
     public String getDescription() {
         return description;
@@ -60,21 +48,9 @@ public class Document {
         this.description = description;
     }
 
-    public void setAccount(Account user) {
-        this.account = user;
-    }
-
     public Document(String name, String url, Integer id) {
         this.id = id;
         this.name = name;
-    }
-
-    public String getSlug() {
-        return this.slug;
-    }
-
-    public void setSlug(String slug) {
-        this.slug = slug;
     }
 
     public Document() {
@@ -96,10 +72,6 @@ public class Document {
         this.name = name;
     }
 
-    public String getFileLocation() {
-        return Paths.get("user--" + this.getAccount().getId().toString(), this.slug).toString();
-    }
-
     public Folder getFolder() {
         return this.folder;
     }
@@ -108,11 +80,19 @@ public class Document {
         this.folder = folder;
     }
 
+    public String getUrl() {
+        return this.url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", dateOfUpload='"
-                + getDateOfUpload() + "'" + ", name='" + getName() + "'" + ", slug='" + getSlug() + "'" + ", account='"
-                + getAccount() + "'" + ", folder='" + getFolder().getTitle() + "'" + "}";
+                + getDateOfUpload() + "'" + ", name='" + getName() + "'" + ", url='" + getUrl() + "'" + ", folder='"
+                + getFolder() + "'" + "}";
     }
 
 }
