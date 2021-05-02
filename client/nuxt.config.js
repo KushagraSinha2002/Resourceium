@@ -59,6 +59,7 @@ export default {
     families: {
       'Original Surfer': true,
       Poppins: true,
+      'Oxygen Mono': true,
     },
     display: 'swap',
   },

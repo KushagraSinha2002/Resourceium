@@ -17,6 +17,7 @@ module.exports = {
       fontFamily: {
         styled: ['Original Surfer', 'cursive'],
         poppins: ['Poppins', 'sans-serif'],
+        'styled-code': ['Oxygen Mono', 'monospace'],
       },
       colors: {
         primary: '#502427',
