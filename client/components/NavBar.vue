@@ -2,7 +2,10 @@
   <div
     class="flex flex-row-reverse items-center justify-between w-full px-3 py-1 font-bold text-white sm:flex-row font-styled bg-light-black"
   >
-    <NuxtLink :to="{ name: 'index' }">
+    <NuxtLink
+      :to="{ name: 'index' }"
+      class="transition-transform duration-300 transform hover:scale-105"
+    >
       <img
         :src="require('~/assets/images/complete-logo.png')"
         alt="resourceium logo"
@@ -19,6 +22,7 @@
         v-for="(social, index) in socials"
         :key="index"
         :to="{ name: 'index' }"
+        class="transition transform hover:scale-105"
       >
         <FontAwesomeIcon
           :icon="social.icon"
