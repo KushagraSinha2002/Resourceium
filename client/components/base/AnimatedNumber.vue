@@ -1,42 +1,36 @@
 <template>
   <div class="text-2xl font-semibold font-styled text-warm-gray-800">
-    {{ displayNumber }}+
+    {{ displayValue }}+
   </div>
 </template>
 
 <script>
+import gsap from 'gsap'
+
 export default {
   props: {
-    number: {
-      required: true,
+    value: {
       type: Number,
+      default: 0,
     },
   },
   data() {
     return {
-      displayNumber: 0,
-      interval: false,
+      displayValue: this.value,
+      tweenValue: this.value,
     }
   },
   watch: {
-    number() {
-      clearInterval(this.interval)
-
-      if (this.number === this.displayNumber) {
-        return
-      }
-
-      this.interval = window.setInterval(() => {
-        if (this.displayNumber !== this.number) {
-          let change = (this.number - this.displayNumber) / 10
-          change = change >= 0 ? Math.ceil(change) : Math.floor(change)
-          this.displayNumber = this.displayNumber + change
-        }
-      }, 100)
+    value() {
+      gsap.to(this, {
+        tweenValue: this.value,
+        duration: 5,
+        ease: 'power2',
+        onUpdate: () => {
+          this.displayValue = Math.ceil(this.tweenValue)
+        },
+      })
     },
-  },
-  mounted() {
-    this.displayNumber = this.number ? this.number : 0
   },
 }
 </script>

@@ -42,7 +42,7 @@
         <div>
           <base-animated-number
             class="md:text-right"
-            :number="accountsCount"
+            :value="accountsCount"
           ></base-animated-number>
           <div class="text-sm sm:text-base md:text-lg text-light-black">
             People trust us
@@ -51,7 +51,7 @@
         <div>
           <base-animated-number
             class="md:text-right"
-            :number="filesCount"
+            :value="filesCount"
           ></base-animated-number>
           <div class="text-sm sm:text-base md:text-lg text-light-black">
             Files stored safely
@@ -60,7 +60,7 @@
         <div>
           <base-animated-number
             class="md:text-right"
-            :number="foldersCount"
+            :value="foldersCount"
           ></base-animated-number>
           <div class="text-sm sm:text-base md:text-lg text-light-black">
             Posts made
