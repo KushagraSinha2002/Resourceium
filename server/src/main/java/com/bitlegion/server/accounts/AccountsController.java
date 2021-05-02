@@ -41,7 +41,7 @@ public class AccountsController {
         String message = "";
 
         ArrayList<String> errors = PasswordValidator.Validator(password);
-        if (errors.size() > 0 && !devMode) {
+        if (errors.size() > 0) {
             message = JSONArray.toJSONString(errors);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
         }
