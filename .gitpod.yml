@@ -2,7 +2,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: bash -c "/workspace/Resourceium/tools/init-db.sh && git config --global pull.rebase true && curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sudo bash"
+  - init: bash -c "curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sh -s -- --yes && /workspace/Resourceium/tools/init-db.sh && git config --global pull.rebase true"
 
 ports:
   - port: 3000

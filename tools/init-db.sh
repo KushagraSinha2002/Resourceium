@@ -24,8 +24,8 @@ CREATE DATABASE "$MAIN_DB" WITH OWNER="$DB_USER"
 GRANT ALL PRIVILEGES ON DATABASE "$MAIN_DB" TO "$DB_USER";
 SQL_COMMANDS
 
-printr "Successfully created server database"
-
+printr -c green -f bold "Successfully created server database!"
+echo
 printr "Creating storage database"
 
 DJANGO_DATABASE_USER="admin-user"
@@ -45,4 +45,4 @@ CREATE DATABASE "$DJANGO_DATABASE_NAME" WITH OWNER="$DJANGO_DATABASE_USER"
 GRANT ALL PRIVILEGES ON DATABASE "$DJANGO_DATABASE_NAME" TO "$DJANGO_DATABASE_USER";
 SQL_COMMANDS
 
-printr "Successfully created storage database"
+printr -c green -f bold "Successfully created storage database!"
