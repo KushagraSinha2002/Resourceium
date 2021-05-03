@@ -1,3 +1,7 @@
+from io import BytesIO
+
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -18,4 +22,15 @@ class FileUploadView(APIView):
             name=file_obj.name,
         )
         obj.save()
-        return Response(data={"url": obj.file.url}, status=status.HTTP_200_OK)
+        return Response(data={"storageID": obj.id}, status=status.HTTP_200_OK)
+
+
+def download_view(request, storageID):
+    response = HttpResponse()
+    buffer = BytesIO()
+    file_obj = get_object_or_404(models.Upload, pk=storageID)
+    with open(file_obj.file.path, "rb") as in_file:
+        buffer.write(in_file.read())
+    response.write(buffer)
+    response["Content-Disposition"] = f'attachment; filename="{file_obj.name}"'
+    return response
