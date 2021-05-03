@@ -98,17 +98,17 @@ export default {
     }
   },
   head: () => ({ title: 'Login' }),
-  mounted() {
-    if (
-      window.localStorage.getItem('username') &&
-      window.localStorage.getItem('userId')
-    ) {
-      this.$addAlert({
-        message: 'You are already logged in',
-      })
-      this.redirectHome()
-    }
-  },
+  // mounted() {
+  //   if (
+  //     window.localStorage.getItem('username') &&
+  //     window.localStorage.getItem('userId')
+  //   ) {
+  //     this.$addAlert({
+  //       message: 'You are already logged in',
+  //     })
+  //     this.redirectHome()
+  //   }
+  // },
   methods: {
     redirectHome() {
       this.$router.push({ name: 'index' })
