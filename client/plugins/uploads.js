@@ -4,10 +4,8 @@ export default ({ app }, inject) => {
       .post(`/uploads/upload/${userId}`, formData)
       .then((response) => {
         app.$addAlert({
-          severity: 'success',
-          messageHeading: 'Upload successful',
-          messageBody: response.data.message,
-          active: true,
+          message: response.data.message,
+          type: 'success',
         })
       })
   })

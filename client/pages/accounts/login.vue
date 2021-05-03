@@ -104,10 +104,7 @@ export default {
       window.localStorage.getItem('userId')
     ) {
       this.$addAlert({
-        severity: 'warning',
-        messageHeading: 'Logged In',
-        messageBody: 'You are already logged in',
-        active: true,
+        message: 'You are already logged in',
       })
       this.redirectHome()
     }

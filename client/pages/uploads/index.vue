@@ -28,7 +28,12 @@ export default {
   },
   methods: {
     getFileUrl(file) {
-      return resolveURL(this.storageServer, file.url)
+      return resolveURL(
+        this.storageServer,
+        'files',
+        'download',
+        String(file.storageID)
+      )
     },
   },
 }
