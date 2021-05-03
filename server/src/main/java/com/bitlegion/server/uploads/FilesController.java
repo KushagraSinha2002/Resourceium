@@ -96,6 +96,7 @@ public class FilesController {
                 Document fileModel = new Document();
                 fileModel.setName(file.getOriginalFilename());
                 fileModel.setStorageID((Long) json.get("storageID"));
+                fileModel.setFolder(folder);
                 fileRepository.save(fileModel);
                 folder.setFile(fileModel);
             } catch (Exception e) {
