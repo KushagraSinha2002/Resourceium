@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex flex-row-reverse items-center justify-between w-full px-3 py-1 font-bold text-white sm:flex-row font-styled bg-light-black"
+    class="z-50 flex flex-row-reverse items-center justify-between w-full px-3 py-1 font-bold text-white sm:flex-row font-styled bg-light-black"
   >
     <NuxtLink
       :to="{ name: 'index' }"
@@ -30,7 +30,7 @@
         ></FontAwesomeIcon>
       </NuxtLink>
     </div>
-    <div class="sm:hidden" @click="toggleSidebarMutation()">
+    <div v-if="showSidebar" class="sm:hidden" @click="toggleSidebarMutation()">
       <ig-icon
         :name="show ? 'x' : 'menu'"
         no-color
@@ -59,6 +59,11 @@ export default {
     ...mapState({
       show: (state) => state.sidebar.show,
     }),
+    showSidebar() {
+      return !['index', 'accounts-login', 'accounts-register'].includes(
+        this.$route.name
+      )
+    },
   },
   methods: {
     ...mapMutations({
