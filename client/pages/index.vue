@@ -1,6 +1,9 @@
 <template>
-  <div class="flex-grow w-full">
-    <div class="flex flex-col w-full h-full px-4 mx-auto sm:w-10/12 2xl:w-9/12">
+  <div class="flex flex-col flex-grow w-full">
+    <page-landing-header></page-landing-header>
+    <div
+      class="flex flex-col flex-grow w-full px-4 mx-auto sm:w-10/12 2xl:w-9/12"
+    >
       <div
         class="flex flex-wrap flex-grow mt-8 space-y-10 sm:space-y-0 sm:mt-0"
       >
