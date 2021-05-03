@@ -2,7 +2,7 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: bash -c "curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sh -s -- --yes && /workspace/Resourceium/tools/init-db.sh && git config --global pull.rebase true && sudo pip3 install poetry"
+  - init: bash -c "sudo pip3 install poetry && curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sh -s -- --yes && /workspace/Resourceium/tools/init-db.sh && git config --global pull.rebase true && poetry config virtualenvs.in-project true"
 
 ports:
   - port: 3000
