@@ -3,17 +3,17 @@
     <transition name="alert">
       <alert v-if="show"></alert>
     </transition>
-    <div
-      class="flex flex-col min-h-screen"
-      :class="{
-        'debug-screens': mode !== 'production',
-        'filter blur-[2px]  sm:blur-[1px]': show,
-      }"
-    >
+    <div class="flex flex-col min-h-screen">
       <nav-bar class="flex-none"></nav-bar>
       <div class="relative flex flex-grow">
-        <side-bar class="flex-none"></side-bar>
-        <Nuxt class="flex-grow" />
+        <side-bar v-if="showSidebar" class="flex-none"></side-bar>
+        <Nuxt
+          class="flex-grow"
+          :class="{
+            'debug-screens': mode !== 'production',
+            'filter blur-[2px]': show,
+          }"
+        />
       </div>
     </div>
   </div>
@@ -28,8 +28,13 @@ export default {
   }),
   computed: {
     ...mapState({
-      show: (state) => state.alerts.show,
+      show: (state) => state.blur.show,
     }),
+    showSidebar() {
+      return !['index', 'accounts-login', 'accounts-register'].includes(
+        this.$route.name
+      )
+    },
   },
 }
 </script>
