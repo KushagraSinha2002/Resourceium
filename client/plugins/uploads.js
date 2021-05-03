@@ -8,5 +8,11 @@ export default ({ app }, inject) => {
           type: 'success',
         })
       })
+      .catch(() => {
+        app.$addAlert({
+          message: 'The file can not be larger than 2 MB',
+          type: 'danger',
+        })
+      })
   })
 }
