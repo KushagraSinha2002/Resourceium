@@ -1,21 +1,20 @@
 <template>
-  <div
-    class="relative transition duration-300 border-2 input-outline rounded-xl focus-within:border-blue-500"
-  >
+  <div>
+    <label
+      class="text-sm font-bold tracking-wider uppercase font-poppins"
+      :for="name"
+      :class="{ hidden: !noHideLabel }"
+    >
+      {{ placeholderText }}
+    </label>
     <input
       :id="name"
       :type="inputType"
       :name="name"
-      placeholder=" "
-      class="block w-full p-2 text-lg bg-transparent sm:p-3 md:p-4 focus:outline-none"
+      :placeholder="placeholderText"
+      class="w-full px-4 py-2 transition bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
       @input="handleInput($event.target.value)"
     />
-    <label
-      :for="name"
-      class="absolute top-0 p-2 font-mono text-lg text-gray-500 capitalize duration-150 bg-white bg-opacity-0 sm:p-3 md:p-4 cursor-text origin-0 rounded-xl"
-    >
-      {{ name }}
-    </label>
   </div>
 </template>
 
@@ -32,7 +31,15 @@ export default {
     },
     value: {
       type: String,
-      default: '',
+      required: true,
+    },
+    placeholderText: {
+      type: String,
+      required: true,
+    },
+    noHideLabel: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
@@ -42,10 +49,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.input-outline input:focus-within ~ label,
-.input-outline input:not(:placeholder-shown) ~ label {
-  @apply font-sans transform scale-75 -translate-y-4 z-0 ml-0.5 sm:ml-1 md:ml-2 px-1 py-0 text-blue-700 bg-opacity-100;
-}
-</style>
