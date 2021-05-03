@@ -13,20 +13,24 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     private String description;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date dateOfUpload;
 
-    private String name;
+    @Column(nullable = false, unique = true)
+    private Long storageID;
 
-    @Column(unique = true)
-    private String url;
+    private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
@@ -38,6 +42,14 @@ public class Document {
 
     public Date getDateOfUpload() {
         return this.dateOfUpload;
+    }
+
+    public Long getStorageID() {
+        return this.storageID;
+    }
+
+    public void setStorageID(Long storageID) {
+        this.storageID = storageID;
     }
 
     public void setDateOfUpload(Date dateOfUpload) {
@@ -80,19 +92,11 @@ public class Document {
         this.folder = folder;
     }
 
-    public String getUrl() {
-        return this.url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", dateOfUpload='"
-                + getDateOfUpload() + "'" + ", name='" + getName() + "'" + ", url='" + getUrl() + "'" + ", folder='"
-                + getFolder() + "'" + "}";
+                + getDateOfUpload() + "'" + ", storageID='" + getStorageID() + "'" + ", name='" + getName() + "'"
+                + ", folder='" + getFolder() + "'" + "}";
     }
 
 }
