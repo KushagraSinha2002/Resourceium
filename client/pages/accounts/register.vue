@@ -27,110 +27,64 @@
           <div>Already have a Resourceium account?</div>
           <div>Find it here.</div>
         </NuxtLink>
-        <div>
-          <label for="username" class="hidden">Username</label>
-          <input
-            id="username"
-            v-model="formData.username"
-            type="text"
-            required
-            placeholder="Username"
-            class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-          />
-        </div>
+        <base-input-box
+          v-model="formData.username"
+          name="username"
+          placeholder-text="Username"
+        ></base-input-box>
         <div class="flex flex-wrap items-center space-y-1 sm:space-y-0">
           <div class="w-full sm:pr-2 sm:w-1/2">
-            <label for="first-name" class="hidden">Fist Name</label>
-            <input
-              id="first-name"
+            <base-input-box
               v-model="formData.firstName"
-              type="text"
-              required
-              placeholder="First Name"
-              class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-            />
+              name="first-name"
+              placeholder-text="First Name"
+            ></base-input-box>
           </div>
           <div class="w-full sm:pl-2 sm:w-1/2">
-            <label for="last-name" class="hidden">Last Name</label>
-            <input
-              id="last-name"
+            <base-input-box
               v-model="formData.lastName"
-              type="text"
-              required
-              placeholder="Last Name"
-              class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-            />
+              name="last-name"
+              placeholder-text="Last Name"
+            ></base-input-box>
           </div>
         </div>
-        <div>
-          <label for="country" class="text-sm uppercase font-poppins">
-            Country/Region
-          </label>
-          <select
-            id="country"
-            v-model="formData.country"
-            name="country"
-            required
-            class="w-full px-4 py-2 bg-transparent border rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-          >
-            <option value="" selected disabled hidden>Select an Option</option>
-            <option
-              v-for="(country, index) in getCountryList"
-              :key="index"
-              :value="country"
-            >
-              {{ country }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label for="date-of-birth" class="hidden">Date of Birth</label>
-          <input
-            id="date-of-birth"
-            v-model="formData.dateOfBirth"
-            type="text"
-            required
-            onfocus="(this.type='date')"
-            onblur="(this.type='text')"
-            placeholder="Date of Birth"
-            class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-          />
-        </div>
-        <div>
-          <label for="email" class="hidden">Email</label>
-          <input
-            id="email"
-            v-model="formData.email"
-            type="email"
-            required
-            placeholder="Email"
-            class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-          />
-        </div>
+        <base-select-box
+          v-model="formData.country"
+          name="country"
+          :select-options="getCountryList"
+          label="Country/Region"
+        ></base-select-box>
+        <base-input-box
+          v-model="formData.dateOfBirth"
+          name="date-of-birth"
+          placeholder-text="Date of Birth"
+          input-type="date"
+          no-hide-label
+        ></base-input-box>
+        <base-input-box
+          v-model="formData.email"
+          name="email"
+          placeholder-text="Email"
+          input-type="email"
+        ></base-input-box>
         <div
           class="flex flex-wrap items-center space-y-1 text-base sm:space-y-0"
         >
           <div class="w-full sm:pr-2 sm:w-1/2">
-            <label for="password" class="hidden">Password</label>
-            <input
-              id="password"
+            <base-input-box
               v-model="formData.password"
-              type="password"
-              required
-              placeholder="Password"
-              class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-            />
+              name="password"
+              placeholder-text="Password"
+              input-type="password"
+            ></base-input-box>
           </div>
           <div class="w-full sm:pl-2 sm:w-1/2">
-            <label for="password2" class="hidden">Confirm password</label>
-            <input
-              id="password2"
+            <base-input-box
               v-model="formData.password2"
-              type="password"
-              required
-              placeholder="Confirm password"
-              class="w-full px-4 py-2 bg-transparent border appearance-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
-            />
+              name="password2"
+              placeholder-text="Confirm password"
+              input-type="password"
+            ></base-input-box>
           </div>
         </div>
         <button
@@ -149,21 +103,6 @@ import { countries } from 'countries-list'
 
 export default {
   data() {
-    const mode = process.env.NODE_ENV
-    if (mode === 'development') {
-      return {
-        formData: {
-          username: 'Some username',
-          firstName: 'test',
-          lastName: 'Username',
-          email: 'email@hotmail.com',
-          dateOfBirth: '2002-12-12',
-          country: 'India',
-          password: '1passWord$',
-          password2: '1passWord$',
-        },
-      }
-    }
     return {
       formData: {
         username: '',
