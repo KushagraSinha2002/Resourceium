@@ -8,4 +8,9 @@ urlpatterns = [
         views.FileUploadView.as_view(),
         name="upload_file",
     ),
+    path(
+        "download/<int:storageID>",
+        views.download_view,
+        name="download_file",
+    ),
 ]
