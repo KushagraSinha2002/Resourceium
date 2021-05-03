@@ -10,13 +10,13 @@
     </NuxtLink>
     <div class="flex items-center space-x-3 font-semibold sm:space-x-5">
       <NuxtLink
-        class="text-purple-800 font-poppins hover:underline"
+        class="text-primary font-poppins hover:underline"
         :to="{ name: 'accounts-login' }"
       >
         Sign In
       </NuxtLink>
       <NuxtLink
-        class="text-purple-800 font-poppins hover:underline"
+        class="text-primary font-poppins hover:underline"
         :to="{ name: 'accounts-register' }"
       >
         Sign Up
