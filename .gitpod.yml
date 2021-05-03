@@ -7,6 +7,8 @@ tasks:
 ports:
   - port: 3000
     visibility: public
+  - port: 8080
+    visibility: public
   - port: 8000
     visibility: public
 
