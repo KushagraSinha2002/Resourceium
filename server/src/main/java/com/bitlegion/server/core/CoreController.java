@@ -33,17 +33,9 @@ public class CoreController {
     @GetMapping(path = "/stats")
     public @ResponseBody HashMap<String, Long> getStats() {
         HashMap<String, Long> map = new HashMap<>();
-
-        if (devMode) {
-            map.put("accountsCount", (long) 259);
-            map.put("filesCount", (long) 69);
-            map.put("foldersCount", (long) 800);
-            return map;
-        } else {
-            map.put("accountsCount", accountRepository.count());
-            map.put("filesCount", fileRepository.count());
-            map.put("foldersCount", folderRepository.count());
-            return map;
-        }
+        map.put("accountsCount", accountRepository.count());
+        map.put("filesCount", fileRepository.count());
+        map.put("foldersCount", folderRepository.count());
+        return map;
     }
 }
