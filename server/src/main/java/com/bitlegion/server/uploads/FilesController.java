@@ -1,5 +1,6 @@
 package com.bitlegion.server.uploads;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -14,7 +15,6 @@ import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.json.simple.JSONObject;
@@ -41,6 +41,9 @@ public class FilesController {
     // private FilesStorageService storageService;
 
     @Autowired
+    private FolderRepository folderRepository;
+
+    @Autowired
     private FileRepository fileRepository;
 
     @Autowired
@@ -61,50 +64,48 @@ public class FilesController {
         }
 
         Account user = userModel.get();
+        Folder folder = new Folder();
+        folder.setTitle("Some random title");
+        folder.setAccount(user);
+        folder.setDescription("Some random description");
+        folder.setHidden(false);
+        folderRepository.save(folder);
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
 
-            Path filepath = Paths.get("/tmp", file.getOriginalFilename());
+            Path filepath = Paths.get(System.getProperty("java.io.tmpdir"), file.getOriginalFilename());
             try {
                 file.transferTo(filepath);
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
             }
-            String URL = System.getenv("STORAGE_SERVER") + "files/upload/";
 
             try {
-                java.io.File fileObj = new java.io.File(filepath.toString());
-                try (CloseableHttpClient client = HttpClients.createDefault()) {
-                    HttpPost post = new HttpPost(URL);
-                    HttpEntity entity = MultipartEntityBuilder.create()
-                            .addTextBody("user_id", user.getId().toString(), ContentType.APPLICATION_JSON)
-                            .addPart("file", new FileBody(fileObj)).build();
-                    post.setEntity(entity);
-                    try {
-                        CloseableHttpResponse response = client.execute(post);
-                        HttpEntity entityResponse = response.getEntity();
-                        String result = EntityUtils.toString(entityResponse);
-                        JSONParser parser = new JSONParser();
-                        JSONObject json = (JSONObject) parser.parse(result);
-                        try {
-                            Document fileModel = new Document();
-                            fileModel.setName(file.getOriginalFilename());
-                            fileModel.setUrl((String) json.get("url"));
-                            fileRepository.save(fileModel);
-                        } catch (Exception e) {
-                            message = "Could not upload the file: " + file.getOriginalFilename() + "!";
-                            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                                    .body(new ResponseMessage(message));
-                        }
-                    } catch (Exception e) {
-                        System.out.println("error: " + e.getMessage());
-                    }
-                }
+                String URL = System.getenv("STORAGE_SERVER") + "files/upload/" + userID.toString() + "/"
+                        + folder.getId();
+                File fileObj = new File(filepath.toString());
+                CloseableHttpClient client = HttpClients.createDefault();
+                HttpPost post = new HttpPost(URL);
+                HttpEntity entity = MultipartEntityBuilder.create().addPart("file", new FileBody(fileObj)).build();
+                post.setEntity(entity);
+                CloseableHttpResponse response = client.execute(post);
+                HttpEntity entityResponse = response.getEntity();
+                String result = EntityUtils.toString(entityResponse);
+                JSONParser parser = new JSONParser();
+                JSONObject json = (JSONObject) parser.parse(result);
+                Document fileModel = new Document();
+                fileModel.setName(file.getOriginalFilename());
+                fileModel.setStorageID((Long) json.get("storageID"));
+                fileRepository.save(fileModel);
+                folder.setFile(fileModel);
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
+                message = "Could not upload the file: " + file.getOriginalFilename() + "!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
             }
         }
         userRepository.save(user);
+        folderRepository.save(folder);
         message = "Uploaded " + files.size() + " files successfully!";
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
     }
