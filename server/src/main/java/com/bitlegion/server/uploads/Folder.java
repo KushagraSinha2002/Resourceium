@@ -1,10 +1,13 @@
 package com.bitlegion.server.uploads;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,6 +26,9 @@ import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.socials.Liked;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 public class Folder {
     @Id
@@ -34,19 +40,22 @@ public class Folder {
     private String title;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     private Date dateOfUpload;
 
     @Temporal(TemporalType.TIMESTAMP)
+    @UpdateTimestamp
     private Date lastEdited;
 
     // if the boolean value is true then the folder is private and only for the
     // user.
+    @Column(columnDefinition = "boolean default false")
     private Boolean hidden;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "folder_tags", joinColumns = { @JoinColumn(name = "folder_id") }, inverseJoinColumns = {
             @JoinColumn(name = "tag_id") })
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<Tag>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
@@ -54,15 +63,19 @@ public class Folder {
 
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
-    private Collection<Document> documents;
+    private Collection<Document> documents = new ArrayList<Document>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
-    private Collection<Favorite> favorites;
+    private Collection<Favorite> favorites = new ArrayList<Favorite>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
-    private Collection<Liked> liked;
+    private Collection<Liked> liked = new ArrayList<Liked>();
+
+    public void setFile(Document document) {
+        this.getFiles().add(document);
+    }
 
     public Set<Tag> getTags() {
         return this.tags;
