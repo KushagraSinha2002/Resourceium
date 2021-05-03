@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
@@ -32,6 +34,7 @@ public class Document {
 
     private String name;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
@@ -96,7 +99,7 @@ public class Document {
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", dateOfUpload='"
                 + getDateOfUpload() + "'" + ", storageID='" + getStorageID() + "'" + ", name='" + getName() + "'"
-                + ", folder='" + getFolder() + "'" + "}";
+                + ", folder='" + getFolder().getTitle() + "'" + "}";
     }
 
 }
