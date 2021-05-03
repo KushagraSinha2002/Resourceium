@@ -27,10 +27,10 @@ class FileUploadView(APIView):
 
 def download_view(request, storageID):
     response = HttpResponse()
-    buffer = BytesIO()
+    # buffer = BytesIO()
     file_obj = get_object_or_404(models.Upload, pk=storageID)
     with open(file_obj.file.path, "rb") as in_file:
-        buffer.write(in_file.read())
-    response.write(buffer)
+        # buffer.write(in_file.read())
+        response.write(in_file.read())
     response["Content-Disposition"] = f'attachment; filename="{file_obj.name}"'
     return response
