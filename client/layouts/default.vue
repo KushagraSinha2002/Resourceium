@@ -3,12 +3,15 @@
     <transition name="alert">
       <alert v-if="show"></alert>
     </transition>
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col h-screen">
       <nav-bar class="flex-none"></nav-bar>
-      <div class="relative flex flex-grow">
-        <side-bar v-if="showSidebar" class="flex-none"></side-bar>
+      <div class="relative flex flex-grow overflow-hidden">
+        <sidebar-container
+          v-if="showSidebar"
+          class="flex-none"
+        ></sidebar-container>
         <Nuxt
-          class="flex-grow"
+          class="flex-grow overflow-auto"
           :class="{
             'debug-screens': mode !== 'production',
             'filter blur-[2px]': show,
