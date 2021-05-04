@@ -50,6 +50,7 @@ public class Account {
     private String password;
 
     @ManyToMany
+    @JsonIgnore
     @JoinTable(name = "discussion_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "discussion_id"))
     private Set<Discussion> discussions;
 
