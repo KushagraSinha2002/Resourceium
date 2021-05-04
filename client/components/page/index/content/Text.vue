@@ -6,15 +6,12 @@
       <div
         class="w-full text-3xl font-bold sm:text-4xl font-poppins text-dark-black"
       >
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellendus,
-        soluta?
+        Your abode for anything and everything
       </div>
       <div class="w-11/12 leading-7 font-poppins">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. In, quam error
-        tempore aliquam expedita quis. Debitis nisi, consequuntur nesciunt
-        facilis distinctiovero laborum ducimus ipsum repellat totam animi
-        aliquam minus blanditiis reprehenderit cumque modi! Eos culpa minima
-        iusto doloremqu!
+      Anything and everything that can be represented in a digital format, can be shared as a resource here.
+      Find what you want or share what you have. A community where you both provide help and get help from.
+      We look forward to your valuable addition.
       </div>
     </div>
     <NuxtLink
