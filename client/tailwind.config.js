@@ -25,6 +25,30 @@ module.exports = {
         'dark-black': '#1D1D1F',
         'cream-white': '#FAFAFA',
         'dirty-gray': '#B0B0B0',
+        steel: {
+          50: '#f9fafa',
+          100: '#eff1f6',
+          200: '#dddcec',
+          300: '#b9b8d3',
+          400: '#938fb4',
+          500: '#766b95',
+          600: '#5f5077',
+          700: '#473c59',
+          800: '#31283d',
+          900: '#1c1825',
+        },
+        denim: {
+          50: '#f9fafa',
+          100: '#eef1f8',
+          200: '#dadcf0',
+          300: '#b5b8db',
+          400: '#8f8fc0',
+          500: '#736ba6',
+          600: '#5c4f88',
+          700: '#463b67',
+          800: '#2f2846',
+          900: '#1b182a',
+        },
       },
       borderRadius: {
         '15px': '15px',
@@ -34,5 +58,8 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [require('tailwindcss-debug-screens')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('tailwindcss-debug-screens'),
+  ],
 }
