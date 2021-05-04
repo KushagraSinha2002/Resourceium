@@ -9,9 +9,10 @@
         Your abode for anything and everything
       </div>
       <div class="w-11/12 leading-7 font-poppins">
-      Anything and everything that can be represented in a digital format, can be shared as a resource here.
-      Find what you want or share what you have. A community where you both provide help and get help from.
-      We look forward to your valuable addition.
+        Anything and everything that can be represented in a digital format, can
+        be shared as a resource here. Find what you want or share what you have.
+        A community where you both provide help and get help from. We look
+        forward to your valuable addition.
       </div>
     </div>
     <NuxtLink
