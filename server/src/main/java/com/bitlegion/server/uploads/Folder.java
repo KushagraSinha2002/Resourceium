@@ -31,6 +31,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 public class Folder {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -73,8 +74,8 @@ public class Folder {
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked = new ArrayList<Liked>();
 
-    public void setFile(Document document) {
-        this.getFiles().add(document);
+    public void setDocument(Document document) {
+        this.getDocuments().add(document);
     }
 
     public Set<Tag> getTags() {
@@ -109,12 +110,12 @@ public class Folder {
         return this.lastEdited;
     }
 
-    public Collection<Document> getFiles() {
+    public Collection<Document> getDocuments() {
         return this.documents;
     }
 
-    public void setFiles(Collection<Document> files) {
-        this.documents = files;
+    public void setDocuments(Collection<Document> documents) {
+        this.documents = documents;
     }
 
     public void setLastEdited(Date lastEdited) {
@@ -167,15 +168,6 @@ public class Folder {
 
     public void setAccount(Account account) {
         this.account = account;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", title='" + getTitle()
-                + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", lastEdited='" + getLastEdited() + "'"
-                + ", hidden='" + isHidden() + "'" + ", tags='" + getTags() + "'" + ", account='" + getAccount() + "'"
-                + ", files='" + getFiles() + "'" + ", favorites='" + getFavorites() + "'" + ", liked='" + getLiked()
-                + "'" + "}";
     }
 
 }

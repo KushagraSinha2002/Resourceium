@@ -65,7 +65,7 @@ public class FilesController {
 
         Account user = userModel.get();
         Folder folder = new Folder();
-        folder.setTitle("Some random title");
+        folder.setTitle("Some random title that is quite long and need to be truncated");
         folder.setAccount(user);
         folder.setDescription("Some random description");
         folder.setHidden(false);
@@ -98,7 +98,7 @@ public class FilesController {
                 fileModel.setStorageID((Long) json.get("storageID"));
                 fileModel.setFolder(folder);
                 fileRepository.save(fileModel);
-                folder.setFile(fileModel);
+                folder.setDocument(fileModel);
             } catch (Exception e) {
                 System.out.println("error: " + e.getMessage());
                 message = "Could not upload the file: " + file.getOriginalFilename() + "!";
