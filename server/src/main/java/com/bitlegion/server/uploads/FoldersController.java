@@ -1,6 +1,7 @@
 package com.bitlegion.server.uploads;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Optional;
 
 import com.bitlegion.server.accounts.Account;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -34,5 +37,20 @@ public class FoldersController {
         }
         Optional<Collection<Folder>> folders = folderRepository.findByAccount(maybeUser.get());
         return ResponseEntity.status(HttpStatus.OK).body(folders.get());
+    }
+
+    @PostMapping("/create/{userID}")
+    public ResponseEntity<Folder> createFolder(@PathVariable Integer userID,
+            @RequestBody HashMap<String, String> reqBody) {
+        Optional<Account> maybeUser = accountRepository.findById(userID);
+        if (maybeUser.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        String title = reqBody.get("title");
+        Folder folder = new Folder();
+        folder.setTitle(title);
+        folder.setAccount(maybeUser.get());
+        folderRepository.save(folder);
+        return ResponseEntity.status(HttpStatus.OK).body(folder);
     }
 }
