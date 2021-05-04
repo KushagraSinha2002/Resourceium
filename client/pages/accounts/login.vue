@@ -73,35 +73,14 @@
 <script>
 export default {
   data() {
-    const mode = process.env.NODE_ENV
-    if (mode === 'development') {
-      return {
-        formData: {
-          username: '',
-          password: '1passWord$',
-        },
-      }
-    } else {
       return {
         formData: {
           username: '',
           password: '',
         },
       }
-    }
   },
   head: () => ({ title: 'Login' }),
-  // mounted() {
-  //   if (
-  //     window.localStorage.getItem('username') &&
-  //     window.localStorage.getItem('userId')
-  //   ) {
-  //     this.$addAlert({
-  //       message: 'You are already logged in',
-  //     })
-  //     this.redirectHome()
-  //   }
-  // },
   methods: {
     redirectHome() {
       this.$router.push({ name: 'index' })
