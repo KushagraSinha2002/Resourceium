@@ -35,8 +35,9 @@ public class FoldersController {
         if (maybeUser.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        Optional<Collection<Folder>> folders = folderRepository.findByAccount(maybeUser.get());
-        return ResponseEntity.status(HttpStatus.OK).body(folders.get());
+        Collection<Folder> folders = folderRepository.findByAccount(maybeUser.get());
+        System.out.println(folders.size());
+        return ResponseEntity.status(HttpStatus.OK).body(folders);
     }
 
     @PostMapping("/create/{userID}")
