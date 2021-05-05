@@ -62,7 +62,7 @@ public class Folder {
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    @JsonIgnore
+    // @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<Document> documents = new ArrayList<Document>();
 
