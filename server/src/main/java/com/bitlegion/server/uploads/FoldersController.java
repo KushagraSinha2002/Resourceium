@@ -36,8 +36,16 @@ public class FoldersController {
             return ResponseEntity.notFound().build();
         }
         Collection<Folder> folders = folderRepository.findByAccount(maybeUser.get());
-        System.out.println(folders.size());
         return ResponseEntity.status(HttpStatus.OK).body(folders);
+    }
+
+    @GetMapping("/folder/{folderID}")
+    public ResponseEntity<Folder> getFolderDetails(@PathVariable Integer folderID) {
+        Optional<Folder> maybeFolder = folderRepository.findById(folderID);
+        if (maybeFolder.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(maybeFolder.get());
     }
 
     @PostMapping("/create/{userID}")
