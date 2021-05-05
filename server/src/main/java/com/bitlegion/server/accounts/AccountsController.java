@@ -40,11 +40,11 @@ public class AccountsController {
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
 
-        ArrayList<String> errors = PasswordValidator.Validator(password);
-        if (errors.size() > 0) {
-            message = JSONArray.toJSONString(errors);
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
-        }
+        // ArrayList<String> errors = PasswordValidator.Validator(password);
+        // if (errors.size() > 0) {
+        //     message = JSONArray.toJSONString(errors);
+        //     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        // }
 
         if (username.length() == 0) {
             message = "You provided an invalid name";
