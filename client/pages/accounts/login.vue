@@ -73,12 +73,12 @@
 <script>
 export default {
   data() {
-      return {
-        formData: {
-          username: '',
-          password: '',
-        },
-      }
+    return {
+      formData: {
+        username: '',
+        password: '',
+      },
+    }
   },
   head: () => ({ title: 'Login' }),
   methods: {
@@ -94,7 +94,7 @@ export default {
             message: 'Login successful',
             type: 'success',
           })
-          window.localStorage.setItem('username', result.name)
+          window.localStorage.setItem('username', result.username)
           window.localStorage.setItem('userId', result.id)
           this.redirectHome()
         })
