@@ -1,22 +1,14 @@
 <template>
   <div
-    class="absolute inset-0 z-50 w-64 transition-transform duration-200 ease-in-out transform bg-true-gray-900 sm:static"
-    :class="{ '-translate-x-64 sm:translate-x-0': !show }"
-  ></div>
-  <!-- <NuxtLink
-      v-for="(link, index) in links"
-      :key="index"
-      :to="{ name: link.path }"
-      class="grid items-center grid-cols-2 space-x-5 hover:underline hover:text-emerald-500"
-    >
-      <div class="text-right">{{ link.name }}</div>
-      <ig-icon
-        no-color
-        size="sm"
-        :name="link.icon"
-        class="text-black"
-      ></ig-icon>
-    </NuxtLink> -->
+    class="absolute inset-0 z-50 w-64 transition-transform duration-200 ease-in-out transform sm:shadow-2xl bg-gradient-to-b from-true-gray-900 to-gray-900 sm:static"
+    :class="!show ? '-translate-x-64 sm:translate-x-0' : 'shadow-2xl'"
+  >
+    <sidebar-header></sidebar-header>
+    <div class="flex flex-col space-y-5">
+      <sidebar-element v-for="(link, index) in links" :key="index" :link="link">
+      </sidebar-element>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -27,9 +19,14 @@ export default {
     return {
       links: [
         { name: 'Home', path: 'index', icon: 'home' },
-        { name: 'Register', path: 'accounts-register', icon: 'key' },
-        { name: 'Login', path: 'accounts-login', icon: 'lock' },
-        { name: 'Logout', path: 'accounts-logout', icon: 'unlock' },
+        { name: 'Dashboard', path: 'dashboard', icon: 'pie-chart' },
+        { name: 'Explorer', path: 'folders', icon: 'file' },
+        { name: 'Public', path: 'public', icon: 'users' },
+        { name: 'Private', path: 'private', icon: 'user' },
+        { name: 'Discussions', path: 'discussions', icon: 'message-circle' },
+        { name: 'FAQs', path: 'faq', icon: 'help-circle' },
+        { name: 'Notifications', path: 'notifications', icon: 'activity' },
+        { name: 'Your Account', path: 'profile', icon: 'user-plus' },
       ],
     }
   },
