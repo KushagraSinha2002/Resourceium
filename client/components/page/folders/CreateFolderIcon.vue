@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import { sleep } from '../../../utils/sleep.js'
+
 export default {
   data() {
     return {
@@ -49,11 +51,18 @@ export default {
     closeCreateFolderPrompt() {
       this.showPrompt = false
     },
-    createFolder() {
+    async createFolder() {
       this.$axios.$post(`/folders/create/${this.$route.params.userId}`, {
         title: this.title,
       })
       this.closeCreateFolderPrompt()
+      // I am not really sure why we need this sleep here, but we do. I do have a possible
+      // explanation for it. When we send the POST request above, it takes some time for
+      // the database to actually process the request and insert stuff into the database.
+      // However, we were not really giving it much time to complete the insertion before
+      // we were refreshing the list of folders from the database, resulting in it sending
+      // us back an incomplete list of folders.
+      await sleep(1000)
       this.$emit('refreshFolders')
     },
   },
