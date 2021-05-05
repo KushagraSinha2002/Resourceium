@@ -20,6 +20,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
+import { sleep } from '../utils/sleep.js'
 
 export default {
   data() {
@@ -54,7 +55,7 @@ export default {
 
     for (let i = 0; i <= 100; i++) {
       this.width++
-      await this.sleep(this.timeOut / 100)
+      await sleep(this.timeOut / 100)
     }
   },
   beforeDestroy() {
@@ -64,9 +65,6 @@ export default {
     ...mapActions({
       disableAlertAction: 'alerts/disableAlert',
     }),
-    sleep(ms) {
-      return new Promise((resolve) => setTimeout(resolve, ms))
-    },
   },
 }
 </script>
