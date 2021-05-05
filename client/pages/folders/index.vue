@@ -28,7 +28,7 @@ export default {
   methods: {
     async fetchFolders() {
       const resp = await this.$axios.$get(
-        `/folders/${this.$route.params.userId}`
+        `/folders/${window.localStorage.getItem('userId')}`
       )
       resp.map((element) => {
         element.dateOfUpload = this.$moment(element.dateOfUpload)
