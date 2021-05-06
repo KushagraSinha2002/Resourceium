@@ -4,9 +4,8 @@
 
 <script>
 export default {
-  mounted() {
-    window.localStorage.removeItem('username')
-    window.localStorage.removeItem('userId')
+  async mounted() {
+    await this.$auth.logout()
   },
 }
 </script>
