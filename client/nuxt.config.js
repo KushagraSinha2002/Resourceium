@@ -48,6 +48,8 @@ export default {
     '@nuxtjs/axios',
     // https://google-fonts.nuxtjs.org/
     '@nuxtjs/google-fonts',
+    // https://auth.nuxtjs.org/
+    '@nuxtjs/auth-next',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
@@ -88,4 +90,27 @@ export default {
     },
   },
   watch: ['~/store/*.js'],
+  auth: {
+    strategies: {
+      local: {
+        endpoints: {
+          login: {
+            url: 'accounts/login/',
+            method: 'post',
+            propertyName: 'token',
+          },
+          logout: { url: 'accounts/logout/', method: 'post' },
+          user: {
+            url: 'accounts/details/',
+            method: 'get',
+            propertyName: false,
+          },
+        },
+        token: {
+          type: 'Token',
+          name: 'Authorization',
+        },
+      },
+    },
+  },
 }
