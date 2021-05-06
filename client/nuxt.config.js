@@ -93,20 +93,23 @@ export default {
   auth: {
     strategies: {
       local: {
+        user: {
+          property: false,
+        },
         endpoints: {
           login: {
             url: 'accounts/login/',
             method: 'post',
-            propertyName: 'token',
+            propertyName: 'string',
           },
           logout: { url: 'accounts/logout/', method: 'post' },
           user: {
             url: 'accounts/details/',
             method: 'get',
-            propertyName: false,
           },
         },
         token: {
+          property: 'string',
           type: 'Token',
           name: 'Authorization',
         },
