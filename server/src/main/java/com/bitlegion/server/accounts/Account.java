@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -22,6 +24,7 @@ import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Account {
@@ -62,6 +65,10 @@ public class Account {
     @OneToMany(mappedBy = "account")
     private Collection<Favorite> favorites;
 
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    private Token token;
+
     public String getPassword() {
         return this.password;
     }
@@ -72,6 +79,14 @@ public class Account {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public Token getToken() {
+        return this.token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     public void setPassword(String password) {
@@ -179,5 +194,4 @@ public class Account {
                 + getPassword() + "'" + ", discussions='" + getDiscussions() + "'" + ", folders='" + getFolders() + "'"
                 + ", favorites='" + getFavorites() + "'" + "}";
     }
-
 }
