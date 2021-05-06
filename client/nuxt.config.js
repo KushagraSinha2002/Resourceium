@@ -91,6 +91,11 @@ export default {
   },
   watch: ['~/store/*.js'],
   auth: {
+    redirect: {
+      login: '/accounts/login',
+      logout: '/accounts/logout',
+      home: '/',
+    },
     strategies: {
       local: {
         user: {
