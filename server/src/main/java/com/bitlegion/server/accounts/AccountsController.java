@@ -134,7 +134,7 @@ public class AccountsController {
     @PostMapping(path = "/login-temp")
     public ResponseEntity<Token> loginTempUser(@RequestBody AccountDetails accountDetails, HttpServletRequest request) {
         try {
-            tokenChecker.checkToken(request);
+            tokenChecker.checkAndReturnTokenOrRaiseException(request);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
@@ -168,7 +168,7 @@ public class AccountsController {
     @GetMapping(path = "/details")
     public ResponseEntity<Account> getUserDetails(HttpServletRequest request) {
         try {
-            tokenChecker.checkToken(request);
+            tokenChecker.checkAndReturnTokenOrRaiseException(request);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

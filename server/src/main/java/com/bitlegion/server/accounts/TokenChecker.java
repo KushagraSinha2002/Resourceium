@@ -14,7 +14,7 @@ public class TokenChecker {
     @Autowired
     private TokenRepository tokenRepository;
 
-    public void checkToken(HttpServletRequest httpRequest) throws Exception {
+    public Token checkAndReturnTokenOrRaiseException(HttpServletRequest httpRequest) throws Exception {
         Enumeration<String> headerNames = httpRequest.getHeaderNames();
         if (headerNames != null) {
             String auth = httpRequest.getHeader("Authorization");
@@ -23,10 +23,10 @@ public class TokenChecker {
             Optional<Token> token = tokenRepository.findByString(auth);
             if (auth == null || token.isEmpty()) {
                 throw new Exception("You are not authenticated to perform this action");
+            } else {
+                Token tokenVerified = tokenRepository.findByString(auth).get();
+                return tokenVerified;
             }
-            // else {
-            // Token token = tokenRepository.findByString(auth).get();
-            // }
         } else {
             throw new Exception("You are not authenticated to perform this action");
         }
