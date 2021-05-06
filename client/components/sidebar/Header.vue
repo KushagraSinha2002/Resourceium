@@ -12,27 +12,15 @@
       <div
         class="text-lg font-semibold text-gray-900 uppercase font-styled-code"
       >
-        {{ username }}
+        {{ $auth.user.username }}
       </div>
-      <div class="text-xs text-warm-gray-700 font-poppins">{{ email }}</div>
+      <div class="text-xs text-warm-gray-700 font-poppins">
+        {{ $auth.user.email }}
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      username: null,
-      email: null,
-    }
-  },
-  async mounted() {
-    const resp = await this.$axios.$get(
-      `/accounts/${window.localStorage.getItem('userId')}`
-    )
-    this.username = resp.username
-    this.email = resp.email
-  },
-}
+export default {}
 </script>
