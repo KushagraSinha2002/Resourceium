@@ -52,7 +52,7 @@ export default {
       this.showPrompt = false
     },
     async createFolder() {
-      this.$axios.$post(`/folders/create/${this.$route.params.userId}`, {
+      this.$axios.$post(`/folders/create`, {
         title: this.title,
       })
       this.closeCreateFolderPrompt()
