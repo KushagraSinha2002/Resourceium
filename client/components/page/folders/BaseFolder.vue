@@ -2,8 +2,8 @@
   <NuxtLink
     :id="`folder-${folder.id}`"
     :to="{
-      name: 'folders-userId-folderId',
-      params: { userId: $route.params.userId, folderId: folder.id },
+      name: 'folders-folderId',
+      params: { folderId: folder.id },
     }"
     class="relative flex flex-col items-center shadow-lg cv-folder-container"
   >
