@@ -4,8 +4,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
+import com.bitlegion.server.accounts.Token;
+import com.bitlegion.server.accounts.TokenChecker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,19 +28,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class FoldersController {
 
     @Autowired
+    private TokenChecker tokenChecker;
+
+    @Autowired
     private FolderRepository folderRepository;
 
     @Autowired
     private AccountRepository accountRepository;
 
-    @GetMapping("/{userID}")
-    public ResponseEntity<Iterable<Folder>> getListFolders(@PathVariable Integer userID) {
-        Optional<Account> maybeUser = accountRepository.findById(userID);
-        if (maybeUser.isEmpty()) {
-            return ResponseEntity.notFound().build();
+    @GetMapping("/folders")
+    public ResponseEntity<Iterable<Folder>> getListFolders(HttpServletRequest request) {
+        try {
+            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            Collection<Folder> folders = folderRepository.findByAccount(token.getAccount());
+            return ResponseEntity.status(HttpStatus.OK).body(folders);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
-        Collection<Folder> folders = folderRepository.findByAccount(maybeUser.get());
-        return ResponseEntity.status(HttpStatus.OK).body(folders);
+
     }
 
     @GetMapping("/folder/{folderID}")
@@ -48,18 +58,21 @@ public class FoldersController {
         return ResponseEntity.status(HttpStatus.OK).body(maybeFolder.get());
     }
 
-    @PostMapping("/create/{userID}")
-    public ResponseEntity<Folder> createFolder(@PathVariable Integer userID,
+    @PostMapping("/create")
+    public ResponseEntity<Folder> createFolder(HttpServletRequest request,
             @RequestBody HashMap<String, String> reqBody) {
-        Optional<Account> maybeUser = accountRepository.findById(userID);
-        if (maybeUser.isEmpty()) {
-            return ResponseEntity.notFound().build();
+        try {
+            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            String title = reqBody.get("title");
+            System.out.println(title);
+            Folder folder = new Folder();
+            folder.setTitle(title);
+            folder.setAccount(token.getAccount());
+            folderRepository.save(folder);
+            return ResponseEntity.status(HttpStatus.OK).body(folder);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
         }
-        String title = reqBody.get("title");
-        Folder folder = new Folder();
-        folder.setTitle(title);
-        folder.setAccount(maybeUser.get());
-        folderRepository.save(folder);
-        return ResponseEntity.status(HttpStatus.OK).body(folder);
     }
 }
