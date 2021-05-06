@@ -31,3 +31,5 @@ CREATE DATABASE "$MAIN_DB" WITH OWNER="$DB_USER"
 -- Grant necessary privileges
 GRANT ALL PRIVILEGES ON DATABASE "$MAIN_DB" TO "$DB_USER";
 EOF
+
+rm -rf storage/media
