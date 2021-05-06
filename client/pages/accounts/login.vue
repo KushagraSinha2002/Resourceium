@@ -87,31 +87,7 @@ export default {
     },
     submitForm() {
       const formData = this.formData
-      this.$axios
-        .$post('/accounts/login', null, { params: formData })
-        .then((result) => {
-          this.$addAlert({
-            message: 'Login successful',
-            type: 'success',
-          })
-          window.localStorage.setItem('username', result.username)
-          window.localStorage.setItem('userId', result.id)
-          this.redirectHome()
-        })
-        .catch((err) => {
-          if (err.response.status === 404) {
-            this.$addAlert({
-              message: 'No such user found',
-              type: 'danger',
-            })
-          }
-          if (err.response.status === 400) {
-            this.$addAlert({
-              message: 'Incorrect credentials',
-              type: 'warning',
-            })
-          }
-        })
+      this.$auth.loginWith('local', { data: formData })
     },
   },
 }
