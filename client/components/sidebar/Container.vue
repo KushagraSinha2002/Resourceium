@@ -4,7 +4,7 @@
     :class="!show ? '-translate-x-64 sm:translate-x-0' : 'shadow-2xl'"
   >
     <sidebar-header></sidebar-header>
-    <div class="flex flex-col space-y-5">
+    <div class="flex flex-col space-y-5 md:space-y-10">
       <sidebar-element v-for="(link, index) in links" :key="index" :link="link">
       </sidebar-element>
     </div>
