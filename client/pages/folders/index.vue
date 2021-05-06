@@ -1,6 +1,6 @@
 <template>
   <div
-    class="grid grid-cols-2 gap-4 px-2 py-5 sm:gap-6 bg-cream-white md:py-10 sm:px-10 md:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-6 auto-rows-max"
+    class="grid grid-cols-2 gap-4 px-2 py-5 sm:gap-6 bg-cream-white md:py-[45px] sm:px-20 md:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-6 auto-rows-max"
   >
     <page-folders-create-folder-icon
       class="fixed z-20 bottom-3 right-3"
@@ -17,6 +17,7 @@
 
 <script>
 export default {
+  middleware: ['auth'],
   data() {
     return {
       folders: [],
@@ -27,7 +28,7 @@ export default {
   },
   methods: {
     async fetchFolders() {
-      const resp = await this.$axios.$get(`/folders/${this.$auth.user.id}`)
+      const resp = await this.$axios.$get(`/folders/folders`)
       resp.map((element) => {
         element.dateOfUpload = this.$moment(element.dateOfUpload)
         element.lastEdited = this.$moment(element.lastEdited)
