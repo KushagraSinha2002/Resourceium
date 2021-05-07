@@ -65,10 +65,7 @@ public class FilesController {
 
         Account user = userModel.get();
         Folder folder = new Folder();
-        folder.setTitle("Some random title that is quite long and need to be truncated");
         folder.setAccount(user);
-        folder.setDescription("Some random description");
-        folder.setHidden(false);
         folderRepository.save(folder);
         for (int i = 0; i < files.size(); i++) {
             MultipartFile file = files.get(i);
@@ -115,18 +112,4 @@ public class FilesController {
     public @ResponseBody Iterable<Document> getListFiles() {
         return fileRepository.findAll();
     }
-
-    // @GetMapping("/download")
-    // @ResponseBody
-    // public ResponseEntity<Resource> getFile(@RequestParam Integer userId,
-    // @RequestParam String filename) {
-    // Account userModel = userRepository.findById(userId).get();
-    // Document fileModel = fileRepository.findBySlugAndUserID(filename,
-    // userModel.getId()).get();
-    // Resource file = storageService.load(fileModel.getFileLocation());
-    // return ResponseEntity.ok()
-    // .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +
-    // fileModel.getName() + "\"")
-    // .body(file);
-    // }
 }

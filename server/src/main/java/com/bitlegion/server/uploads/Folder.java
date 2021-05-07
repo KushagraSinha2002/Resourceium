@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -47,11 +46,6 @@ public class Folder {
     @Temporal(TemporalType.TIMESTAMP)
     @UpdateTimestamp
     private Date lastEdited;
-
-    // if the boolean value is true then the folder is private and only for the
-    // user.
-    @Column(columnDefinition = "boolean default false")
-    private Boolean hidden;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "folder_tags", joinColumns = { @JoinColumn(name = "folder_id") }, inverseJoinColumns = {
@@ -148,18 +142,6 @@ public class Folder {
 
     public void setDateOfUpload(Date dateOfUpload) {
         this.dateOfUpload = dateOfUpload;
-    }
-
-    public Boolean isHidden() {
-        return this.hidden;
-    }
-
-    public Boolean getHidden() {
-        return this.hidden;
-    }
-
-    public void setHidden(Boolean hidden) {
-        this.hidden = hidden;
     }
 
     public Account getAccount() {
