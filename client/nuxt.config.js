@@ -94,6 +94,7 @@ export default {
     redirect: {
       login: '/accounts/login',
       home: '/dashboard',
+      logout: '/accounts/login',
     },
     strategies: {
       local: {
