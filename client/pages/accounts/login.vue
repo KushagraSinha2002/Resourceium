@@ -19,6 +19,7 @@
                 v-model="formData.username"
                 name="username"
                 placeholder-text="Username"
+                focus-on-render
               ></base-input-box>
               <div>
                 <base-input-box
@@ -87,7 +88,20 @@ export default {
     },
     submitForm() {
       const formData = this.formData
-      this.$auth.loginWith('local', { data: formData })
+      this.$auth
+        .loginWith('local', { data: formData })
+        .then(() => {
+          this.$addAlert({
+            message: 'Logged in successfully',
+            type: 'success',
+          })
+        })
+        .catch(() => {
+          this.$addAlert({
+            message: 'Invalid credentials',
+            type: 'danger',
+          })
+        })
     },
   },
 }
