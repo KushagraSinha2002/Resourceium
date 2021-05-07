@@ -1,12 +1,10 @@
 package com.bitlegion.server.accounts;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -131,15 +129,16 @@ public class AccountsController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping(path = "/login-temp")
-    public ResponseEntity<Token> loginTempUser(@RequestBody AccountDetails accountDetails, HttpServletRequest request) {
+    @PostMapping(path = "/logout")
+    public ResponseEntity<Boolean> logoutUser(HttpServletRequest request) {
         try {
-            tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            tokenRepository.delete(token);
+            return ResponseEntity.status(HttpStatus.OK).body(true);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.status(HttpStatus.OK).body(false);
         }
-        return ResponseEntity.badRequest().build();
     }
 
     @PutMapping(path = "/update/{userID}")
