@@ -25,4 +25,11 @@ public class Follow {
     @JoinColumn(name = "following_id", referencedColumnName = "id")
     private Account following;
 
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }

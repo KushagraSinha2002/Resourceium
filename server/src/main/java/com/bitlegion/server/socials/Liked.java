@@ -25,4 +25,12 @@ public class Liked {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 }
