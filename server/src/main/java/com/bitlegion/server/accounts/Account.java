@@ -24,7 +24,6 @@ import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity // This tells Hibernate to make a table out of this class
 public class Account {
@@ -66,7 +65,7 @@ public class Account {
     private Collection<Favorite> favorites;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "account")
+    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "account")
     private Token token;
 
     public String getPassword() {
