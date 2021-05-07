@@ -93,7 +93,6 @@ export default {
   auth: {
     redirect: {
       login: '/accounts/login',
-      logout: '/accounts/logout',
       home: '/dashboard',
     },
     strategies: {
