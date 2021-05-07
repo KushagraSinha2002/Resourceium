@@ -1,7 +1,7 @@
 <template>
   <div class="bg-cream-white">
     <div
-      class="container flex flex-wrap-reverse items-center h-full mx-auto place-content-center sm:place-content-evenly"
+      class="container flex flex-wrap-reverse items-center h-full pt-16 mx-auto md:pt-0 place-content-center sm:place-content-evenly"
     >
       <div class="w-full px-6 sm:w-1/2 sm:px-0">
         <form
