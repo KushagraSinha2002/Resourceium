@@ -6,8 +6,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.bitlegion.server.accounts.Account;
-import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
 
@@ -34,7 +32,6 @@ public class FoldersController {
     private FolderRepository folderRepository;
 
     @Autowired
-    private AccountRepository accountRepository;
 
     @GetMapping("/folders")
     public ResponseEntity<Iterable<Folder>> getListFolders(HttpServletRequest request) {
@@ -64,7 +61,6 @@ public class FoldersController {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
             String title = reqBody.get("title");
-            System.out.println(title);
             Folder folder = new Folder();
             folder.setTitle(title);
             folder.setAccount(token.getAccount());
