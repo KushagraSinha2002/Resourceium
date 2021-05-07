@@ -34,9 +34,12 @@ export default {
       show: (state) => state.blur.show,
     }),
     showSidebar() {
-      return !['index', 'accounts-login', 'accounts-register'].includes(
-        this.$route.name
-      )
+      return ![
+        'index',
+        'accounts-login',
+        'accounts-logout',
+        'accounts-register',
+      ].includes(this.$route.name)
     },
   },
 }
