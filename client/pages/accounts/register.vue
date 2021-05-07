@@ -1,7 +1,7 @@
 <template>
   <div class="bg-cream-white">
     <div
-      class="container flex items-center h-full px-6 mx-auto sm:px-0 place-content-center sm:place-content-evenly"
+      class="container flex items-center h-full px-6 pt-16 mx-auto md:pt-0 sm:px-0 place-content-center sm:place-content-evenly"
     >
       <form
         class="flex flex-col font-poppins font-light max-w-sm sm:max-w-[25rem] md:max-w-md mx-auto space-y-5 md:text-xl sm:text-lg"
@@ -31,6 +31,7 @@
           v-model="formData.username"
           name="username"
           placeholder-text="Username"
+          focus-on-render
         ></base-input-box>
         <div class="flex flex-wrap items-center space-y-1 sm:space-y-0">
           <div class="w-full sm:pr-2 sm:w-1/2">
@@ -144,12 +145,21 @@ export default {
           this.$router.push({ name: 'accounts-login' })
         })
         .catch((err) => {
+          // Things get a bit weird here.
+
+          // The errors returned by the backend are of two types: the first type is primary
+          // validation (user already exists, email already in use etc) which are returned
+          // one string at a time. The second type of errors is password validation errors
+          // which are returned as a list of all encountered validation errors. To handle
+          // this situation, we use a `try catch` and convert the errors into an array. If
+          // that fails, we let it remain as a string and simply pass it to the `Alert`
+          // component which can handle both types of error messages (ie, strings and
+          // arrays).
           let message = null
-          if (typeof err.response.data === 'object') {
+          try {
+            message = JSON.parse(err.response.data.message.split(','))
+          } catch {
             message = err.response.data.message
-          } else {
-            message = JSON.parse(err.response.data.message)
-            message = message.join('\n')
           }
           this.$addAlert({
             message,
