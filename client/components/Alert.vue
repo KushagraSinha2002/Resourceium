@@ -3,7 +3,7 @@
     class="absolute inset-0 z-30 flex items-center justify-center bg-white bg-opacity-30"
   >
     <div
-      class="relative flex items-center p-3 space-x-5 bg-[#ADA8A9] rounded-b-md w-72 md:max-w-[60%]"
+      class="relative flex items-center p-3 space-x-5 bg-[#ADA8A9] rounded-b-md w-72 md:w-auto md:max-w-[60%]"
     >
       <div
         :style="{ width: `${width}%` }"
