@@ -86,11 +86,11 @@ public class AccountsController {
         try {
             Account newUser = new Account();
             if (accountRepository.findByEmail(email).isPresent()) {
-                message = "A user with email " + email + " already exists";
+                message = "A user with email '" + email + "' already exists";
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage(message));
             }
             if (accountRepository.findByUsername(username).isPresent()) {
-                message = "A user with name " + username + " already exists";
+                message = "A user with name '" + username + "' already exists";
                 return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage(message));
             }
             newUser.setUsername(username);
