@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center px-5 py-2 mb-5 space-x-4 border-blue-500 from-cream-white bg-gradient-to-tr to-steel-300"
+    class="flex items-center px-5 py-2 mb-5 space-x-4 border-blue-500 rounded-b-xl from-cream-white bg-gradient-to-tr to-steel-300"
   >
     <img
       :src="require('~/assets/images/robot-profile.png')"
