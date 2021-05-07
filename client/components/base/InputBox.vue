@@ -9,6 +9,7 @@
     </label>
     <input
       :id="name"
+      ref="inputBox"
       :type="inputType"
       :name="name"
       :placeholder="placeholderText"
@@ -53,6 +54,16 @@ export default {
       type: Boolean,
       default: false,
     },
+    focusOnRender: {
+      // If set to true, the input box will be focused when it is rendered on screen
+      type: Boolean,
+      default: false,
+    },
+  },
+  mounted() {
+    if (this.focusOnRender) {
+      this.$refs.inputBox.focus()
+    }
   },
   methods: {
     handleInput(value) {
