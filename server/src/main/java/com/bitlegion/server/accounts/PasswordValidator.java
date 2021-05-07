@@ -2,12 +2,15 @@ package com.bitlegion.server.accounts;
 
 import java.util.ArrayList;
 
-//Program to validate Password
-public class PasswordValidator {
-  public static ArrayList<String> errorStrings = new ArrayList<String>();
+import org.springframework.stereotype.Component;
 
-  public static ArrayList<String> Validator(String password) {
+//Program to validate Password
+@Component
+public class PasswordValidator {
+
+  public ArrayList<String> validate(String password) {
     // For password length
+    ArrayList<String> errorStrings = new ArrayList<String>();
     if (password.length() < 8) {
       errorStrings.add("The password should be of at least 8 characters");
     }
@@ -17,85 +20,78 @@ public class PasswordValidator {
       errorStrings.add("Password should not have space in it");
     }
 
-    // // for integer in password
-    // if (true) {
-    // boolean flag = false;
+    // for integer in password
+    if (true) {
+      boolean flag = false;
 
-    // for (int n = 0; n <= 9; n++) {
-    // // int to String
-    // String str = String.valueOf(n);
+      for (int n = 0; n <= 9; n++) {
+        // int to String
+        String str = String.valueOf(n);
 
-    // if (password.contains(str)) {
-    // flag = true;
-    // break;
-    // }
-    // }
+        if (password.contains(str)) {
+          flag = true;
+          break;
+        }
+      }
 
-    // // Not even 1 integer
-    // if (flag == false) {
-    // errorStrings.add("Password should have at least one integer (0-9)");
-    // }
-    // }
+      // Not even 1 integer
+      if (flag == false) {
+        errorStrings.add("Password should have at least one integer (0-9)");
+      }
+    }
 
-    // // for Higher Case letters
-    // if (true) {
-    // boolean flag = false;
+    // for Higher Case letters
+    if (true) {
+      boolean flag = false;
 
-    // for (int n = 65; n <= 90; n++) {
-    // // ASCII
-    // char c = (char) n;
+      for (int n = 65; n <= 90; n++) {
+        // ASCII
+        char c = (char) n;
 
-    // // Character to String
-    // String str = String.valueOf(c);
+        // Character to String
+        String str = String.valueOf(c);
 
-    // if (password.contains(str)) {
-    // flag = true;
-    // break;
-    // }
-    // }
+        if (password.contains(str)) {
+          flag = true;
+          break;
+        }
+      }
 
-    // if (flag == false) {
-    // errorStrings.add("Password should have at least one higher case letter
-    // (A-Z)");
-    // }
-    // }
+      if (flag == false) {
+        errorStrings.add("Password should have at least one higher case letter (A-Z)");
+      }
+    }
 
-    // // for Lower Case letters
-    // if (true) {
-    // boolean flag = false;
+    // for Lower Case letters
+    if (true) {
+      boolean flag = false;
 
-    // for (int n = 97; n <= 122; n++) {
+      for (int n = 97; n <= 122; n++) {
 
-    // char ch = (char) n;
+        char ch = (char) n;
 
-    // String str = String.valueOf(ch);
+        String str = String.valueOf(ch);
 
-    // if (password.contains(str)) {
-    // flag = true;
-    // break;
-    // }
-    // }
+        if (password.contains(str)) {
+          flag = true;
+          break;
+        }
+      }
 
-    // if (flag == false) {
-    // errorStrings.add("Password should have at least one lower case letter
-    // (a-z)");
-    // }
-    // }
+      if (flag == false) {
+        errorStrings.add("Password should have at least one lower case letter (a-z)");
+      }
+    }
 
-    // // For special Characters
-    // if (!(password.contains("@") || password.contains("#") ||
-    // password.contains("!") || password.contains("~")
-    // || password.contains(":") || password.contains(".") || password.contains("$")
-    // || password.contains("%")
-    // || password.contains("^") || password.contains("&") || password.contains("*")
-    // || password.contains("(")
-    // || password.contains(")") || password.contains("-") || password.contains("+")
-    // || password.contains("/")
-    // || password.contains(",") || password.contains("<") || password.contains(">")
-    // || password.contains("?")
-    // || password.contains("|"))) {
-    // errorStrings.add("Password should have at least one special character");
-    // }
+    // For special Characters
+    if (!(password.contains("@") || password.contains("#") || password.contains("!") || password.contains("~")
+        || password.contains(":") || password.contains(".") || password.contains("$") || password.contains("%")
+        || password.contains("^") || password.contains("&") || password.contains("*") || password.contains("(")
+        || password.contains(")") || password.contains("-") || password.contains("+") || password.contains("/")
+        || password.contains(",") || password.contains("<") || password.contains(">") || password.contains("?")
+        || password.contains("|"))) {
+      errorStrings.add("Password should have at least one special character");
+    }
     return errorStrings;
   }
 }

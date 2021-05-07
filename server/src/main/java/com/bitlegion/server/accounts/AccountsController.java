@@ -1,10 +1,12 @@
 package com.bitlegion.server.accounts;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -35,6 +37,9 @@ public class AccountsController {
     @Autowired
     private TokenChecker tokenChecker;
 
+    @Autowired
+    private PasswordValidator passwordValidator;
+
     @Value("${spring-dev-mode}")
     private Boolean devMode;
 
@@ -47,12 +52,11 @@ public class AccountsController {
         // @RequestParam means it is a parameter from the GET or POST request
         String message = "";
 
-        // ArrayList<String> errors = PasswordValidator.Validator(password);
-        // if (errors.size() > 0) {
-        // message = JSONArray.toJSONString(errors);
-        // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new
-        // ResponseMessage(message));
-        // }
+        ArrayList<String> errors = passwordValidator.validate(password);
+        if (errors.size() > 0) {
+            message = JSONArray.toJSONString(errors);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+        }
 
         if (username.length() == 0) {
             message = "You provided an invalid name";
