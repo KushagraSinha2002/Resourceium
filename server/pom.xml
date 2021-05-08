@@ -68,7 +68,6 @@
 				<configuration>
 					<changeLogFile>src/main/resources/db/changelog/db.changelog-master.yaml</changeLogFile>
 					<url>${env.JDBC_DATABASE_URL}</url>
-					<propertyFile>src/main/resources/liquibase.properties</propertyFile>
 					<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 				</configuration>
 			</plugin>
