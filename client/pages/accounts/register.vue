@@ -157,9 +157,9 @@ export default {
           // arrays).
           let message = null
           try {
-            message = JSON.parse(err.response.data.message.split(','))
+            message = JSON.parse(err.response.data.split(','))
           } catch {
-            message = err.response.data.message
+            message = err.response.data
           }
           this.$addAlert({
             message,

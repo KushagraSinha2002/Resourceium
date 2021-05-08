@@ -44,7 +44,7 @@ public class AccountsController {
   private Boolean devMode;
 
   @PostMapping(path = "/register") // Map ONLY POST Requests
-  public ResponseEntity<ResponseMessage> addNewUser(@RequestParam String username, @RequestParam String email,
+  public ResponseEntity<Object> addNewUser(@RequestParam String username, @RequestParam String email,
       @RequestParam String password, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateOfBirth,
       @RequestParam String firstName, @RequestParam String lastName, @RequestParam String country) {
     // @ResponseBody means the returned String is the response, not a view name
@@ -54,43 +54,43 @@ public class AccountsController {
     ArrayList<String> errors = passwordValidator.validate(password);
     if (errors.size() > 0) {
       message = JSONArray.toJSONString(errors);
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
     if (username.length() == 0) {
       message = "You provided an invalid name";
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
     if (password.length() == 0) {
       message = "You provided an invalid password";
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
     if (username.length() == 0) {
       message = "You provided an invalid name";
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
     if (lastName.length() == 0) {
       message = "You provided an invalid last name";
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
     if (firstName.length() == 0) {
       message = "You provided an invalid first name";
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
     if (dateOfBirth.after(new Date())) {
       message = "Invalid date of birth detected";
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
 
     try {
       Account newUser = new Account();
       if (accountRepository.findByEmail(email).isPresent()) {
         message = "A user with email '" + email + "' already exists";
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage(message));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
       }
       if (accountRepository.findByUsername(username).isPresent()) {
         message = "A user with name '" + username + "' already exists";
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseMessage(message));
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
       }
       newUser.setUsername(username);
       newUser.setEmail(email);
@@ -101,10 +101,10 @@ public class AccountsController {
       newUser.setCountry(country);
       accountRepository.save(newUser);
       message = "The user was created successfully!";
-      return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.OK).body(message);
     } catch (Exception e) {
       message = e.getMessage();
-      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.OK).body(message);
     }
   }
 
@@ -145,14 +145,14 @@ public class AccountsController {
   }
 
   @PutMapping(path = "/update/{userID}")
-  public ResponseEntity<ResponseMessage> updateUser(@RequestParam(required = false) String password,
+  public ResponseEntity<Object> updateUser(@RequestParam(required = false) String password,
       @RequestParam(required = false) String bio, @PathVariable Integer userID) {
     String message = "";
 
     Optional<Account> maybeUser = accountRepository.findById(userID);
     if (maybeUser.isEmpty()) {
       message = "No such user found";
-      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseMessage(message));
+      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
     }
     Account user = maybeUser.get();
 
@@ -164,7 +164,7 @@ public class AccountsController {
     }
     accountRepository.save(user);
     message = "The user was updated successfully";
-    return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
+    return ResponseEntity.status(HttpStatus.OK).body(message);
   }
 
   @GetMapping(path = "/details")
