@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +38,6 @@ public class AccountsController {
 
   @Autowired
   private PasswordValidator passwordValidator;
-
-  @Value("${spring-dev-mode}")
-  private Boolean devMode;
 
   @PostMapping(path = "/register") // Map ONLY POST Requests
   public ResponseEntity<Object> addNewUser(@RequestParam String username, @RequestParam String email,
