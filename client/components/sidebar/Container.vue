@@ -25,11 +25,8 @@ export default {
   data() {
     return {
       links: [
-        { name: 'Home', path: 'index', icon: 'home' },
         { name: 'Dashboard', path: 'dashboard', icon: 'pie-chart' },
         { name: 'Explorer', path: 'folders', icon: 'file' },
-        { name: 'Public', path: 'public', icon: 'users' },
-        { name: 'Private', path: 'private', icon: 'user' },
         { name: 'Discussions', path: 'discussions', icon: 'message-circle' },
         { name: 'FAQs', path: 'faq', icon: 'help-circle' },
         { name: 'Notifications', path: 'notifications', icon: 'activity' },
