@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bitlegion.server.core.Sleeper;
+
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -38,6 +40,9 @@ public class AccountsController {
 
   @Autowired
   private PasswordValidator passwordValidator;
+
+  @Autowired
+  private Sleeper sleeper;
 
   @PostMapping(path = "/register") // Map ONLY POST Requests
   public ResponseEntity<Object> addNewUser(@RequestParam String username, @RequestParam String email,
@@ -77,6 +82,9 @@ public class AccountsController {
       message = "Invalid date of birth detected";
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
     }
+
+    // This pause only works on development environment so no worries :)
+    sleeper.pause(10000);
 
     try {
       Account newUser = new Account();
