@@ -123,6 +123,7 @@ if not DEBUG:
         0,
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
+    ALLOWED_HOSTS = [".pythonanywhere.com"]
 # development only settings
 if DEBUG:
     ALLOWED_HOSTS += ["*"]
