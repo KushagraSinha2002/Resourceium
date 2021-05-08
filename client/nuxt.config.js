@@ -22,7 +22,6 @@ export default {
   plugins: [
     '~/plugins/ignisnents.js',
     '~/plugins/alerts.js',
-    '~/plugins/uploads.js',
     '~/plugins/fontawesome.js',
   ],
 
