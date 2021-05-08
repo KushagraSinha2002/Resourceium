@@ -35,12 +35,11 @@
             </div>
           </div>
           <div class="flex flex-col space-y-5">
-            <button
+            <base-loading-button
               type="submit"
-              class="flex justify-center py-2 space-x-3 transition duration-300 transform rounded-15px hover:scale-105 sm:py-3 focus:outline-none bg-primary ring-black ring-1"
-            >
-              <div class="text-white">Login</div>
-            </button>
+              text="Login"
+              :loading="loading"
+            ></base-loading-button>
             <div class="text-sm sm:text-base text-primary">
               <div>
                 <NuxtLink :to="{ name: 'index' }" class="hover:underline">
@@ -75,6 +74,7 @@
 export default {
   data() {
     return {
+      loading: false,
       formData: {
         username: '',
         password: '',
@@ -86,9 +86,10 @@ export default {
     redirectHome() {
       this.$router.push({ name: 'index' })
     },
-    submitForm() {
+    async submitForm() {
       const formData = this.formData
-      this.$auth
+      this.loading = true
+      await this.$auth
         .loginWith('local', { data: formData })
         .then(() => {
           this.$addAlert({
@@ -102,6 +103,7 @@ export default {
             type: 'danger',
           })
         })
+      this.loading = false
     },
   },
 }
