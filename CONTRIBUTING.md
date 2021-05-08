@@ -11,15 +11,16 @@ fire up the development servers. For docker users, the command is `docker-compos
 
 ## Deployment instructions
 
-The project has a separate frontend and backend and are deployed separately. Both the
-backend and frontend are deployed as two separate apps on Heroku. Since this is a monorepo,
-they need to be pushed to their remotes using the subtree strategy since Heroku does not
-support deployment from monorepos.
+The project has a separate frontend, backend and storage servers and are deployed
+separately. Both the backend and frontend are deployed as two separate apps on Heroku while
+the third server (django app) is deployed to Pythonanywhere. Since this is a monorepo, they
+need to be pushed to their remotes using the subtree strategy since Heroku does not support
+deployment from monorepos.
 
 **NOTE**: You will need to change the remote URLs since only our team (BitLegion) has push
 permissions to these remotes.
 
-### For the frontend
+### For the frontend server
 
 ```bash
 # add the frontend remote
@@ -36,7 +37,7 @@ git push heroku-client `git subtree split --prefix client main`:main --force
 git push heroku-client (git subtree split --prefix client main):main --force
 ```
 
-### For the backend
+### For the backend server
 
 ```bash
 # add the backend remote
@@ -44,3 +45,13 @@ git remote add heroku-server https://git.heroku.com/resourceium-server.git
 # push the main branch to be deployed
 git subtree push --prefix server heroku-server main
 ```
+
+### For the storage server
+
+The following commands need to be executed in the Pythonanywhere console for the app.
+
+```bash
+git pull
+```
+
+Then go to the web tab and click on reload to reload the server.
