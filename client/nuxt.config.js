@@ -76,8 +76,11 @@ export default {
     subFolders: false,
   },
   env: {
-    baseUrl: process.env.API_URL || 'http://localhost:8000',
+    baseUrl: process.env.API_URL || 'http://localhost:8000/',
     storageServer: process.env.STORAGE_SERVER,
+  },
+  axios: {
+    baseURL: process.env.API_URL || 'http://localhost:8000/',
   },
   pwa: {
     icon: {
