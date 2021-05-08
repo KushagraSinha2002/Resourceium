@@ -44,7 +44,7 @@ public class DocumentController {
     private FolderRepository folderRepository;
 
     @Autowired
-    private FileRepository fileRepository;
+    private DocumentRepository fileRepository;
 
     @Autowired
     private AccountRepository userRepository;

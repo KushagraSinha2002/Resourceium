@@ -3,7 +3,7 @@ package com.bitlegion.server.core;
 import java.util.HashMap;
 
 import com.bitlegion.server.accounts.AccountRepository;
-import com.bitlegion.server.uploads.FileRepository;
+import com.bitlegion.server.uploads.DocumentRepository;
 import com.bitlegion.server.uploads.FolderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class CoreController {
     private Boolean devMode;
 
     @Autowired
-    private FileRepository fileRepository;
+    private DocumentRepository fileRepository;
 
     @Autowired
     private FolderRepository folderRepository;

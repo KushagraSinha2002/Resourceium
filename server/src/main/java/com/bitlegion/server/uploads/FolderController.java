@@ -52,7 +52,7 @@ public class FolderController {
     private AccountRepository userRepository;
 
     @Autowired
-    private FileRepository fileRepository;
+    private DocumentRepository fileRepository;
 
     @GetMapping("/user-folders")
     public ResponseEntity<Iterable<Folder>> getListFolders(HttpServletRequest request) {
