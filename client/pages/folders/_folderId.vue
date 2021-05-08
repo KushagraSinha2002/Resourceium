@@ -39,6 +39,7 @@ export default {
       return filesize(value)
     },
   },
+  middleware: ['auth'],
   data() {
     return {
       folder: null,
