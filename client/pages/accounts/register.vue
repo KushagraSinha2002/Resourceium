@@ -88,12 +88,11 @@
             ></base-input-box>
           </div>
         </div>
-        <button
+        <base-loading-button
           type="submit"
-          class="flex justify-center py-2 space-x-3 transition duration-300 transform rounded-15px hover:scale-105 sm:py-3 focus:outline-none bg-primary ring-black ring-1"
-        >
-          <div class="text-white">Register</div>
-        </button>
+          text="Register"
+          :loading="loading"
+        ></base-loading-button>
       </form>
     </div>
   </div>
@@ -105,6 +104,7 @@ import { countries } from 'countries-list'
 export default {
   data() {
     return {
+      loading: false,
       formData: {
         username: '',
         firstName: '',
@@ -129,13 +129,14 @@ export default {
     },
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       const formData = this.formData
       if (formData.password !== formData.password2) {
         alert('The two passwords do not match')
         return
       }
-      this.$axios
+      this.loading = true
+      await this.$axios
         .$post('/accounts/register', null, { params: formData })
         .then((_result) => {
           this.$addAlert({
@@ -166,6 +167,7 @@ export default {
             type: 'danger',
           })
         })
+      this.loading = false
     },
   },
 }
