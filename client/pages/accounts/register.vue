@@ -1,14 +1,14 @@
 <template>
   <div class="bg-cream-white">
     <div
-      class="container flex items-center h-full px-6 pt-16 mx-auto md:pt-0 sm:px-0 place-content-center sm:place-content-evenly"
+      class="container flex items-center px-6 py-12 mx-auto md:py-0 md:h-full sm:px-0 place-content-center sm:place-content-evenly"
     >
       <form
         class="flex flex-col font-poppins font-light max-w-sm sm:max-w-[25rem] md:max-w-md mx-auto space-y-5 md:text-xl sm:text-lg"
         @submit.prevent="submitForm"
       >
         <div
-          class="flex items-center justify-center mt-10 mb-5 space-x-4 text-3xl font-bold text-center sm:text-4xl sm:mb-10 font-poppins text-primary"
+          class="flex items-center justify-center mb-5 space-x-4 text-3xl font-bold text-center sm:text-4xl sm:mb-10 font-poppins text-primary"
         >
           <div>Create your</div>
           <img
