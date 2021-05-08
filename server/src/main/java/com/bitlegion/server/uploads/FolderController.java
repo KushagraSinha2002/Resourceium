@@ -40,7 +40,7 @@ import org.json.simple.parser.JSONParser;
 @Service
 @RequestMapping(path = "/folders")
 @CrossOrigin
-public class FoldersService {
+public class FolderController {
 
     @Autowired
     private TokenChecker tokenChecker;
