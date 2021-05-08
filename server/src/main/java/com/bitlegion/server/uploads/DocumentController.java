@@ -35,7 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 @RequestMapping(path = "/uploads")
 @CrossOrigin
-public class FilesController {
+public class DocumentController {
 
     // @Autowired
     // private FilesStorageService storageService;
