@@ -96,6 +96,11 @@ export default {
       home: '/dashboard',
       logout: '/accounts/login',
     },
+    cookie: {
+      options: {
+        expires: 7,
+      },
+    },
     strategies: {
       local: {
         user: {
