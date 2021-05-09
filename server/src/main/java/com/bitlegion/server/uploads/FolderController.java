@@ -3,6 +3,7 @@ package com.bitlegion.server.uploads;
 import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Optional;
@@ -127,6 +128,7 @@ public class FolderController {
                 document.setFolder(folder);
                 fileRepository.save(document);
                 folder.setDocument(document);
+                folder.setLastEdited(new Date());
                 userRepository.save(account);
                 folderRepository.save(folder);
                 return ResponseEntity.status(HttpStatus.OK).body(document);
