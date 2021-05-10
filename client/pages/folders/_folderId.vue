@@ -76,6 +76,7 @@ export default {
       // reset form to initial state
       this.currentStatus = STATUS_INITIAL
       this.$refs.inputBox.value = null
+      this.file = null
     },
     save(formData) {
       // upload data to the server
@@ -104,7 +105,15 @@ export default {
     async handleSubmit() {
       // handle file changes
       const formData = new FormData()
-      if (!this.file) return
+
+      if (!this.file) {
+        this.$addAlert({
+          message: 'Please select a file to upload',
+          type: 'info',
+          timeOut: 1000,
+        })
+        return
+      }
       if (this.file.size > 2048000) {
         this.$addAlert({
           message: 'File size can not be above 2 MB',
