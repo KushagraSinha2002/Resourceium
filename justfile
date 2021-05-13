@@ -4,6 +4,8 @@ default:
 	frontend_folder="client"
 	storage_folder="storage"
 
+	export PIP_USER=false
+
 	pwd="$(pwd)"
 	cd "$frontend_folder" && yarn install && cd "$pwd"
 	cd "$storage_folder" && poetry install && poetry run python manage.py migrate && cd "$pwd"
@@ -12,8 +14,6 @@ default:
 	then URL="$(gp url 8000)"
 	else URL="http://localhost:8000/"
 	fi
-
-	export PIP_USER=false
 
 	# Start all the servers
 	{ cd "$storage_folder" && poetry run python manage.py runserver 0.0.0.0:8080 & \
