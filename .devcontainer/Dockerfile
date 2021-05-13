@@ -17,7 +17,7 @@ RUN if [ "${INSTALL_NODE}" = "true" ]; then su $USERNAME -c "umask 0002 && . /us
 # Install required development packages
 RUN apt update \
      && export DEBIAN_FRONTEND=noninteractive \
-     && apt -y install --no-install-recommends "fish" "exa" "neovim" "yarn" "git" "maven" \
+     && apt -y install --no-install-recommends "fish" "exa" "neovim" "yarn" "git" "maven" "openjdk-11-jre" "openjdk-11-jdk" \
      && curl -sSL https://github.com/sharkdp/bat/releases/download/v0.18.0/bat-musl_0.18.0_amd64.deb -o /tmp/bat.deb \
      && dpkg -i /tmp/bat.deb \
      && wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
