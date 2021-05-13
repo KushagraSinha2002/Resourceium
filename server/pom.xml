@@ -15,7 +15,7 @@
 	<name>server</name>
 	<description>Server side for Resourceium</description>
 	<properties>
-		<java.version>15</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
