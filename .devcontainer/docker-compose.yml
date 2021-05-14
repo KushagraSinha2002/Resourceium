@@ -9,10 +9,15 @@ services:
     volumes:
       - ..:/workspace:cached
       - server_data:/home/vscode/.m2/repository
+      - cypress-cache:/home/vscode/Cypress
+      - /tmp/.X11-unix:/tmp/.X11-unix
 
     command: sleep infinity
     network_mode: service:db
     user: vscode
+    environment:
+      CYPRESS_VIDEO: "false"
+      DISPLAY:
 
   db:
     image: postgres:13-alpine
@@ -26,3 +31,4 @@ services:
 volumes:
   postgres-data:
   server_data:
+  cypress-cache:

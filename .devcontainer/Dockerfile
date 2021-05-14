@@ -21,3 +21,28 @@ RUN apt update \
      && curl -sSL https://github.com/sharkdp/bat/releases/download/v0.18.0/bat-musl_0.18.0_amd64.deb -o /tmp/bat.deb \
      && dpkg -i /tmp/bat.deb \
      && wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+ENV CYPRESS_CACHE_FOLDER=/home/${USERNAME}/Cypress
+RUN mkdir -p $CYPRESS_CACHE_FOLDER && sudo chown ${USERNAME}:${USERNAME} -R $CYPRESS_CACHE_FOLDER \
+     && npm install --global --unsafe-perms pm2 wait-on
+
+RUN apt-get install --no-install-recommends -y \
+          libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libgbm-dev libnss3 libxss1 libasound2 libxtst6 xauth xvfb \
+          fonts-arphic-bkai00mp fonts-arphic-bsmi00lp fonts-arphic-gbsn00lp fonts-arphic-gkai00mp fonts-arphic-ukai zip \
+          fonts-arphic-uming ttf-wqy-zenhei ttf-wqy-microhei xfonts-wqy fonts-liberation libappindicator3-1 xdg-utils \
+     && rm -rf /var/lib/apt/lists/*
+
+ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
+ENV CHROME_VERSION 86.0.4240.193
+RUN wget -O /usr/src/google-chrome-stable_current_amd64.deb "http://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb" && \
+  dpkg -i /usr/src/google-chrome-stable_current_amd64.deb ; \
+  apt-get install -f -y && \
+  rm -f /usr/src/google-chrome-stable_current_amd64.deb
+
+RUN google-chrome --version
+
+# disable shared memory X11 affecting Cypress v4 and Chrome
+# https://github.com/cypress-io/cypress-docker-images/issues/270
+ENV QT_X11_NO_MITSHM=1
+ENV _X11_NO_MITSHM=1
+ENV _MITSHM=0
