@@ -1,3 +1,11 @@
+/* ensure the page has correct title */
+describe(`Page title`, () => {
+  it('has correct title', () => {
+    cy.visit('/')
+    cy.title().should('eq', 'Resourceium')
+  })
+})
+
 /* ensure all links point to the correct pages  */
 describe(`Links contents`, () => {
   before(() => {
