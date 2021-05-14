@@ -36,6 +36,7 @@ export default {
     showSidebar() {
       return ![
         'index',
+        'faq',
         'accounts-login',
         'accounts-logout',
         'accounts-register',
