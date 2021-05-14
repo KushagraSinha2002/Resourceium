@@ -25,6 +25,7 @@ describe(`Links contents`, () => {
   })
 })
 
+/* ensure all links redirect to the correct page  */
 describe(`Links directs`, () => {
   beforeEach(() => {
     cy.visit('/accounts/login')
