@@ -42,12 +42,17 @@
             ></base-loading-button>
             <div class="text-sm sm:text-base text-primary">
               <div>
-                <NuxtLink :to="{ name: 'index' }" class="hover:underline">
+                <NuxtLink
+                  id="link-password-change"
+                  :to="{ name: 'accounts-password-change' }"
+                  class="hover:underline"
+                >
                   Forgot your Resourceium username or password?
                 </NuxtLink>
               </div>
               <div>
                 <NuxtLink
+                  id="link-register"
                   :to="{ name: 'accounts-register' }"
                   class="hover:underline"
                 >
