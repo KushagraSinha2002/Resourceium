@@ -4,19 +4,22 @@
       class="flex items-center justify-between w-full px-4 mx-auto sm:w-9/12 2xl:w-8/12"
     >
       <NuxtLink
-        :to="{ name: 'index' }"
+        id="link-faq"
+        :to="{ name: 'faq' }"
         class="font-thin font-poppins hover:underline"
       >
         Why Resourceium?
       </NuxtLink>
       <div class="flex items-center space-x-3 font-semibold sm:space-x-5">
         <NuxtLink
+          id="link-login"
           class="text-primary font-poppins hover:underline"
           :to="{ name: 'accounts-login' }"
         >
           Sign In
         </NuxtLink>
         <NuxtLink
+          id="link-register"
           class="text-primary font-poppins hover:underline"
           :to="{ name: 'accounts-register' }"
         >
