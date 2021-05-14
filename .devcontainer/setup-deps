@@ -36,7 +36,7 @@ storage_folder="storage"
 
 # Install the dependencies of each micro-service
 
-PROJECT_FOLDER="/workspace"
+PROJECT_FOLDER="/workspace/Resourceium"
 cd "$PROJECT_FOLDER"
 cd "$backend_folder"
 sudo chown -R vscode:vscode $HOME/.m2/repository

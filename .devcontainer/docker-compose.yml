@@ -7,7 +7,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
 
     volumes:
-      - ..:/workspace:cached
+      - ..:/workspace/Resourceium:cached
       - server_data:/home/vscode/.m2/repository
       - cypress-cache:/home/vscode/Cypress
       - /tmp/.X11-unix:/tmp/.X11-unix
