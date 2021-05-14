@@ -21,6 +21,7 @@
           <div>ID.</div>
         </div>
         <NuxtLink
+          id="link-login"
           :to="{ name: 'accounts-login' }"
           class="text-xs text-center hover:underline"
         >
