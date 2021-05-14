@@ -19,3 +19,13 @@ describe(`${DESCRIPTION} "/accounts/login"`, () => {
     cy.title().should('eq', 'Login')
   })
 })
+
+describe(`${DESCRIPTION} "/accounts/register"`, () => {
+  beforeEach(() => {
+    cy.visit('/accounts/register')
+  })
+
+  it('has correct title', () => {
+    cy.title().should('eq', 'Register')
+  })
+})
