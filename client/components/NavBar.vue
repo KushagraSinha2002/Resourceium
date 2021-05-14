@@ -63,6 +63,7 @@ export default {
       return ![
         'index',
         'faq',
+        'accounts-password-change',
         'accounts-login',
         'accounts-logout',
         'accounts-register',
