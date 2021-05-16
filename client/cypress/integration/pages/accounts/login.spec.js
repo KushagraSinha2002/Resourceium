@@ -13,10 +13,10 @@ describe(`Links contents`, () => {
   })
 
   it(`"Forgot your?"`, () => {
-    cy.get('#link-password-change').should(
+    cy.get('#link-password-recover').should(
       'have.attr',
       'href',
-      '/accounts/password/change'
+      '/accounts/password/recover'
     )
   })
 
@@ -32,10 +32,10 @@ describe(`Links directs`, () => {
   })
 
   it(`"Forgot your?"`, () => {
-    cy.get('#link-password-change').click()
+    cy.get('#link-password-recover').click()
     cy.url().should(
       'eq',
-      Cypress.config().baseUrl + '/accounts/password/change'
+      Cypress.config().baseUrl + '/accounts/password/recover'
     )
   })
 

@@ -43,8 +43,8 @@
             <div class="text-sm sm:text-base text-primary">
               <div>
                 <NuxtLink
-                  id="link-password-change"
-                  :to="{ name: 'accounts-password-change' }"
+                  id="link-password-recover"
+                  :to="{ name: 'accounts-password-recover' }"
                   class="hover:underline"
                 >
                   Forgot your Resourceium username or password?

@@ -37,7 +37,7 @@ export default {
       return ![
         'index',
         'faq',
-        'accounts-password-change',
+        'accounts-password-recover',
         'accounts-login',
         'accounts-logout',
         'accounts-register',
