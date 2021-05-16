@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -148,27 +147,17 @@ public class AccountsController {
     }
   }
 
-  @PutMapping(path = "/update/{userID}")
-  public ResponseEntity<Object> updateUser(@RequestParam(required = false) String password,
-      @RequestParam(required = false) String bio, @PathVariable Integer userID) {
-    String message = "";
-
-    Optional<Account> maybeUser = accountRepository.findById(userID);
-    if (maybeUser.isEmpty()) {
-      message = "No such user found";
-      return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(message);
+  @PutMapping(path = "/update")
+  public ResponseEntity<Object> updateUser(HttpServletRequest request, @RequestBody Account account) {
+    try {
+      tokenChecker.checkAndReturnTokenOrRaiseException(request);
+      accountRepository.save(account);
+      System.out.println(account.getDateOfBirth());
+      return ResponseEntity.status(HttpStatus.OK).body(account);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return ResponseEntity.badRequest().build();
     }
-    Account user = maybeUser.get();
-
-    if (password != null) {
-      user.setPassword(password);
-    }
-    if (bio != null) {
-      user.setBio(bio);
-    }
-    accountRepository.save(user);
-    message = "The user was updated successfully";
-    return ResponseEntity.status(HttpStatus.OK).body(message);
   }
 
   @GetMapping(path = "/details")
