@@ -1,14 +1,12 @@
 <template>
   <div class="grid grid-cols-1 sm:grid-cols-3">
-    <div
-      class="font-semibold text-gray-200 uppercase sm:col-span-1 md:text-lg font-poppins"
-    >
+    <div class="text-gray-200 uppercase sm:col-span-1 md:text-lg font-poppins">
       {{ unslugify(label) }}
     </div>
     <div
       class="flex items-center justify-between pb-1 space-x-3 border-b sm:col-span-2"
     >
-      <div class="truncate md:text-lg font-styled-code text-warm-gray-200">
+      <div class="truncate md:text-lg font-poppins text-warm-gray-200">
         {{ identifier }}
       </div>
       <ig-icon

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute inset-0 z-50 flex flex-col justify-between w-64 transition-transform duration-200 ease-in-out transform sm:shadow-2xl bg-gradient-to-b from-true-gray-900 to-gray-900 sm:static"
+    class="absolute inset-0 z-50 flex flex-col justify-between w-64 transition-transform duration-200 ease-in-out transform sm:shadow-2xl bg-light-black sm:static"
     :class="!show ? '-translate-x-64 sm:translate-x-0' : 'shadow-2xl'"
   >
     <div>

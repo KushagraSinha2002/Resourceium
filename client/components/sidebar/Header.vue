@@ -1,22 +1,20 @@
 <template>
   <div
-    class="flex items-center px-5 py-2 mb-5 space-x-4 border-blue-500 rounded-b-xl from-cream-white bg-gradient-to-tr to-steel-300"
+    class="flex items-center px-5 py-2 mb-5 space-x-4 border-[#C4C4C4] border bg-[#F5F5F7]"
   >
     <img
-      :src="require('~/assets/images/robot-profile.png')"
+      :src="require('~/assets/images/id_logo.png')"
       alt="profile image"
       class="w-12 h-12"
     />
 
     <div class="truncate">
-      <div
-        class="text-lg font-semibold text-gray-900 uppercase font-styled-code"
-      >
-        {{ $auth.user.username }}
+      <div class="text-lg text-black uppercase font-styled-code">
+        {{ $auth.user.firstName + ' ' + $auth.user.lastName }}
       </div>
-      <div class="text-xs text-warm-gray-700 font-poppins">
+      <!-- <div class="text-xs text-warm-gray-700 font-poppins">
         {{ $auth.user.email }}
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
