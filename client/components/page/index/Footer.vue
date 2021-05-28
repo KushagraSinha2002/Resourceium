@@ -41,12 +41,11 @@ export default {
       filesCount: 0,
     }
   },
-  mounted() {
-    this.$axios.$get('/core/stats').then((result) => {
-      this.foldersCount = result.foldersCount
-      this.filesCount = result.filesCount
-      this.accountsCount = result.accountsCount
-    })
+  async fetch() {
+    const result = await this.$axios.$get('/core/stats')
+    this.foldersCount = result.foldersCount
+    this.filesCount = result.filesCount
+    this.accountsCount = result.accountsCount
   },
 }
 </script>
