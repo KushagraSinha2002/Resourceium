@@ -23,6 +23,7 @@ export default {
     '~/plugins/ignisnents.js',
     '~/plugins/alerts.js',
     '~/plugins/fontawesome.js',
+    '~/plugins/number-animation.client.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
