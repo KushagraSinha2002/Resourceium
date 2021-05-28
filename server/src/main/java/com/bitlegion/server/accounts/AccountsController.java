@@ -83,7 +83,7 @@ public class AccountsController {
     }
 
     // This pause only works on development environment so no worries :)
-    sleeper.pause(10000);
+    sleeper.pause(1000);
 
     try {
       Account newUser = new Account();
