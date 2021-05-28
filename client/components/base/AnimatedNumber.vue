@@ -1,36 +1,31 @@
 <template>
   <div class="text-2xl font-semibold font-styled text-warm-gray-800">
-    {{ displayValue }}+
+    <span v-if="!loaded">0</span>
+    <client-only v-else>
+      <number
+        :from="0"
+        :to="value"
+        :duration="2.5"
+        :delay="1"
+        easing="Power1.easeOut"
+      ></number>
+    </client-only>
+    +
   </div>
 </template>
 
 <script>
-import gsap from 'gsap'
-
 export default {
   props: {
-    value: {
-      type: Number,
-      default: 0,
-    },
+    value: { type: Number, required: true },
   },
   data() {
     return {
-      displayValue: this.value,
-      tweenValue: this.value,
+      loaded: false,
     }
   },
-  watch: {
-    value() {
-      gsap.to(this, {
-        tweenValue: this.value,
-        duration: 5,
-        ease: 'power2',
-        onUpdate: () => {
-          this.displayValue = Math.ceil(this.tweenValue)
-        },
-      })
-    },
+  mounted() {
+    this.loaded = true
   },
 }
 </script>
