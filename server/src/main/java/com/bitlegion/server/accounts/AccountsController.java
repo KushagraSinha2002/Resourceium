@@ -6,7 +6,7 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.bitlegion.server.core.Sleeper;
+import com.bitlegion.server.general.Sleeper;
 
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;

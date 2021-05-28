@@ -1,4 +1,4 @@
-package com.bitlegion.server.core;
+package com.bitlegion.server.general;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
