@@ -24,11 +24,13 @@
     "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/pwa": "^3.3.5",
     "@tailwindcss/line-clamp": "^0.2.0",
+    "chart.js": "2.9.4",
     "countries-list": "^2.6.1",
     "filesize": "^6.3.0",
     "ignisnents": "^1.2.1",
     "nuxt": "^2.15.3",
     "ufo": "^0.7.2",
+    "vue-chartjs": "3.5.1",
     "vue-number-animation": "^1.0.5"
   },
   "devDependencies": {
