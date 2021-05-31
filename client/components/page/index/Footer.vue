@@ -26,7 +26,7 @@
         :value="foldersCount"
       ></base-animated-number>
       <div class="text-sm sm:text-base md:text-lg text-light-black">
-        Posts made
+        Safes Created
       </div>
     </div>
   </div>
