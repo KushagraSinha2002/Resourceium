@@ -24,6 +24,7 @@ export default {
     '~/plugins/alerts.js',
     '~/plugins/fontawesome.js',
     '~/plugins/number-animation.client.js',
+    '~/plugins/tippy.client.js',
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -37,7 +38,6 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-    '@nuxtjs/moment',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
