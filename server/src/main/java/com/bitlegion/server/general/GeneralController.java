@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,7 +47,7 @@ public class GeneralController {
         return map;
     }
 
-    // This controller will be used to obtain exactly the number of files uploaded
+    //  This controller will be used to obtain exactly the number of files uploaded
     // for the last 7 days (excluding the current day). If there are less than 7
     // days worth of data in the database, the corresponding entry must be 0. The
     // data MUST be returned in the following format:
@@ -62,13 +63,18 @@ public class GeneralController {
         // we are using linked hash map here since we need to preserve insertion order
         LinkedHashMap<String, Long> map = new LinkedHashMap<>();
         // this is the format in which the date is returned in
-        map.put("2021-04-24 00:00:00.0", (long) 20);
-        map.put("2021-04-25 00:00:00.0", (long) 0);
-        map.put("2021-04-26 00:00:00.0", (long) 76);
-        map.put("2021-04-27 00:00:00.0", (long) 90);
-        map.put("2021-04-28 00:00:00.0", (long) 25);
-        map.put("2021-04-29 00:00:00.0", (long) 12);
-        map.put("2021-04-30 00:00:00.0", (long) 56);
+         Calendar calendar = Calendar.getInstance();
+        for(int i = 1; i <= 7; i++){
+          map.put(calendar.add(Calendar.Date, -i), (long) fileRepository.findbyDateofupload(calendar.add(Calendar.Date,-i));
+        }
+
+        //map.put(c, (long) 20);
+        //map.put("2021-04-25 00:00:00.0", (long) 0);
+        //map.put("2021-04-26 00:00:00.0", (long) 76);
+        //map.put("2021-04-27 00:00:00.0", (long) 90);
+        //map.put("2021-04-28 00:00:00.0", (long) 25);
+        //map.put("2021-04-29 00:00:00.0", (long) 12);
+        //map.put("2021-04-30 00:00:00.0", (long) 56);
         return ResponseEntity.ok().body(map);
     }
 
@@ -91,11 +97,13 @@ public class GeneralController {
             // use this variable to perform database operations
             Account account = tokenChecker.checkAndReturnTokenOrRaiseException(request).getAccount();
             HashMap<String, Long> map = new HashMap<>();
-            map.put("discussion1", (long) 34);
-            map.put("discussion2", (long) 45);
-            map.put("discussion3", (long) 56);
-            map.put("discussion4", (long) 16);
-            map.put("discussion5", (long) 90);
+
+
+            // map.put("discussion1", (long) 34);
+            // map.put("discussion2", (long) 45);
+            // map.put("discussion3", (long) 56);
+            // map.put("discussion4", (long) 16);
+            // map.put("discussion5", (long) 90);
             LinkedHashMap<String, Long> sortedMap = sortMap(map);
             return ResponseEntity.ok().body(sortedMap);
         } catch (Exception e) {

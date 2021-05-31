@@ -12,6 +12,12 @@ public interface DocumentRepository extends CrudRepository<Document, Integer> {
     @Query("SELECT a FROM Document a where a.storageID = :storageID")
     public Optional<Document> findByStorageID(@Param("storageID") Long storageID);
 
+    //@Query("SELECT * FROM DOCUMENT a where a.dateOfUpload = :dateOfUpload")
+    //public Optional<Document> findbyDateofupload(@Param("dateOfUpload") ArrayList dateOfUpload);
+
+    @Query("SELECT  count(a) as NUM FROM Document GROUP BY a.dateOfUpload = :dateOfUpload")
+    public Optional<Document> findbyDateofupload(@Param("dateOfUpload") Long dateOfUpload);
+
     // @Query("SELECT a FROM Document a where a.storageID = :storageID AND
     // a.account.id =
     // :userId")
