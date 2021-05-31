@@ -1,0 +1,5 @@
+[
+  { "extensions": ["jpg", "png", "jpeg"], "name": "photos.png" },
+  { "extensions": ["ppt", "pptx"], "name": "ppt.png" },
+  { "extensions": ["pdf"], "name": "pdf.png" }
+]
