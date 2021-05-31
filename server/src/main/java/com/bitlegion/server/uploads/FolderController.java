@@ -16,7 +16,6 @@ import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
-import com.bitlegion.server.general.ApiRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.FileBody;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
