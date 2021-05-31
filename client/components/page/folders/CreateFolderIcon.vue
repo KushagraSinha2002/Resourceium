@@ -1,15 +1,10 @@
 <template>
   <div>
     <div
-      class="rounded-full shadow-2xl cursor-pointer bg-steel-300 ring ring-denim-700"
+      class="px-5 py-3 text-lg text-gray-200 transition-transform transform shadow-2xl cursor-pointer rounded-15px bg-primary font-poppins hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-inner"
       @click="openCreateFolderPrompt()"
     >
-      <ig-icon
-        name="plus"
-        no-size
-        variant="black"
-        class="h-10 md:h-14"
-      ></ig-icon>
+      New Folder
     </div>
     <div v-if="showPrompt" class="fixed inset-0 flex">
       <form
@@ -51,19 +46,28 @@ export default {
     closeCreateFolderPrompt() {
       this.showPrompt = false
     },
-    async createFolder() {
-      this.$axios.$post(`/folders/create`, {
-        title: this.title,
-      })
+    createFolder() {
+      this.$axios
+        .$post(`/folders/create`, {
+          title: this.title,
+        })
+        .then(async () => {
+          // I am not really sure why we need this sleep here, but we do. I do have a possible
+          // explanation for it. When we send the POST request above, it takes some time for
+          // the database to actually process the request and insert stuff into the database.
+          // However, we were not really giving it much time to complete the insertion before
+          // we were refreshing the list of folders from the database, resulting in it sending
+          // us back an incomplete list of folders.
+          await sleep(1000)
+          this.$emit('refreshFolders')
+        })
+        .catch((error) => {
+          this.$addAlert({
+            message: error.response.data,
+            type: 'danger',
+          })
+        })
       this.closeCreateFolderPrompt()
-      // I am not really sure why we need this sleep here, but we do. I do have a possible
-      // explanation for it. When we send the POST request above, it takes some time for
-      // the database to actually process the request and insert stuff into the database.
-      // However, we were not really giving it much time to complete the insertion before
-      // we were refreshing the list of folders from the database, resulting in it sending
-      // us back an incomplete list of folders.
-      await sleep(1000)
-      this.$emit('refreshFolders')
     },
   },
 }
