@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -16,6 +14,7 @@ import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
+import com.bitlegion.server.general.Sleeper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -58,11 +57,15 @@ public class FolderController {
     @Autowired
     private DocumentRepository fileRepository;
 
+    @Autowired
+    private Sleeper sleeper;
+
     @GetMapping("/user-folders")
     public ResponseEntity<Iterable<Folder>> getListFolders(HttpServletRequest request) {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
             Collection<Folder> folders = folderRepository.findByAccountOrderByLastEditedDesc(token.getAccount());
+            sleeper.pause(2000);
             return ResponseEntity.status(HttpStatus.OK).body(folders);
         } catch (Exception e) {
             System.out.println(e.getMessage());
