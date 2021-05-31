@@ -32,7 +32,8 @@
     "nuxt": "^2.15.3",
     "ufo": "^0.7.2",
     "vue-chartjs": "3.5.1",
-    "vue-number-animation": "^1.0.5"
+    "vue-number-animation": "^1.0.5",
+    "vue-tippy": "v4"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^5.0.0",
