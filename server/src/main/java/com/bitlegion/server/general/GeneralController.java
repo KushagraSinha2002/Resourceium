@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.Calendar;
+import java.time.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -63,9 +64,9 @@ public class GeneralController {
         // we are using linked hash map here since we need to preserve insertion order
         LinkedHashMap<String, Long> map = new LinkedHashMap<>();
         // this is the format in which the date is returned in
-         Calendar calendar = Calendar.getInstance();
+        LocalDate date = LocalDate.now();
         for(int i = 1; i <= 7; i++){
-          map.put(calendar.add(Calendar.Date, -i), (long) fileRepository.findbyDateofupload(calendar.add(Calendar.Date,-i));
+          map.put(date.minusdays(-i) , (long) fileRepository.findbyDateofupload(date.minusdays(-i));
         }
 
         //map.put(c, (long) 20);
