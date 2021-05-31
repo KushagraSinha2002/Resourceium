@@ -5,6 +5,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -14,6 +16,7 @@ import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
+import com.bitlegion.server.general.ApiRequestException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +29,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.FileBody;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
@@ -59,7 +64,7 @@ public class FolderController {
     public ResponseEntity<Iterable<Folder>> getListFolders(HttpServletRequest request) {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
-            Collection<Folder> folders = folderRepository.findByAccount(token.getAccount());
+            Collection<Folder> folders = folderRepository.findByAccountOrderByLastEditedDesc(token.getAccount());
             return ResponseEntity.status(HttpStatus.OK).body(folders);
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -78,11 +83,14 @@ public class FolderController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Folder> createFolder(HttpServletRequest request,
+    public @ResponseBody ResponseEntity<?> createFolder(HttpServletRequest request,
             @RequestBody HashMap<String, String> reqBody) {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
             String title = reqBody.get("title");
+            if (!folderRepository.findByAccountAndTitle(token.getAccount(), title).isEmpty()) {
+                return ResponseEntity.badRequest().body("A folder with this name already exists.");
+            }
             Folder folder = new Folder();
             folder.setTitle(title);
             folder.setAccount(token.getAccount());
