@@ -50,6 +50,8 @@ export default {
     '@nuxtjs/google-fonts',
     // https://auth.nuxtjs.org/
     '@nuxtjs/auth-next',
+    // https://github.com/nuxt-community/dayjs-module
+    '@nuxtjs/dayjs',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
