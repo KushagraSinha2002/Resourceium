@@ -68,7 +68,7 @@ public class Folder {
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked = new ArrayList<Liked>();
 
-    public void setDocument(Document document) {
+    public void addDocument(Document document) {
         this.getDocuments().add(document);
     }
 
