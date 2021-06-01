@@ -1,6 +1,7 @@
 import os
 
 from django.db import models
+from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 
@@ -27,3 +28,16 @@ class Upload(models.Model):
 
     def __str__(self):
         return f"{self.user_id}"
+
+
+def _delete_file(path):
+    """ Deletes file from filesystem. """
+    if os.path.isfile(path):
+        os.remove(path)
+
+
+@receiver(models.signals.post_delete, sender=Upload)
+def delete_file(sender, instance, *args, **kwargs):
+    """ Deletes image files on `post_delete` """
+    if instance.file:
+        _delete_file(instance.file.path)
