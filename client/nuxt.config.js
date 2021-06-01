@@ -127,6 +127,7 @@ export default {
           property: 'string',
           type: 'Token',
           name: 'Authorization',
+          maxAge: 60 * 60 * 24,
         },
       },
     },
