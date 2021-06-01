@@ -7,7 +7,7 @@
     <div v-if="!$fetchState.pending" class="w-full h-full">
       <div
         v-if="folders.length > 0"
-        class="grid grid-cols-2 gap-4 px-2 py-5 sm:gap-6 bg-cream-white sm:px-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 auto-rows-max"
+        class="grid grid-cols-2 gap-4 px-2 py-5 sm:gap-6 bg-cream-white sm:px-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 auto-rows-max"
       >
         <page-folders-base-folder
           v-for="(folder, name, index) in folders"
