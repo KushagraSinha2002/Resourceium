@@ -20,7 +20,7 @@
           <div
             class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
             title="Rename Folder"
-            @click.stop.prevent="renameFolder(folder.id)"
+            @click.stop.prevent="renameFolder"
           >
             <ig-icon
               title="Rename"
@@ -32,7 +32,7 @@
           <div
             class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
             title="Delete Folder"
-            @click.stop.prevent="deleteFolder(folder.id)"
+            @click.stop.prevent="deleteFolder"
           >
             <ig-icon
               title="Delete"
