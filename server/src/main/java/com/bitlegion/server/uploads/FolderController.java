@@ -1,9 +1,5 @@
 package com.bitlegion.server.uploads;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,8 +10,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.bitlegion.server.accounts.Account;
-import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
 import com.bitlegion.server.general.Sleeper;
@@ -32,19 +26,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.entity.mime.FileBody;
-import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.HttpEntity;
-import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 class SortByDateOfUpload implements Comparator<Document> {
 
@@ -64,9 +49,6 @@ public class FolderController {
 
     @Autowired
     private FolderRepository folderRepository;
-
-    @Autowired
-    private AccountRepository userRepository;
 
     @Autowired
     private DocumentRepository documentRepository;
@@ -174,51 +156,4 @@ public class FolderController {
         }
     }
 
-    @PostMapping("/upload-file/{folderID}")
-    public ResponseEntity<Document> uploadFile(HttpServletRequest request, @RequestParam MultipartFile file,
-            @PathVariable Integer folderID) {
-        try {
-
-            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
-            Account account = token.getAccount();
-            Folder folder = folderRepository.findById(folderID).get();
-            Path filepath = Paths.get(System.getProperty("java.io.tmpdir"), file.getOriginalFilename());
-            try {
-                file.transferTo(filepath);
-            } catch (Exception e) {
-                System.out.println("error: " + e.getMessage());
-                return ResponseEntity.badRequest().build();
-            }
-            try {
-                String URL = System.getenv("STORAGE_SERVER") + "files/upload/" + account.getId().toString() + "/"
-                        + folder.getId();
-                File diskFile = new File(filepath.toString());
-                CloseableHttpClient client = HttpClients.createDefault();
-                HttpPost post = new HttpPost(URL);
-                HttpEntity entity = MultipartEntityBuilder.create().addPart("file", new FileBody(diskFile)).build();
-                post.setEntity(entity);
-                CloseableHttpResponse response = client.execute(post);
-                HttpEntity entityResponse = response.getEntity();
-                String result = EntityUtils.toString(entityResponse);
-                JSONParser parser = new JSONParser();
-                JSONObject json = (JSONObject) parser.parse(result);
-                Document document = new Document();
-                document.setName(file.getOriginalFilename());
-                document.setStorageID((Long) json.get("storageID"));
-                document.setFolder(folder);
-                documentRepository.save(document);
-                folder.setDocument(document);
-                folder.setLastEdited(new Date());
-                userRepository.save(account);
-                folderRepository.save(folder);
-                return ResponseEntity.status(HttpStatus.OK).body(document);
-            } catch (Exception e) {
-                System.out.println("error: " + e.getMessage());
-                return ResponseEntity.badRequest().build();
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
-    }
 }
