@@ -2,4 +2,11 @@
   { "extensions": ["jpg", "png", "jpeg"], "name": "photos.png" },
   { "extensions": ["ppt", "pptx"], "name": "ppt.png" },
   { "extensions": ["pdf"], "name": "pdf.png" }
+  { "extensions": ["zip", "z"], "name": "zip.png" }
+  { "extensions": ["doc", "docx", "dotx"], "name": "word.png" }
+  { "extensions": ["mp4", "mpg", "mpeg"], "name": "video.png" }
+  { "extensions": ["pdf"], "name": "pdf.png" }
+  { "extensions": ["txt"], "name": "note.png" }
+  { "extensions": ["xls", "xlsx"], "name": "ms_excel.png" }
+  { "extensions": ["mp3", "aac"], "name": "audio.png" }
 ]
