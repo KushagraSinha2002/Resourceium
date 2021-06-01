@@ -88,6 +88,10 @@ public class Document {
         return "files/download/" + this.getStorageID();
     }
 
+    public String getDeleteUrl() {
+        return "files/delete/" + this.getStorageID();
+    }
+
     public void setName(String name) {
         this.name = name;
     }
