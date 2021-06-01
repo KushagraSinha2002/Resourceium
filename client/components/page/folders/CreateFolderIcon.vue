@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { sleep } from '../../../utils/sleep.js'
+import { sleep } from '~/utils/sleep.js'
 
 export default {
   data() {
@@ -58,7 +58,7 @@ export default {
           // However, we were not really giving it much time to complete the insertion before
           // we were refreshing the list of folders from the database, resulting in it sending
           // us back an incomplete list of folders.
-          await sleep(1000)
+          await sleep(200)
           this.$emit('refreshFolders')
         })
         .catch((error) => {
