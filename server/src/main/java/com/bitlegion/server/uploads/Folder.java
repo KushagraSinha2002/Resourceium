@@ -72,6 +72,10 @@ public class Folder {
         this.getDocuments().add(document);
     }
 
+    public void removeDocument(Document document) {
+        this.getDocuments().remove(document);
+    }
+
     public Set<Tag> getTags() {
         return this.tags;
     }
