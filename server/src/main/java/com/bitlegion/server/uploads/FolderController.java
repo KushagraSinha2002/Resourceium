@@ -4,7 +4,10 @@ import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +45,14 @@ import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+class SortByDateOfUpload implements Comparator<Document> {
+
+    @Override
+    public int compare(Document a, Document b) {
+        return b.getDateOfUpload().compareTo(a.getDateOfUpload());
+    }
+}
 
 @Service
 @RequestMapping(path = "/folders")
@@ -82,8 +93,14 @@ public class FolderController {
         Optional<Folder> maybeFolder = folderRepository.findById(folderID);
         if (maybeFolder.isEmpty()) {
             return ResponseEntity.notFound().build();
+        } else {
+            Folder folder = maybeFolder.get();
+            Collection<Document> documents = folder.getDocuments();
+            ArrayList<Document> newDocuments = new ArrayList<>(documents);
+            Collections.sort(newDocuments, new SortByDateOfUpload());
+            folder.setDocuments(newDocuments);
+            return ResponseEntity.status(HttpStatus.OK).body(folder);
         }
-        return ResponseEntity.status(HttpStatus.OK).body(maybeFolder.get());
     }
 
     @PostMapping("/create")
