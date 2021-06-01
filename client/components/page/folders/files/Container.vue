@@ -4,9 +4,17 @@
       :folder="folder"
       @refreshFolder="fetchFolder()"
     ></page-folders-files-upload-icon>
-    <page-folders-files-table
-      :files="folder.documents"
-    ></page-folders-files-table>
+    <div
+      class="grid grid-cols-1 gap-4 px-2 py-5 md:grid-cols-2 sm:gap-6 bg-cream-white sm:px-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-max"
+    >
+      <page-folders-files-grid-item
+        v-for="file in folder.documents"
+        :key="file.id"
+        :file="file"
+        @refreshFolder="fetchFolder()"
+      >
+      </page-folders-files-grid-item>
+    </div>
   </div>
   <base-show-loading v-else></base-show-loading>
 </template>
