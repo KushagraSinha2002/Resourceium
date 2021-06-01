@@ -19,7 +19,8 @@
         <div class="flex justify-around space-x-6">
           <div
             class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
-            @click.stop.prevent="renameFolder"
+            title="Rename Folder"
+            @click.stop.prevent="renameFolder(folder.id)"
           >
             <ig-icon
               title="Rename"
@@ -30,7 +31,8 @@
           </div>
           <div
             class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
-            @click.stop.prevent="deleteFolder"
+            title="Delete Folder"
+            @click.stop.prevent="deleteFolder(folder.id)"
           >
             <ig-icon
               title="Delete"
@@ -53,6 +55,7 @@
 
 <script>
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+import { sleep } from '~/utils/sleep.js'
 
 export default {
   props: {
@@ -85,13 +88,45 @@ export default {
     },
   },
   methods: {
-    deleteFolder() {
+    async deleteFolder() {
       // send DELETE request
-      console.log('delete')
+      if (
+        confirm(
+          `All files inside will also be deleted. This action can not be reversed. Delete folder '${this.folder.title}'?`
+        )
+      ) {
+        await this.$axios
+          .$delete(`/folders/delete/${this.folder.id}`)
+          .then(async () => {
+            await sleep(20)
+            this.$emit('refreshFolders')
+          })
+          .catch(() => {
+            this.$addAlert({
+              message:
+                'There was some problem processing your request. Please try again later.',
+              type: 'danger',
+            })
+          })
+      }
     },
-    renameFolder() {
-      // send PUT request
-      console.log('rename')
+    async renameFolder() {
+      // send PATCH request
+      const title = prompt('Enter new name', this.folder.title)
+      if (title) {
+        await this.$axios
+          .$patch(`/folders/rename/${this.folder.id}`, { title })
+          .then(async () => {
+            await sleep(20)
+            this.$emit('refreshFolders')
+          })
+          .catch((err) => {
+            this.$addAlert({
+              message: err.response.data,
+              type: 'danger',
+            })
+          })
+      }
     },
     formatDate(date) {
       this.$dayjs.extend(LocalizedFormat)
