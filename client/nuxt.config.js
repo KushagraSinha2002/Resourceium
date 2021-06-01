@@ -84,6 +84,9 @@ export default {
   axios: {
     baseURL: process.env.API_URL || 'http://localhost:8000/',
   },
+  publicRuntimeConfig: {
+    storageServer: process.env.STORAGE_SERVER,
+  },
   pwa: {
     icon: {
       fileName: 'icon.png',
