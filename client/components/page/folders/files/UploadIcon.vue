@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { cleanDoubleSlashes } from 'ufo'
 import filesize from 'filesize'
 import { sleep } from '~/utils/sleep.js'
 
@@ -68,14 +69,32 @@ export default {
     save(formData) {
       // upload data to the server
       this.currentStatus = STATUS_SAVING
+      const filename = this.file.name
+      const url = cleanDoubleSlashes(
+        `${this.$config.storageServer}/files/upload/${this.$auth.user.id}/${this.folder.id}`
+      )
       this.$axios
-        .$post(`/folders/upload-file/${this.folder.id}`, formData)
-        .then((_resp) => {
-          this.$addAlert({
-            message: 'Uploaded file successfully',
-            type: 'success',
-            timeOut: 1000,
-          })
+        .$post(url, formData)
+        .then((result) => {
+          this.$axios
+            .$post(`/documents/upload/${this.folder.id}`, {
+              name: filename,
+              storageID: result.storageID,
+            })
+            .then((_resp) => {
+              this.$addAlert({
+                message: 'Uploaded file successfully',
+                type: 'success',
+                timeOut: 1000,
+              })
+            })
+            .catch((_err) => {
+              this.$addAlert({
+                message: 'Error in uploading file',
+                type: 'danger',
+                timeOut: 1000,
+              })
+            })
         })
         .catch((_err) => {
           this.$addAlert({
