@@ -52,6 +52,8 @@ export default {
     '@nuxtjs/auth-next',
     // https://github.com/nuxt-community/dayjs-module
     '@nuxtjs/dayjs',
+    // https://saintplay.github.io
+    'vue-swatches/nuxt',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
