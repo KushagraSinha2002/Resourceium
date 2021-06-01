@@ -9,21 +9,41 @@
     :content="getFolderDetails"
     class="flex flex-col items-center"
   >
-    <div class="rounded-15px hover:ring-2">
-      <div class="flex justify-center md:p-4">
+    <div class="p-4 rounded-15px hover:ring-2">
+      <div class="flex flex-col items-center justify-center">
         <img
           :src="require('~/assets/images/folder-icon.png')"
           :alt="`folder-${folder.id}`"
+          class="w-20 h-20"
         />
-        <div
-          class="z-20 flex items-center justify-center w-8 h-8 mt-auto mb-2 -ml-2 transition duration-500 transform rounded-full cursor-pointer hover:bg-black hover:bg-opacity-40"
-          @click.stop.prevent="handleMenuOpen"
-        >
-          <img :src="require('~/assets/images/open-menu.png')" class="h-6" />
+        <div class="flex justify-around space-x-6">
+          <div
+            class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
+            @click.stop.prevent="renameFolder"
+          >
+            <ig-icon
+              title="Rename"
+              name="edit-3"
+              size="sm"
+              variant="primary"
+            ></ig-icon>
+          </div>
+          <div
+            class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
+            @click.stop.prevent="deleteFolder"
+          >
+            <ig-icon
+              title="Delete"
+              name="trash"
+              size="sm"
+              variant="danger"
+            ></ig-icon>
+          </div>
         </div>
       </div>
       <div
-        class="p-2 text-center line-clamp-1 justify-self-end rounded-b-md font-poppins"
+        class="p-2 overflow-hidden text-center whitespace-nowrap justify-self-end rounded-b-md font-poppins"
+        style="width: 13ch"
       >
         {{ folder.title }}
       </div>
@@ -65,9 +85,13 @@ export default {
     },
   },
   methods: {
-    handleMenuOpen() {
-      // event.stopPropagation()
-      console.log('here')
+    deleteFolder() {
+      // send DELETE request
+      console.log('delete')
+    },
+    renameFolder() {
+      // send PUT request
+      console.log('rename')
     },
     formatDate(date) {
       this.$dayjs.extend(LocalizedFormat)
