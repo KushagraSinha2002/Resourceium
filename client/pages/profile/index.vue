@@ -52,7 +52,7 @@ export default {
     const user = this.$auth.user
     this.formData = {
       ...user,
-      dateOfBirth: this.$moment(user.dateOfBirth).format('ll'),
+      dateOfBirth: this.$dayjs(user.dateOfBirth).format('ll'),
       password: '********',
       bio: user.bio ? user.bio : '',
     }
@@ -66,7 +66,7 @@ export default {
       if (!this.changed) {
         return
       }
-      const date = this.$moment(this.formData.dateOfBirth, 'll')
+      const date = this.$dayjs(this.formData.dateOfBirth, 'll')
       if (!date.isValid()) {
         alert("Invalid date format. Should follow format: 'Apr 25, 2021'")
         return
