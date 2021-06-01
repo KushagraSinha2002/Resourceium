@@ -9,6 +9,11 @@ urlpatterns = [
         name="upload_file",
     ),
     path(
+        "delete/<int:storageID>",
+        views.delete_view,
+        name="delete_file",
+    ),
+    path(
         "download/<int:storageID>",
         views.download_view,
         name="download_file",

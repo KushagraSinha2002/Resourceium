@@ -2,6 +2,7 @@ from io import BytesIO
 
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
@@ -18,7 +19,7 @@ class IndexView(TemplateView):
 class FileUploadView(APIView):
     parser_classes = (MultiPartParser,)
 
-    def post(self, request, format=None, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         file_obj = request.FILES["file"]
         obj = models.Upload.objects.create(
             file=file_obj,
@@ -30,7 +31,7 @@ class FileUploadView(APIView):
         return Response(data={"storageID": obj.id}, status=status.HTTP_200_OK)
 
 
-def download_view(request, storageID):
+def download_view(_, storageID):
     response = HttpResponse()
     buffer = BytesIO()
     file_obj = get_object_or_404(models.Upload, pk=storageID)
@@ -39,3 +40,10 @@ def download_view(request, storageID):
     response.write(buffer.getbuffer())
     response["Content-Disposition"] = f'attachment; filename="{file_obj.name}"'
     return response
+
+
+@csrf_exempt
+def delete_view(_, storageID):
+    upload = models.Upload.objects.get(pk=storageID)
+    upload.delete()
+    return HttpResponse(status=200)
