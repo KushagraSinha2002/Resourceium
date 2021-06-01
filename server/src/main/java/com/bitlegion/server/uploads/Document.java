@@ -27,6 +27,7 @@ public class Document {
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private Date dateOfUpload;
 
     @Column(nullable = false, unique = true)
@@ -81,6 +82,10 @@ public class Document {
 
     public String getName() {
         return this.name;
+    }
+
+    public String getUrl() {
+        return "files/download/" + this.getStorageID();
     }
 
     public void setName(String name) {
