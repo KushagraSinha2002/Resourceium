@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,7 +58,7 @@ public class FolderController {
     private AccountRepository userRepository;
 
     @Autowired
-    private DocumentRepository fileRepository;
+    private DocumentRepository documentRepository;
 
     @Autowired
     private Sleeper sleeper;
@@ -103,6 +106,57 @@ public class FolderController {
         }
     }
 
+    @DeleteMapping("/delete/{folderID}")
+    public @ResponseBody ResponseEntity<?> deleteFolder(HttpServletRequest request, @PathVariable Integer folderID) {
+        try {
+            tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            Optional<Folder> maybeFolder = folderRepository.findById(folderID);
+            if (maybeFolder.isEmpty()) {
+                return ResponseEntity.badRequest().body("The requested folder does not exist.");
+            } else {
+                Folder folder = maybeFolder.get();
+                List<Document> documents = documentRepository.findByFolder(folder);
+                for (int i = 0; i < documents.size(); i++) {
+                    CloseableHttpClient httpClient = HttpClients.createDefault();
+                    String URL = System.getenv("STORAGE_SERVER") + "files/delete/" + documents.get(i).getStorageID();
+                    HttpPost httpPost = new HttpPost(URL);
+                    httpClient.execute(httpPost);
+                }
+                // delete all associated documents
+                documentRepository.deleteAll(documents);
+                folderRepository.delete(folder);
+                return ResponseEntity.status(HttpStatus.OK).body("Folder deleted successfully!");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PatchMapping("/rename/{folderID}")
+    public @ResponseBody ResponseEntity<?> renameFolder(HttpServletRequest request, @PathVariable Integer folderID,
+            @RequestBody HashMap<String, String> reqBody) {
+        try {
+            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            Optional<Folder> maybeFolder = folderRepository.findById(folderID);
+            if (maybeFolder.isEmpty()) {
+                return ResponseEntity.badRequest().body("The requested folder does not exist.");
+            } else {
+                String title = reqBody.get("title");
+                if (!folderRepository.findByAccountAndTitle(token.getAccount(), title).isEmpty()) {
+                    return ResponseEntity.badRequest().body("A folder with this name already exists.");
+                }
+                Folder folder = maybeFolder.get();
+                folder.setTitle(title);
+                folderRepository.save(folder);
+                return ResponseEntity.status(HttpStatus.OK).body("Folder renamed successfully!");
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping("/upload-file/{folderID}")
     public ResponseEntity<Document> uploadFile(HttpServletRequest request, @RequestParam MultipartFile file,
             @PathVariable Integer folderID) {
@@ -135,7 +189,7 @@ public class FolderController {
                 document.setName(file.getOriginalFilename());
                 document.setStorageID((Long) json.get("storageID"));
                 document.setFolder(folder);
-                fileRepository.save(document);
+                documentRepository.save(document);
                 folder.setDocument(document);
                 folder.setLastEdited(new Date());
                 userRepository.save(account);
