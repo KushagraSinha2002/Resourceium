@@ -13,6 +13,7 @@
           v-for="(folder, name, index) in folders"
           :key="index"
           :folder="folder"
+          @refreshFolders="fetchFolders()"
         >
         </page-folders-base-folder>
       </div>
