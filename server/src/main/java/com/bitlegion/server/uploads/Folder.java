@@ -52,7 +52,7 @@ public class Folder {
             @JoinColumn(name = "tag_id") })
     private Set<Tag> tags = new HashSet<Tag>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
