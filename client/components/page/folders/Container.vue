@@ -17,7 +17,12 @@
         >
         </page-folders-base-folder>
       </div>
-      <page-folders-empty-data v-else></page-folders-empty-data>
+      <div v-else class="flex items-center justify-center h-full">
+        <common-empty-data>
+          <span>Seems like you have not created any folders.</span>
+          <span>Click on the button on the bottom right to create one.</span>
+        </common-empty-data>
+      </div>
     </div>
     <base-show-loading v-else></base-show-loading>
   </div>
