@@ -2,7 +2,24 @@ image:
   file: .gitpod.Dockerfile
 
 tasks:
-  - init: bash -c "sudo pip3 install poetry && curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sh -s -- --yes && /workspace/Resourceium/.devcontainer/setup-storage && git config --global pull.rebase true && poetry config virtualenvs.in-project true"
+  - name: Setup project
+    init: >
+      sudo pip3 install poetry && 
+      curl https://raw.githubusercontent.com/IgnisDa/printr/main/get-printr.sh | sh -s -- --yes && 
+      bash -c "/workspace/Resourceium/.devcontainer/setup-storage" && 
+      git config --global pull.rebase true && 
+      poetry config virtualenvs.in-project true &&
+      gp sync-done setup
+
+  - name: Setup dependencies
+    init: gp sync-await setup
+    command: >
+      just setup &&
+      gp sync-done deps
+
+  - name: Run servers
+    init: gp sync-await deps
+    command: just
 
 ports:
   - port: 3000
