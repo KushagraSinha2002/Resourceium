@@ -1,20 +1,29 @@
 <template>
-  <div v-if="folder" class="flex-grow overflow-hidden">
+  <div v-if="folder" class="flex flex-col h-full">
     <!-- <page-folders-tag-setter></page-folders-tag-setter> -->
     <page-folders-files-upload-icon
       :folder="folder"
       @refreshFolder="fetchFolder()"
     ></page-folders-files-upload-icon>
-    <div
-      class="grid grid-cols-1 gap-4 px-2 py-5 md:grid-cols-2 sm:gap-6 bg-cream-white sm:px-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-max"
-    >
-      <page-folders-files-grid-item
-        v-for="file in documents"
-        :key="file.id"
-        :file="file"
-        @refreshFolder="fetchFolder()"
+    <div v-if="!$fetchState.pending" class="flex-1">
+      <div
+        v-if="documents.length > 0"
+        class="grid grid-cols-1 gap-4 px-2 py-5 md:grid-cols-2 sm:gap-6 bg-cream-white sm:px-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-max"
       >
-      </page-folders-files-grid-item>
+        <page-folders-files-grid-item
+          v-for="file in documents"
+          :key="file.id"
+          :file="file"
+          @refreshFolder="fetchFolder()"
+        >
+        </page-folders-files-grid-item>
+      </div>
+      <div v-else class="flex items-center justify-center h-full">
+        <common-empty-data>
+          <span>Seems like you have not uploaded any files.</span>
+          <span>Click on the button above to upload some.</span>
+        </common-empty-data>
+      </div>
     </div>
   </div>
   <base-show-loading v-else></base-show-loading>
