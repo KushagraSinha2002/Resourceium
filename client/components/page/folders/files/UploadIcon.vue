@@ -1,13 +1,21 @@
 <template>
-  <form enctype="multipart/form-data" novalidate @submit.prevent="handleSubmit">
+  <form
+    enctype="multipart/form-data"
+    novalidate
+    class="border"
+    @submit.prevent="handleSubmit"
+    @drop.prevent="addFile"
+    @dragover.prevent
+  >
     <h1>Upload files</h1>
-    <div class="dropbox">
+    <div>
       <input
-        id="file"
+        id="files"
         ref="inputBox"
+        multiple
         type="file"
-        name="file"
-        :disabled="isSaving"
+        name="files"
+        class="custom-file-input"
         @change="handleFileChange"
       />
       <button type="submit" class="bg-blue-300 border border-black">
@@ -19,41 +27,26 @@
 
 <script>
 import { cleanDoubleSlashes } from 'ufo'
-import filesize from 'filesize'
-import { sleep } from '~/utils/sleep.js'
-
-const STATUS_INITIAL = 0
-const STATUS_SAVING = 1
-const STATUS_SUCCESS = 2
-const STATUS_FAILED = 3
+import { sleep } from '~/utils/sleep'
 
 export default {
-  filters: {
-    getFileSize(value) {
-      return filesize(value)
-    },
-  },
   props: {
     folder: { type: Object, required: true },
   },
   data() {
     return {
       currentStatus: null,
-      file: null,
+      files: [],
     }
   },
   computed: {
-    isInitial() {
-      return this.currentStatus === STATUS_INITIAL
+    serverUploadURL() {
+      return cleanDoubleSlashes(
+        `${this.$config.storageServer}/files/upload/${this.$auth.user.id}/${this.folder.id}`
+      )
     },
-    isSaving() {
-      return this.currentStatus === STATUS_SAVING
-    },
-    isSuccess() {
-      return this.currentStatus === STATUS_SUCCESS
-    },
-    isFailed() {
-      return this.currentStatus === STATUS_FAILED
+    backendUploadURL() {
+      return cleanDoubleSlashes(`/documents/upload/${this.folder.id}`)
     },
   },
   mounted() {
@@ -62,57 +55,45 @@ export default {
   methods: {
     reset() {
       // reset form to initial state
-      this.currentStatus = STATUS_INITIAL
       this.$refs.inputBox.value = null
-      this.file = null
+      this.files = []
     },
-    save(formData) {
-      // upload data to the server
-      this.currentStatus = STATUS_SAVING
-      const filename = this.file.name
-      const url = cleanDoubleSlashes(
-        `${this.$config.storageServer}/files/upload/${this.$auth.user.id}/${this.folder.id}`
-      )
-      this.$axios
-        .$post(url, formData)
-        .then((result) => {
-          this.$axios
-            .$post(`/documents/upload/${this.folder.id}`, {
-              name: filename,
-              storageID: result.storageID,
-            })
-            .then((_resp) => {
-              this.$addAlert({
-                message: 'Uploaded file successfully',
-                type: 'success',
-                timeOut: 1000,
-              })
-            })
-            .catch((_err) => {
-              this.$addAlert({
-                message: 'Error in uploading file',
-                type: 'danger',
-                timeOut: 1000,
-              })
-            })
-        })
-        .catch((_err) => {
-          this.$addAlert({
-            message: 'Error in uploading file',
-            type: 'danger',
-            timeOut: 1000,
+    async save(formData) {
+      const filename = formData.get('file').name
+      try {
+        const res1 = await this.$axios.$post(this.serverUploadURL, formData)
+        try {
+          await this.$axios.$post(this.backendUploadURL, {
+            name: filename,
+            storageID: res1.storageID,
           })
-        })
-      this.currentStatus = STATUS_SUCCESS
+        } catch {
+          this.showError()
+        }
+      } catch {
+        this.showError()
+      }
     },
     handleFileChange() {
-      this.file = this.$refs.inputBox.files[0]
+      this.files = this.$refs.inputBox.files
+    },
+    showError() {
+      this.$addAlert({
+        message: 'Error in uploading file',
+        type: 'danger',
+        timeOut: 1000,
+      })
+    },
+    addFile(e) {
+      const droppedFiles = e.dataTransfer.files
+      if (!droppedFiles) return
+      ;[...droppedFiles].forEach((f) => {
+        this.files.push(f)
+      })
     },
     async handleSubmit() {
       // handle file changes
-      const formData = new FormData()
-
-      if (!this.file) {
+      if (!this.files.length) {
         this.$addAlert({
           message: 'Please select a file to upload',
           type: 'info',
@@ -120,22 +101,46 @@ export default {
         })
         return
       }
-      if (this.file.size > 2048000) {
-        this.$addAlert({
-          message: 'File size can not be above 2 MB',
-          type: 'danger',
-          timeOut: 1000,
-        })
-        this.reset()
-        return
+      for (let i = 0; i < this.files.length; i++) {
+        const formData = new FormData()
+        const file = this.files[i]
+        formData.append('file', file, file.name)
+        // save it
+        await this.save(formData)
       }
-      formData.append('file', this.file, this.file.name)
-      // save it
-      this.save(formData)
+      await sleep(800)
       this.reset()
-      await sleep(500)
       this.$emit('refreshFolder')
     },
   },
 }
 </script>
+
+<style scoped>
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-file-input::before {
+  border: 1px solid #999;
+  border-radius: 3px;
+  content: 'Select some files';
+  cursor: pointer;
+  display: inline-block;
+  font-size: 10pt;
+  font-weight: 700;
+  outline: none;
+  padding: 5px 8px;
+  text-shadow: 1px 1px #fff;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.custom-file-input:hover::before {
+  border-color: #000;
+}
+
+.custom-file-input:active::before {
+  background: #e3e3e3, #f9f9f9;
+}
+</style>
