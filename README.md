@@ -20,8 +20,9 @@ as a resource on our platform.
 ## Built With
 
 - [Spring Boot](https://spring.io/) - JAVA backend server
+- [Django](https://www.djangoproject.com/) - Storage server
+- [Nuxtjs](https://nuxtjs.org/) - Frontend framework
 - [Tailwind](https://tailwindcss.com/) - Used as the main UI framework
-- [Nuxtjs](https://nuxtjs.org/) - frontend framework
 - [Heroku](https://www.heroku.com/) - Web Hosting
 
 ## Contributing
