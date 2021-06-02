@@ -104,11 +104,11 @@ export default {
         this.showError()
       }
     },
-    removeFile(name) {
-      console.log(name)
-    },
     handleFileChange() {
-      this.files = this.$refs.inputBox.files
+      const files = this.$refs.inputBox.files
+      for (const file of files) {
+        this.files.push(file)
+      }
     },
     showError() {
       this.$addAlert({
@@ -137,7 +137,7 @@ export default {
       } else {
         for (let i = 0; i < this.files.length; i++) {
           const formData = new FormData()
-          const file = this.files[i]
+          const file = this.files.pop()
           formData.append('file', file, file.name)
           // save it
           await this.save(formData)
