@@ -8,5 +8,8 @@
   { "extensions": ["pdf"], "name": "pdf.png" },
   { "extensions": ["txt"], "name": "note.png" },
   { "extensions": ["xls", "xlsx"], "name": "ms_excel.png" },
+  { "extensions": ["asp", "aspx"], "name": "asp.png" },
+  { "extensions": ["htm", "html"], "name": "html.png" },
+  { "extensions": ["xls", "xlsx"], "name": "ms_excel.png" },
   { "extensions": ["mp3", "aac"], "name": "audio.png" }
 ]
