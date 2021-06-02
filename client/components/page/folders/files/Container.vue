@@ -1,5 +1,6 @@
 <template>
   <div v-if="folder" class="flex-grow overflow-hidden">
+    <!-- <page-folders-tag-setter></page-folders-tag-setter> -->
     <page-folders-files-upload-icon
       :folder="folder"
       @refreshFolder="fetchFolder()"
@@ -8,7 +9,7 @@
       class="grid grid-cols-1 gap-4 px-2 py-5 md:grid-cols-2 sm:gap-6 bg-cream-white sm:px-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-max"
     >
       <page-folders-files-grid-item
-        v-for="file in folder.documents"
+        v-for="file in documents"
         :key="file.id"
         :file="file"
         @refreshFolder="fetchFolder()"
@@ -28,6 +29,11 @@ export default {
   },
   async fetch() {
     await this.fetchFolder()
+  },
+  computed: {
+    documents() {
+      return this.folder.documents
+    },
   },
   methods: {
     async fetchFolder() {
