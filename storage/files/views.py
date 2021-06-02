@@ -44,6 +44,6 @@ def download_view(_, storageID):
 
 @csrf_exempt
 def delete_view(_, storageID):
-    upload = models.Upload.objects.get(pk=storageID)
+    upload = get_object_or_404(models.Upload, pk=storageID)
     upload.delete()
     return HttpResponse(status=200)
