@@ -1,32 +1,59 @@
 <template>
   <form
+    class="flex flex-col w-10/12 mx-auto sm:w-2/3"
     enctype="multipart/form-data"
     novalidate
-    class="border"
     @submit.prevent="handleSubmit"
     @drop.prevent="addFile"
     @dragover.prevent
   >
-    <h1>Upload files</h1>
-    <div>
+    <div
+      class="p-3 text-center border-2 border-b-0 border-gray-400 border-dashed rounded-t-15px font-poppins"
+    >
       <input
         id="files"
         ref="inputBox"
         multiple
         type="file"
         name="files"
-        class="custom-file-input"
+        class="hidden"
         @change="handleFileChange"
       />
-      <button type="submit" class="bg-blue-300 border border-black">
-        Upload
-      </button>
+      <div class="mx-auto text-xl md:text-3xl sm:w-9/12">
+        Drag & drop <span class="text-purple-800">images</span>,
+        <span class="text-purple-800">videos</span> or any
+        <span class="text-purple-800">file</span>
+      </div>
+      <div>
+        <label for="files" class="cursor-pointer">
+          or
+          <span
+            class="text-purple-800 underline md:no-underline md:hover:underline"
+          >
+            browse files</span
+          >
+          on your device
+        </label>
+      </div>
+      <div class="w-full mx-auto md:w-9/12">
+        <span v-if="!uploading">Selected</span>
+        <span v-else>Uploading</span>
+        <span class="text-xl text-purple-800">{{ files.length }}</span> files
+      </div>
     </div>
+    <base-loading-button
+      type="submit"
+      text="Upload"
+      :loading="uploading"
+      class="w-full px-3 py-2 mx-auto text-lg font-semibold bg-indigo-600 sm:px-4 md:text-xl text-purple-50 hover:ring focus:outline-none hover:ring-red-300 !transform-none ring-0 !rounded-t-none"
+    >
+    </base-loading-button>
   </form>
 </template>
 
 <script>
 import { cleanDoubleSlashes } from 'ufo'
+import fileSize from 'filesize'
 import { sleep } from '~/utils/sleep'
 
 export default {
@@ -35,7 +62,7 @@ export default {
   },
   data() {
     return {
-      currentStatus: null,
+      uploading: false,
       files: [],
     }
   },
@@ -58,6 +85,9 @@ export default {
       this.$refs.inputBox.value = null
       this.files = []
     },
+    getFilesize(size) {
+      return fileSize(size)
+    },
     async save(formData) {
       const filename = formData.get('file').name
       try {
@@ -73,6 +103,9 @@ export default {
       } catch {
         this.showError()
       }
+    },
+    removeFile(name) {
+      console.log(name)
     },
     handleFileChange() {
       this.files = this.$refs.inputBox.files
@@ -93,24 +126,27 @@ export default {
     },
     async handleSubmit() {
       // handle file changes
+      this.uploading = true
       if (!this.files.length) {
         this.$addAlert({
           message: 'Please select a file to upload',
           type: 'info',
           timeOut: 1000,
         })
-        return
+        this.uploading = false
+      } else {
+        for (let i = 0; i < this.files.length; i++) {
+          const formData = new FormData()
+          const file = this.files[i]
+          formData.append('file', file, file.name)
+          // save it
+          await this.save(formData)
+          await sleep(800)
+          this.$emit('refreshFolder')
+        }
+        this.reset()
       }
-      for (let i = 0; i < this.files.length; i++) {
-        const formData = new FormData()
-        const file = this.files[i]
-        formData.append('file', file, file.name)
-        // save it
-        await this.save(formData)
-      }
-      await sleep(800)
-      this.reset()
-      this.$emit('refreshFolder')
+      this.uploading = false
     },
   },
 }
@@ -119,28 +155,16 @@ export default {
 <style scoped>
 .custom-file-input::-webkit-file-upload-button {
   visibility: hidden;
+  @apply appearance-none;
 }
 
 .custom-file-input::before {
-  border: 1px solid #999;
-  border-radius: 3px;
-  content: 'Select some files';
-  cursor: pointer;
-  display: inline-block;
-  font-size: 10pt;
-  font-weight: 700;
-  outline: none;
-  padding: 5px 8px;
-  text-shadow: 1px 1px #fff;
-  user-select: none;
-  white-space: nowrap;
+  content: 'Add file';
+  @apply cursor-pointer outline-none select-none;
 }
 
-.custom-file-input:hover::before {
-  border-color: #000;
-}
-
-.custom-file-input:active::before {
-  background: #e3e3e3, #f9f9f9;
+.custom-file-input::after {
+  content: 'or drop files here';
+  @apply cursor-pointer outline-none select-none;
 }
 </style>
