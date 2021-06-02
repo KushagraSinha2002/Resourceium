@@ -59,25 +59,25 @@ public class GeneralController {
     // '2021-04-2 00:00:00:0': <number of documents uploaded that day>,
     // }
     // TODO: COMPLETE IMPLEMENTATION
-    @GetMapping(path = "/dashboard/graph/1")
-    public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphOne() {
-        // we are using linked hash map here since we need to preserve insertion order
-        LinkedHashMap<String, Long> map = new LinkedHashMap<>();
-        // this is the format in which the date is returned in
-        LocalDate date = LocalDate.now();
-        for(int i = 1; i <= 7; i++){
-          map.put(date.minusdays(-i) , (long) fileRepository.findbyDateofupload(date.minusdays(-i));
-        }
+    // @GetMapping(path = "/dashboard/graph/1")
+    // public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphOne() {
+    //     // we are using linked hash map here since we need to preserve insertion order
+    //     LinkedHashMap<String, Long> map = new LinkedHashMap<>();
+    //     // this is the format in which the date is returned in
+    //     LocalDate date = LocalDate.now();
+    //     for(int i = 1; i <= 7; i++){
+    //       map.put(date.minusdays(-i) , (long) fileRepository.findbyDateofupload(date.minusdays(-i));
+    //     }
 
-        //map.put(c, (long) 20);
-        //map.put("2021-04-25 00:00:00.0", (long) 0);
-        //map.put("2021-04-26 00:00:00.0", (long) 76);
-        //map.put("2021-04-27 00:00:00.0", (long) 90);
-        //map.put("2021-04-28 00:00:00.0", (long) 25);
-        //map.put("2021-04-29 00:00:00.0", (long) 12);
-        //map.put("2021-04-30 00:00:00.0", (long) 56);
-        return ResponseEntity.ok().body(map);
-    }
+    //     //map.put(c, (long) 20);
+    //     //map.put("2021-04-25 00:00:00.0", (long) 0);
+    //     //map.put("2021-04-26 00:00:00.0", (long) 76);
+    //     //map.put("2021-04-27 00:00:00.0", (long) 90);
+    //     //map.put("2021-04-28 00:00:00.0", (long) 25);
+    //     //map.put("2021-04-29 00:00:00.0", (long) 12);
+    //     //map.put("2021-04-30 00:00:00.0", (long) 56);
+    //     return ResponseEntity.ok().body(map);
+    // }
 
     // This controller will be used to obtain the at-most top 5 discussions (or
     // could be less) that the user has participated in. The data MUST be
