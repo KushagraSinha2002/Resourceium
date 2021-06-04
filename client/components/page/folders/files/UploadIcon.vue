@@ -1,6 +1,6 @@
 <template>
   <form
-    class="flex flex-col w-10/12 mx-auto sm:w-2/3"
+    class="flex flex-col"
     enctype="multipart/form-data"
     novalidate
     @submit.prevent="handleSubmit"
@@ -10,6 +10,28 @@
     <div
       class="p-3 text-center border-2 border-b-0 border-gray-400 border-dashed rounded-t-15px font-poppins"
     >
+      <div
+        class="flex justify-between px-2 pt-2 pb-1 mb-2 border border-gray-400 rounded-tl-15px rounded-br-15px"
+      >
+        <div>
+          <div v-for="tag in folder.tags" :key="tag.id">{{ tag }}</div>
+        </div>
+        <div class="flex flex-col items-center">
+          <v-swatches v-model="color" show-fallback></v-swatches>
+          <div
+            class="flex items-center justify-center w-6 h-6 rounded-full cursor-pointer hover:bg-black hover:bg-opacity-20"
+            title="Delete File"
+            @click.stop.prevent="addTag"
+          >
+            <ig-icon
+              name="plus"
+              variant="success"
+              size="sm"
+              class="!block mx-auto"
+            ></ig-icon>
+          </div>
+        </div>
+      </div>
       <input
         id="files"
         ref="inputBox"
@@ -45,6 +67,7 @@
       type="submit"
       text="Upload"
       :loading="uploading"
+      :disabled="uploading"
       class="w-full px-3 py-2 mx-auto text-lg font-semibold bg-indigo-600 sm:px-4 md:text-xl text-purple-50 hover:ring focus:outline-none hover:ring-red-300 !transform-none ring-0 !rounded-t-none"
     >
     </base-loading-button>
@@ -54,7 +77,6 @@
 <script>
 import { cleanDoubleSlashes } from 'ufo'
 import fileSize from 'filesize'
-import { sleep } from '~/utils/sleep'
 
 export default {
   props: {
@@ -64,6 +86,7 @@ export default {
     return {
       uploading: false,
       files: [],
+      color: '#A463BF',
     }
   },
   computed: {
@@ -80,6 +103,9 @@ export default {
     this.reset()
   },
   methods: {
+    addTag() {
+      console.log(this.color)
+    },
     reset() {
       // reset form to initial state
       this.$refs.inputBox.value = null
@@ -90,12 +116,14 @@ export default {
     },
     async save(formData) {
       const filename = formData.get('file').name
+      const size = formData.get('file').size
       try {
         const res1 = await this.$axios.$post(this.serverUploadURL, formData)
         try {
           await this.$axios.$post(this.backendUploadURL, {
             name: filename,
             storageID: res1.storageID,
+            size,
           })
         } catch {
           this.showError()
@@ -135,13 +163,13 @@ export default {
         })
         this.uploading = false
       } else {
-        for (let i = 0; i < this.files.length; i++) {
+        const len = this.files.length
+        for (let i = 0; i < len; i++) {
           const formData = new FormData()
           const file = this.files.pop()
           formData.append('file', file, file.name)
           // save it
           await this.save(formData)
-          await sleep(800)
           this.$emit('refreshFolder')
         }
         this.reset()
