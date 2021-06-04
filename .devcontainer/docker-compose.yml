@@ -5,30 +5,16 @@ services:
     build:
       context: ..
       dockerfile: .devcontainer/Dockerfile
+    
+    container_name: resourceium
 
     volumes:
       - ..:/workspace/Resourceium:cached
-      - server_data:/home/vscode/.m2/repository
-      - cypress-cache:/home/vscode/Cypress
-      - /tmp/.X11-unix:/tmp/.X11-unix
+      - server_data:/home/developr/.m2/repository
+      - postgres_data:/var/lib/postgresql/data
 
     command: sleep infinity
-    network_mode: service:db
-    user: vscode
-    environment:
-      CYPRESS_VIDEO: "false"
-      DISPLAY:
-
-  db:
-    image: postgres:13-alpine
-    restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-      - ./setup-storage:/docker-entrypoint-initdb.d/setup-storage.sh
-    environment:
-      POSTGRES_PASSWORD: password
 
 volumes:
-  postgres-data:
   server_data:
-  cypress-cache:
+  postgres_data:
