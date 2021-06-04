@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
-import java.util.Calendar;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +33,7 @@ public class GeneralController {
     private AccountRepository accountRepository;
 
     @Autowired
-    private DocumentRepository fileRepository;
+    private DocumentRepository documentRepository;
 
     @Autowired
     private FolderRepository folderRepository;
@@ -43,41 +45,35 @@ public class GeneralController {
     public @ResponseBody HashMap<String, Long> getStats() {
         HashMap<String, Long> map = new HashMap<>();
         map.put("accountsCount", accountRepository.count());
-        map.put("filesCount", fileRepository.count());
+        map.put("filesCount", documentRepository.count());
         map.put("foldersCount", folderRepository.count());
         return map;
     }
 
-    //  This controller will be used to obtain exactly the number of files uploaded
+    // This controller will be used to obtain exactly the number of files uploaded
     // for the last 7 days (excluding the current day). If there are less than 7
     // days worth of data in the database, the corresponding entry must be 0. The
     // data MUST be returned in the following format:
 
     // {
-    // '2021-04-2 00:00:00:0': <number of documents uploaded that day>,
-    // '2021-04-2 00:00:00:0': <number of documents uploaded that day>,
-    // '2021-04-2 00:00:00:0': <number of documents uploaded that day>,
+    // '2021-04-2': <number of documents uploaded that day>,
+    // '2021-04-2': <number of documents uploaded that day>,
+    // '2021-04-2': <number of documents uploaded that day>,
     // }
-    // TODO: COMPLETE IMPLEMENTATION
-    // @GetMapping(path = "/dashboard/graph/1")
-    // public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphOne() {
-    //     // we are using linked hash map here since we need to preserve insertion order
-    //     LinkedHashMap<String, Long> map = new LinkedHashMap<>();
-    //     // this is the format in which the date is returned in
-    //     LocalDate date = LocalDate.now();
-    //     for(int i = 1; i <= 7; i++){
-    //       map.put(date.minusdays(-i) , (long) fileRepository.findbyDateofupload(date.minusdays(-i));
-    //     }
-
-    //     //map.put(c, (long) 20);
-    //     //map.put("2021-04-25 00:00:00.0", (long) 0);
-    //     //map.put("2021-04-26 00:00:00.0", (long) 76);
-    //     //map.put("2021-04-27 00:00:00.0", (long) 90);
-    //     //map.put("2021-04-28 00:00:00.0", (long) 25);
-    //     //map.put("2021-04-29 00:00:00.0", (long) 12);
-    //     //map.put("2021-04-30 00:00:00.0", (long) 56);
-    //     return ResponseEntity.ok().body(map);
-    // }
+    @GetMapping(path = "/dashboard/graph/1")
+    public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphOne() throws ParseException {
+        // we are using linked hash map here since we need to preserve insertion order
+        LinkedHashMap<String, Long> map = new LinkedHashMap<>();
+        // this is the format in which the date is returned in
+        ZonedDateTime now = LocalDate.now().atStartOfDay(ZoneId.systemDefault());
+        for (int i = 0; i <= 6; i++) {
+            Date date = Date.from(now.toLocalDate().minusDays(i).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
+            String str = simpleDateFormat.format(date);
+            map.put(str, (long) documentRepository.findAllByDateOfUpload(date).size());
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
     // This controller will be used to obtain the at-most top 5 discussions (or
     // could be less) that the user has participated in. The data MUST be
@@ -98,7 +94,6 @@ public class GeneralController {
             // use this variable to perform database operations
             Account account = tokenChecker.checkAndReturnTokenOrRaiseException(request).getAccount();
             HashMap<String, Long> map = new HashMap<>();
-
 
             // map.put("discussion1", (long) 34);
             // map.put("discussion2", (long) 45);
