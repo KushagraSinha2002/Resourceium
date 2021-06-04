@@ -7,7 +7,9 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,6 +44,9 @@ public class GeneralController {
     @Autowired
     private TokenChecker tokenChecker;
 
+    @Autowired
+    private Sleeper sleeper;
+
     @GetMapping(path = "/stats")
     public @ResponseBody HashMap<String, Long> getStats() {
         HashMap<String, Long> map = new HashMap<>();
@@ -60,7 +65,9 @@ public class GeneralController {
             double size = documents.stream().mapToDouble(o -> o.getSize()).sum();
             map.put("size", (long) size);
             map.put("files", (long) documents.size());
+            map.put("discussions", (long) account.getDiscussions().size());
             map.put("folders", (long) folderRepository.findAllByAccount(account).size());
+            sleeper.pause(1500);
             return ResponseEntity.ok().body(map);
         } catch (Exception e) {
             System.out.println(e.getMessage());
