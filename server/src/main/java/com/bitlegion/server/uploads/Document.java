@@ -40,6 +40,17 @@ public class Document {
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
 
+    // store the filesize
+    private double size = 0;
+
+    public double getSize() {
+        return this.size;
+    }
+
+    public void setSize(double size) {
+        this.size = size;
+    }
+
     public String getDescription() {
         return description;
     }
