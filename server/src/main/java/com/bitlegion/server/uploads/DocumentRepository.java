@@ -13,7 +13,7 @@ public interface DocumentRepository extends CrudRepository<Document, Integer> {
 
     public List<Document> findAllByDateOfUpload(Date dateOfUpload);
 
-    public List<Document> findByFolderAccount(Account account);
+    public List<Document> findAllByFolderAccount(Account account);
 
     public List<Document> findByFolder(Folder folder);
 }
