@@ -38,7 +38,7 @@ public class Account {
     @Column(unique = true, updatable = false)
     private String username;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
 
     @Column(unique = true, updatable = false)

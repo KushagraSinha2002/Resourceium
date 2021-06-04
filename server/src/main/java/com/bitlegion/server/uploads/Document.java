@@ -25,7 +25,7 @@ public class Document {
 
     private String description;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private Date dateOfUpload;

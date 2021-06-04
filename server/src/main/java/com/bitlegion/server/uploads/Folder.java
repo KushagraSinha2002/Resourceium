@@ -39,7 +39,7 @@ public class Folder {
 
     private String title;
 
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @CreationTimestamp
     private Date dateOfUpload;
 
