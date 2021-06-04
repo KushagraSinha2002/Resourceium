@@ -51,7 +51,7 @@ public class GeneralController {
     }
 
     // This controller will be used to obtain exactly the number of files uploaded
-    // for the last 7 days (excluding the current day). If there are less than 7
+    // for the last 7 days (including the current day). If there are less than 7
     // days worth of data in the database, the corresponding entry must be 0. The
     // data MUST be returned in the following format:
 
@@ -61,10 +61,8 @@ public class GeneralController {
     // '2021-04-2': <number of documents uploaded that day>,
     // }
     @GetMapping(path = "/dashboard/graph/1")
-    public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphOne() throws ParseException {
-        // we are using linked hash map here since we need to preserve insertion order
+    public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphOne() {
         LinkedHashMap<String, Long> map = new LinkedHashMap<>();
-        // this is the format in which the date is returned in
         ZonedDateTime now = LocalDate.now().atStartOfDay(ZoneId.systemDefault());
         for (int i = 0; i <= 6; i++) {
             Date date = Date.from(now.toLocalDate().minusDays(i).atStartOfDay(ZoneId.systemDefault()).toInstant());
