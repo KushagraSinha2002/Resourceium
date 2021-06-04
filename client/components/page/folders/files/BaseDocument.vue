@@ -46,7 +46,7 @@
       <div>
         <span class="text-sm">Filesize:</span>
         <span class="font-semibold font-styled-code">
-          {{ filesize }}
+          {{ getFileSize }}
         </span>
       </div>
     </div>
@@ -64,20 +64,15 @@ export default {
   props: {
     file: { type: Object, required: true },
   },
-  data() {
-    return {
-      filesize: '0',
-    }
-  },
-  fetch() {
-    this.getFileSize()
-  },
   computed: {
     getFileUrl() {
       return cleanDoubleSlashes(this.$config.storageServer + this.file.url)
     },
     getFileDateOfUpload() {
       return this.$dayjs(this.file.dateOfUpload).format('D MMM, H:mm')
+    },
+    getFileSize() {
+      return filesize(this.file.size)
     },
     getFileDetails() {
       const file = this.file
@@ -99,12 +94,6 @@ export default {
     },
   },
   methods: {
-    getFileSize() {
-      this.$axios.get(`${this.getFileUrl}`).then((resp) => {
-        const size = filesize(resp.headers['content-length'])
-        this.filesize = size
-      })
-    },
     deleteFile() {
       const deleteURL = cleanDoubleSlashes(
         this.$config.storageServer + this.file.deleteUrl
