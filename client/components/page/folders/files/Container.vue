@@ -13,18 +13,18 @@
           <span class="text-4xl font-semibold text-blue-500">
             {{ documents.length }}
           </span>
-          files
+          file(s)
         </div>
         <div
           class="grid grid-cols-1 gap-4 px-2 py-5 md:grid-cols-2 sm:gap-6 bg-cream-white sm:px-5 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 auto-rows-max"
         >
-          <page-folders-files-grid-item
+          <page-folders-files-base-document
             v-for="file in documents"
             :key="file.id"
             :file="file"
             @refreshFolder="fetchFolder()"
           >
-          </page-folders-files-grid-item>
+          </page-folders-files-base-document>
         </div>
       </div>
       <div v-else class="flex items-center justify-center h-full">
