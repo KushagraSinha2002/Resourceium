@@ -60,9 +60,11 @@ public class DocumentController {
             Document document = new Document();
             String name = reqBody.get("name");
             Long storageID = Long.valueOf((reqBody.get("storageID")));
+            Double size = Double.valueOf(reqBody.get("size"));
             document.setName(name);
             document.setStorageID(storageID);
             document.setFolder(folder);
+            document.setSize(size);
             documentRepository.save(document);
             folder.addDocument(document);
             folder.setLastEdited(new Date());
