@@ -2,10 +2,10 @@ package com.bitlegion.server.general;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.Date;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.*;
 
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.TokenChecker;
+import com.bitlegion.server.uploads.Document;
 import com.bitlegion.server.uploads.DocumentRepository;
 import com.bitlegion.server.uploads.FolderRepository;
 
@@ -48,6 +49,23 @@ public class GeneralController {
         map.put("filesCount", documentRepository.count());
         map.put("foldersCount", folderRepository.count());
         return map;
+    }
+
+    @GetMapping(path = "/stats/dashboard")
+    public @ResponseBody ResponseEntity<HashMap<String, Long>> getDashboardStats(HttpServletRequest request) {
+        try {
+            Account account = tokenChecker.checkAndReturnTokenOrRaiseException(request).getAccount();
+            HashMap<String, Long> map = new HashMap<>();
+            List<Document> documents = documentRepository.findAllByFolderAccount(account);
+            double size = documents.stream().mapToDouble(o -> o.getSize()).sum();
+            map.put("size", (long) size);
+            map.put("files", (long) documents.size());
+            map.put("folders", (long) folderRepository.findAllByAccount(account).size());
+            return ResponseEntity.ok().body(map);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     // This controller will be used to obtain exactly the number of files uploaded
@@ -104,7 +122,6 @@ public class GeneralController {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
-
     }
 
     // This controller will be used to obtain at-most the 5 most used tags of the
