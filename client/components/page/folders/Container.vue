@@ -24,7 +24,9 @@
         </common-empty-data>
       </div>
     </div>
-    <base-show-loading v-else></base-show-loading>
+    <div v-else class="flex items-center justify-center w-full h-full">
+      <base-show-loading></base-show-loading>
+    </div>
   </div>
 </template>
 
