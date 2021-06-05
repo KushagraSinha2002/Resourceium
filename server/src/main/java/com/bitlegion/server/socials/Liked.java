@@ -33,4 +33,30 @@ public class Liked {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    public Account getAccount() {
+        return this.account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    public Folder getFolder() {
+        return this.folder;
+    }
+
+    public void setFolder(Folder folder) {
+        this.folder = folder;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", account='" + getAccount() + "'" +
+            ", folder='" + getFolder() + "'" +
+            "}";
+    }
+    
 }
