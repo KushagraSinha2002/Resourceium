@@ -2,7 +2,7 @@
   <div class="p-5">
     <div
       v-if="stats && app"
-      class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:col-span-4 sm:gap-10 sm:mt-4"
+      class="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-4 sm:gap-10"
     >
       <page-dashboard-stat-item
         label="Folders created"
