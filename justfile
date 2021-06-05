@@ -27,6 +27,7 @@ setup:
     #!/usr/bin/env bash
     cd "{{frontend_folder}}" && yarn install
     cd "../{{storage_folder}}" && poetry install && poetry run python manage.py migrate
+    cd "../{{backend_folder}}" && mvn dependency:go-offline -B
 
 # Build the project for integration testing.
 build: setup
