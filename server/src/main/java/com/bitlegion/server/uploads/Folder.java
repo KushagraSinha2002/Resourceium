@@ -17,12 +17,14 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.socials.Liked;
+import com.bitlegion.server.socials.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -68,6 +70,10 @@ public class Folder {
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked = new ArrayList<Liked>();
 
+    @OneToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
     public void addDocument(Document document) {
         this.getDocuments().add(document);
     }
@@ -76,48 +82,8 @@ public class Folder {
         this.getDocuments().remove(document);
     }
 
-    public Set<Tag> getTags() {
-        return this.tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
-    public Collection<Favorite> getFavorites() {
-        return this.favorites;
-    }
-
-    public void setFavorites(Collection<Favorite> favorites) {
-        this.favorites = favorites;
-    }
-
-    public Collection<Liked> getLiked() {
-        return this.liked;
-    }
-
-    public void setLiked(Collection<Liked> liked) {
-        this.liked = liked;
-    }
-
     public Integer getId() {
         return this.id;
-    }
-
-    public Date getLastEdited() {
-        return this.lastEdited;
-    }
-
-    public Collection<Document> getDocuments() {
-        return this.documents;
-    }
-
-    public void setDocuments(Collection<Document> documents) {
-        this.documents = documents;
-    }
-
-    public void setLastEdited(Date lastEdited) {
-        this.lastEdited = lastEdited;
     }
 
     public void setId(Integer id) {
@@ -148,6 +114,22 @@ public class Folder {
         this.dateOfUpload = dateOfUpload;
     }
 
+    public Date getLastEdited() {
+        return this.lastEdited;
+    }
+
+    public void setLastEdited(Date lastEdited) {
+        this.lastEdited = lastEdited;
+    }
+
+    public Set<Tag> getTags() {
+        return this.tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     public Account getAccount() {
         return this.account;
     }
@@ -156,4 +138,53 @@ public class Folder {
         this.account = account;
     }
 
+    public Collection<Document> getDocuments() {
+        return this.documents;
+    }
+
+    public void setDocuments(Collection<Document> documents) {
+        this.documents = documents;
+    }
+
+    public Collection<Favorite> getFavorites() {
+        return this.favorites;
+    }
+
+    public void setFavorites(Collection<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
+    public Collection<Liked> getLiked() {
+        return this.liked;
+    }
+
+    public void setLiked(Collection<Liked> liked) {
+        this.liked = liked;
+    }
+
+    public Post getPost() {
+        return this.post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", title='" + getTitle() + "'" +
+            ", dateOfUpload='" + getDateOfUpload() + "'" +
+            ", lastEdited='" + getLastEdited() + "'" +
+            ", tags='" + getTags() + "'" +
+            ", account='" + getAccount() + "'" +
+            ", documents='" + getDocuments() + "'" +
+            ", favorites='" + getFavorites() + "'" +
+            ", liked='" + getLiked() + "'" +
+            ", post='" + getPost() + "'" +
+            "}";
+    }
+    
 }
