@@ -21,8 +21,6 @@ import com.bitlegion.server.discussions.Discussion;
 @Entity
 public class Post {
 
-    //private static final String POST = "post";
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
