@@ -8,10 +8,11 @@
       class="w-12 h-12"
     />
 
-    <div class="truncate">
-      <div class="text-lg text-black uppercase font-styled-code">
-        {{ $auth.user.firstName + ' ' + $auth.user.lastName }}
+    <div class="leading-none truncate font-styled-code">
+      <div class="text-lg text-black">
+        {{ $auth.user.firstName }}
       </div>
+      <div>{{ $auth.user.lastName }}</div>
       <!-- <div class="text-xs text-warm-gray-700 font-poppins">
         {{ $auth.user.email }}
       </div> -->

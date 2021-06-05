@@ -6,7 +6,7 @@
       :alt="`image for ${label}`"
     />
     <div
-      class="text-right text-blue-500 font-poppins font-extralight sm:text-lg"
+      class="text-right text-blue-900 font-poppins font-extralight sm:text-lg"
     >
       {{ label }}
     </div>
