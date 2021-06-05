@@ -42,17 +42,16 @@
         @change="handleFileChange"
       />
       <div class="mx-auto text-xl md:text-3xl sm:w-9/12">
-        Drag & drop <span class="text-purple-800">images</span>,
-        <span class="text-purple-800">videos</span> or any
-        <span class="text-purple-800">file</span>
+        Drag & drop <span class="text-purple-800">Images</span>,
+        <span class="text-purple-800">Videos</span> or any
+        <span class="text-purple-800">File</span>
       </div>
       <div>
         <label for="files" class="cursor-pointer">
           or
           <span
             class="text-purple-800 underline md:no-underline md:hover:underline"
-          >
-            browse files</span
+            ><strong> Browse Files</strong></span
           >
           on your device
         </label>
