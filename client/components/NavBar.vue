@@ -62,7 +62,6 @@ export default {
     showSidebar() {
       return ![
         'index',
-        'faq',
         'accounts-password-recover',
         'accounts-login',
         'accounts-logout',

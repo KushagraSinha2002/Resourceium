@@ -28,8 +28,8 @@ export default {
         { name: 'Dashboard', path: 'dashboard', icon: 'pie-chart' },
         { name: 'Explorer', path: 'folders', icon: 'file' },
         { name: 'Discussions', path: 'discussions', icon: 'message-circle' },
+        { name: 'Profile', path: 'profile', icon: 'user' },
         { name: 'FAQs', path: 'faq', icon: 'help-circle' },
-        { name: 'Notifications', path: 'notifications', icon: 'activity' },
         { name: 'Your Account', path: 'profile', icon: 'user-plus' },
       ],
     }
