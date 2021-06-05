@@ -87,6 +87,7 @@ export default {
       uploading: false,
       files: [],
       color: '#A463BF',
+      uploadPercentage: 0,
     }
   },
   computed: {
@@ -99,12 +100,17 @@ export default {
       return cleanDoubleSlashes(`/documents/upload/${this.folder.id}`)
     },
   },
+  watch: {
+    // uploadPercentage(newVal) {
+    //   console.log(newVal)
+    // },
+  },
   mounted() {
     this.reset()
   },
   methods: {
     addTag() {
-      console.log(this.color)
+      // console.log(this.color)
     },
     reset() {
       // reset form to initial state
@@ -120,11 +126,21 @@ export default {
       try {
         const res1 = await this.$axios.$post(this.serverUploadURL, formData)
         try {
-          await this.$axios.$post(this.backendUploadURL, {
-            name: filename,
-            storageID: res1.storageID,
-            size,
-          })
+          await this.$axios.$post(
+            this.backendUploadURL,
+            {
+              name: filename,
+              storageID: res1.storageID,
+              size,
+            },
+            {
+              onUploadProgress: function (progressEvent) {
+                this.uploadPercentage = parseInt(
+                  Math.round((progressEvent.loaded / progressEvent.total) * 100)
+                )
+              }.bind(this),
+            }
+          )
         } catch {
           this.showError()
         }
@@ -179,20 +195,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.custom-file-input::-webkit-file-upload-button {
-  visibility: hidden;
-  @apply appearance-none;
-}
-
-.custom-file-input::before {
-  content: 'Add file';
-  @apply cursor-pointer outline-none select-none;
-}
-
-.custom-file-input::after {
-  content: 'or drop files here';
-  @apply cursor-pointer outline-none select-none;
-}
-</style>
