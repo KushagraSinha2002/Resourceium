@@ -11,5 +11,6 @@
   { "extensions": ["asp", "aspx"], "name": "asp.png" },
   { "extensions": ["htm", "html"], "name": "html.png" },
   { "extensions": ["odt"], "name": "odt.png" },
+  { "extensions": ["gif"], "name": "gif.png" },
   { "extensions": ["mp3", "aac"], "name": "audio.png" }
 ]
