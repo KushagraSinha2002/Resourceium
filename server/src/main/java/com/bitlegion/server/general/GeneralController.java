@@ -47,6 +47,17 @@ public class GeneralController {
     @Autowired
     private Sleeper sleeper;
 
+    @GetMapping(path = "/stats/app")
+    public @ResponseBody HashMap<String, Long> getAppStats() {
+        HashMap<String, Long> map = new HashMap<>();
+        // 500 MB
+        map.put("size", (long) 524288000); // bytes
+        map.put("files", (long) 200);
+        map.put("discussions", (long) 40);
+        map.put("folders", (long) 20);
+        return map;
+    }
+
     @GetMapping(path = "/stats")
     public @ResponseBody HashMap<String, Long> getStats() {
         HashMap<String, Long> map = new HashMap<>();
