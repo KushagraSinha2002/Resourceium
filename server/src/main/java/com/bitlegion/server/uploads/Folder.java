@@ -49,9 +49,10 @@ public class Folder {
     @UpdateTimestamp
     private Date lastEdited;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-    @JoinTable(name = "folder_tags", joinColumns = { @JoinColumn(name = "folder_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "tag_id") })
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(name = "folder_tags", joinColumns = {
+            @JoinColumn(name = "folder_id", referencedColumnName = "id", nullable = false) }, inverseJoinColumns = {
+                    @JoinColumn(name = "tag_id", referencedColumnName = "id", nullable = false) })
     private Set<Tag> tags = new HashSet<Tag>();
 
     @ManyToOne(cascade = CascadeType.PERSIST)
@@ -130,6 +131,10 @@ public class Folder {
         this.tags = tags;
     }
 
+    public void addTag(Tag tag) {
+        this.tags.add(tag);
+    }
+
     public Account getAccount() {
         return this.account;
     }
@@ -172,19 +177,11 @@ public class Folder {
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", dateOfUpload='" + getDateOfUpload() + "'" +
-            ", lastEdited='" + getLastEdited() + "'" +
-            ", tags='" + getTags() + "'" +
-            ", account='" + getAccount() + "'" +
-            ", documents='" + getDocuments() + "'" +
-            ", favorites='" + getFavorites() + "'" +
-            ", liked='" + getLiked() + "'" +
-            ", post='" + getPost() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", title='" + getTitle()
+                + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", lastEdited='" + getLastEdited() + "'"
+                + ", tags='" + getTags() + "'" + ", account='" + getAccount() + "'" + ", documents='" + getDocuments()
+                + "'" + ", favorites='" + getFavorites() + "'" + ", liked='" + getLiked() + "'" + ", post='" + getPost()
+                + "'" + "}";
     }
-    
+
 }

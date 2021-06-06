@@ -1,14 +1,18 @@
 package com.bitlegion.server.uploads;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Tag {
@@ -17,12 +21,14 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @Column(unique = true)
     private String name;
 
     private String colour;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tags")
-    private Set<Folder> folders;
+    @JsonIgnore
+    @ManyToMany(mappedBy = "tags", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Set<Folder> folders = new HashSet<Folder>();
 
     public Integer getId() {
         return this.id;
@@ -52,14 +58,17 @@ public class Tag {
         return this.folders;
     }
 
+    public void addFolder(Folder folder) {
+        this.folders.add(folder);
+    }
+
     public void setFolders(Set<Folder> folders) {
         this.folders = folders;
     }
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", colour='" + getColour() + "'"
-                + ", folders='" + getFolders() + "'" + "}";
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", colour='" + getColour() + "'" + "'"
+                + "}";
     }
-
 }
