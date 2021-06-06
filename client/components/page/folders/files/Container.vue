@@ -1,16 +1,15 @@
 <template>
   <div v-if="folder" class="flex flex-col h-full">
-    <!-- <page-folders-tag-setter></page-folders-tag-setter> -->
     <div class="w-10/12 mx-auto sm:w-2/3 xl:w-1/2">
       <page-folders-files-upload-icon
         :folder="folder"
         @refreshFolder="fetchFolder()"
       ></page-folders-files-upload-icon>
     </div>
-    <!-- <page-folders-files-folder-tagger
-      :folderID="folder.id"
+    <page-folders-files-folder-tagger
+      :folder-id="folder.id"
       class="w-10/12 mx-auto my-5 sm:w-2/3 xl:w-1/2"
-    ></page-folders-files-folder-tagger> -->
+    ></page-folders-files-folder-tagger>
     <div v-if="!$fetchState.pending" class="flex-1">
       <div v-if="documents.length > 0">
         <div class="mt-4 font-serif text-2xl text-center">
