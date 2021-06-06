@@ -135,6 +135,10 @@ public class Folder {
         this.tags.add(tag);
     }
 
+    public void removeTag(Tag tag) {
+        this.tags.remove(tag);
+    }
+
     public Account getAccount() {
         return this.account;
     }
