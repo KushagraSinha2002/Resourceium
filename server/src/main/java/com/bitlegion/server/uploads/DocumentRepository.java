@@ -11,7 +11,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface DocumentRepository extends CrudRepository<Document, Integer> {
     public Optional<Document> findByStorageID(Long storageID);
 
-    public List<Document> findAllByDateOfUpload(Date dateOfUpload);
+    public List<Document> findAllByDateOfUploadBetween(Date start, Date end);
 
     public List<Document> findAllByFolderAccount(Account account);
 
