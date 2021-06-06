@@ -9,11 +9,18 @@
         class="flex items-center space-x-2"
       >
         <div
-          v-tippy
-          class="w-10 h-10 rounded-lg"
+          class="flex items-end justify-end w-10 h-10 p-0.5 rounded-lg"
           :style="{ backgroundColor: tag.colour }"
-          :content="getTagDetails(tag.id)"
-        ></div>
+        >
+          <ig-icon
+            name="trash"
+            no-color
+            class="text-black transition-transform origin-bottom-right transform cursor-pointer hover:scale-110"
+            size="sm"
+            :title="`Delete tag ${tag.name}`"
+            @click.native="removeTag(tag.id)"
+          ></ig-icon>
+        </div>
         <div>{{ tag.name }}</div>
       </div>
     </div>
@@ -64,6 +71,10 @@ export default {
       `
       template += '</ol>'
       return template
+    },
+    async removeTag(tagID) {
+      await this.$axios.$post(`/tags/remove/${tagID}/${this.folderId}`)
+      this.$fetch()
     },
     async addTag() {
       await this.$axios.$post(`/tags/create/${this.folderId}`, {
