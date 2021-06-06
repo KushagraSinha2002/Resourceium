@@ -47,6 +47,27 @@ public class TagController {
     }
   }
 
+  @PostMapping("/remove/{tagID}/{folderID}")
+  public @ResponseBody ResponseEntity<?> removeTag(HttpServletRequest request, @PathVariable Integer tagID,
+      @PathVariable Integer folderID) {
+    try {
+      tokenChecker.checkAndReturnTokenOrRaiseException(request);
+      Optional<Folder> maybeFolder = folderRepository.findById(folderID);
+      Optional<Tag> maybeTag = tagRepository.findById(tagID);
+      if (maybeFolder.isEmpty() || maybeTag.isEmpty()) {
+        return ResponseEntity.badRequest().body("The requested resource does not exist.");
+      }
+      Folder folder = maybeFolder.get();
+      Tag tag = maybeTag.get();
+      folder.removeTag(tag);
+      folderRepository.save(folder);
+      return ResponseEntity.status(HttpStatus.OK).body("Success!");
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
   @PostMapping("/create/{folderID}")
   public @ResponseBody ResponseEntity<?> addTag(HttpServletRequest request, @PathVariable Integer folderID,
       @RequestBody HashMap<String, String> reqBody) {
