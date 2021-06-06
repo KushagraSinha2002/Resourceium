@@ -10,28 +10,6 @@
     <div
       class="p-3 text-center border-2 border-b-0 border-gray-400 border-dashed rounded-t-15px font-poppins"
     >
-      <div
-        class="flex justify-between px-2 pt-2 pb-1 mb-2 border border-gray-400 rounded-tl-15px rounded-br-15px"
-      >
-        <div>
-          <div v-for="tag in folder.tags" :key="tag.id">{{ tag }}</div>
-        </div>
-        <div class="flex flex-col items-center">
-          <v-swatches v-model="color" show-fallback></v-swatches>
-          <div
-            class="flex items-center justify-center w-6 h-6 rounded-full cursor-pointer hover:bg-black hover:bg-opacity-20"
-            title="Delete File"
-            @click.stop.prevent="addTag"
-          >
-            <ig-icon
-              name="plus"
-              variant="success"
-              size="sm"
-              class="!block mx-auto"
-            ></ig-icon>
-          </div>
-        </div>
-      </div>
       <input
         id="files"
         ref="inputBox"
@@ -85,7 +63,6 @@ export default {
     return {
       uploading: false,
       files: [],
-      color: '#A463BF',
       uploadPercentage: 0,
     }
   },
@@ -108,9 +85,6 @@ export default {
     this.reset()
   },
   methods: {
-    addTag() {
-      // console.log(this.color)
-    },
     reset() {
       // reset form to initial state
       this.$refs.inputBox.value = null
