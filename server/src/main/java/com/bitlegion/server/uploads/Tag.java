@@ -58,17 +58,12 @@ public class Tag {
         return this.folders;
     }
 
-    public void addFolder(Folder folder) {
-        this.folders.add(folder);
-    }
-
     public void setFolders(Set<Folder> folders) {
         this.folders = folders;
     }
 
     @Override
     public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", colour='" + getColour() + "'" + "'"
-                + "}";
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", colour='" + getColour() + "'" + "}";
     }
 }
