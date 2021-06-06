@@ -27,7 +27,7 @@ public class Post {
 
     @Temporal(TemporalType.DATE)
     @CreationTimestamp
-    private Date dateOfPostGenerated;
+    private Date dateOfUpload;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "post")
@@ -45,12 +45,12 @@ public class Post {
         this.id = id;
     }
 
-    public Date getDateOfPostGenerated() {
-        return this.dateOfPostGenerated;
+    public Date getDateOfUpload() {
+        return this.dateOfUpload;
     }
 
-    public void setDateOfPostGenerated(Date dateOfPostGenerated) {
-        this.dateOfPostGenerated = dateOfPostGenerated;
+    public void setDateOfUpload(Date dateOfUpload) {
+        this.dateOfUpload = dateOfUpload;
     }
 
     public Folder getFolder() {
@@ -62,8 +62,7 @@ public class Post {
     }
 
     public Collection<Discussion> getDiscussions() {
-        return this.discussions
-;
+        return this.discussions;
     }
 
     public void setDiscussions(Collection<Discussion> discussions) {
@@ -72,12 +71,8 @@ public class Post {
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", dateOfPostGenerated='" + getDateOfPostGenerated() + "'" +
-            ", folder='" + getFolder() + "'" +
-            ", discussion='" + getDiscussions() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", folder='" + getFolder()
+                + "'" + ", discussions='" + getDiscussions() + "'" + "}";
     }
 
 }
