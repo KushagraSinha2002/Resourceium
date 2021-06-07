@@ -101,11 +101,11 @@ public class GeneralController {
         LinkedHashMap<String, Long> map = new LinkedHashMap<>();
         ZonedDateTime now = LocalDate.now().atStartOfDay(ZoneId.systemDefault());
         for (int i = 0; i <= 6; i++) {
-            Date from = Date.from(now.toLocalDate().minusDays(i - 1).atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Date date = Date.from(now.toLocalDate().minusDays(i).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date end = Date.from(now.toLocalDate().minusDays(i - 1).atStartOfDay(ZoneId.systemDefault()).toInstant());
+            Date from = Date.from(now.toLocalDate().minusDays(i).atStartOfDay(ZoneId.systemDefault()).toInstant());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
-            String str = simpleDateFormat.format(date);
-            List<Document> documents = documentRepository.findAllByDateOfUploadBetween(date, from);
+            String str = simpleDateFormat.format(from);
+            List<Document> documents = documentRepository.findAllByDateOfUploadBetween(from, end);
             map.put(str, (long) documents.size());
         }
         return ResponseEntity.ok().body(map);
