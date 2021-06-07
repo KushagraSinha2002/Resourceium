@@ -1,6 +1,7 @@
 package com.bitlegion.server.discussions;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -42,6 +44,12 @@ public class DiscussionController {
     @GetMapping("/all")
     public @ResponseBody Iterable<Discussion> getListDiscussions() {
         return discussionRepository.findAll();
+    }
+
+    @GetMapping(path = "get-by-name")
+    public ResponseEntity<Collection<Discussion>> getByName(@RequestParam String name) {
+        Collection<Discussion> discussions = discussionRepository.findAllByNameContainingIgnoreCase(name);
+        return ResponseEntity.status(HttpStatus.OK).body(discussions);
     }
 
     @GetMapping("/account/{accountID}")
