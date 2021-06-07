@@ -44,7 +44,7 @@ public class AccountsController {
   @Autowired
   private Sleeper sleeper;
 
-  @GetMapping(path = "get-by-username")
+  @GetMapping(path = "/get-by-username")
   public ResponseEntity<Collection<Account>> getByUsername(@RequestParam String username) {
     Collection<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCase(username);
     return ResponseEntity.status(HttpStatus.OK).body(accounts);

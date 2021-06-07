@@ -46,7 +46,7 @@ public class DiscussionController {
         return discussionRepository.findAll();
     }
 
-    @GetMapping(path = "get-by-name")
+    @GetMapping(path = "/get-by-name")
     public ResponseEntity<Collection<Discussion>> getByName(@RequestParam String name) {
         Collection<Discussion> discussions = discussionRepository.findAllByNameContainingIgnoreCase(name);
         return ResponseEntity.status(HttpStatus.OK).body(discussions);
