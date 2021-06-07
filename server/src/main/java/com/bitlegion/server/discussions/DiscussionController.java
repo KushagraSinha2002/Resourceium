@@ -2,7 +2,6 @@ package com.bitlegion.server.discussions;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,21 +61,20 @@ public class DiscussionController {
 
     @PostMapping("/create")
     public @ResponseBody ResponseEntity<?> createDiscussion(HttpServletRequest request,
-            @RequestBody HashMap<String, String> reqBody) {
+            @RequestBody DiscussionDetails discussionDetails) {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
-            String name = reqBody.get("name");
-            if (discussionRepository.findByNameIgnoreCase(name).isPresent()) {
+            if (discussionRepository.findByNameIgnoreCase(discussionDetails.getName()).isPresent()) {
                 return ResponseEntity.badRequest().body("A discussion with this name already exists");
             }
             Discussion discussion = new Discussion();
-            String description = reqBody.get("description");
             discussion.setCreatedBy(token.getAccount());
-            discussion.setName(name);
-            discussion.setDescription(description);
+            discussion.setName(discussionDetails.getName());
+            discussion.setDescription(discussionDetails.getDescription());
             discussionRepository.save(discussion);
-            String stringifiedUserIDs = reqBody.get("userIDs");
-            if (stringifiedUserIDs != null) {
+            String stringifiedUserIDs = discussionDetails.getUserIDs();
+            System.out.println(stringifiedUserIDs);
+            if (!stringifiedUserIDs.isEmpty()) {
                 List<Integer> ids = Arrays.stream(stringifiedUserIDs.split(",")).map(Integer::parseInt)
                         .collect(Collectors.toList());
                 Iterable<Account> accounts = accountRepository.findAllById(ids);
@@ -87,7 +85,7 @@ public class DiscussionController {
             }
             return ResponseEntity.status(HttpStatus.OK).body(discussion);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + e.getStackTrace()[0].toString());
             return ResponseEntity.badRequest().build();
         }
     }
