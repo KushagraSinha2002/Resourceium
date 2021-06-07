@@ -4,6 +4,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -25,7 +26,7 @@ import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity // This tells Hibernate to make a table out of this class
+@Entity
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -54,15 +55,15 @@ public class Account {
     @ManyToMany
     @JsonIgnore
     @JoinTable(name = "discussion_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "discussion_id"))
-    private Set<Discussion> discussions;
+    private Set<Discussion> discussions = new HashSet<Discussion>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
-    private Collection<Folder> folders;
+    private Set<Folder> folders = new HashSet<Folder>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "account")
-    private Collection<Favorite> favorites;
+    private Set<Favorite> favorites = new HashSet<Favorite>();
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "account")
@@ -133,12 +134,12 @@ public class Account {
         this.discussions = discussions;
     }
 
-    public Collection<Favorite> getFavorites() {
-        return this.favorites;
+    public void addDiscussion(Discussion discussion) {
+        this.discussions.add(discussion);
     }
 
-    public void setFavorites(Collection<Favorite> favorites) {
-        this.favorites = favorites;
+    public Collection<Favorite> getFavorites() {
+        return this.favorites;
     }
 
     public void setLastName(String lastName) {
@@ -181,8 +182,20 @@ public class Account {
         return this.folders;
     }
 
-    public void setFolders(Collection<Folder> folders) {
+    public void setFolders(Set<Folder> folders) {
         this.folders = folders;
+    }
+
+    public void addFolder(Folder folder) {
+        this.folders.add(folder);
+    }
+
+    public void setFavorites(Set<Favorite> favorites) {
+        this.favorites = favorites;
+    }
+
+    public void addFavorite(Favorite favorite) {
+        this.favorites.add(favorite);
     }
 
     @Override
