@@ -70,6 +70,10 @@ public class Discussion {
         this.accounts = accounts;
     }
 
+    public void addAccount(Account account) {
+        this.accounts.add(account);
+    }
+
     public Collection<Post> getPosts() {
         return this.posts;
     }

@@ -1,9 +1,14 @@
 package com.bitlegion.server.discussions;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bitlegion.server.accounts.Account;
+import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
 
@@ -29,6 +34,9 @@ public class DiscussionController {
     @Autowired
     private DiscussionRepository discussionRepository;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     @GetMapping("/all")
     public @ResponseBody Iterable<Discussion> getListDiscussions() {
         return discussionRepository.findAll();
@@ -39,15 +47,23 @@ public class DiscussionController {
             @RequestBody HashMap<String, String> reqBody) {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
-            String description = reqBody.get("description");
             String name = reqBody.get("name");
             if (discussionRepository.findByNameIgnoreCase(name).isPresent()) {
                 return ResponseEntity.badRequest().body("A discussion with this name already exists");
             }
             Discussion discussion = new Discussion();
+            String description = reqBody.get("description");
             discussion.setCreatedBy(token.getAccount());
             discussion.setName(name);
             discussion.setDescription(description);
+            String stringifiedUserIDs = reqBody.get("userIDs");
+            if (stringifiedUserIDs != null) {
+                List<Integer> ids = Arrays.stream(stringifiedUserIDs.split(",")).map(Integer::parseInt)
+                        .collect(Collectors.toList());
+                System.out.println(ids);
+                Iterable<Account> accounts = accountRepository.findAllById(ids);
+                accounts.forEach(acc -> discussion.addAccount(acc));
+            }
             discussionRepository.save(discussion);
             return ResponseEntity.status(HttpStatus.OK).body(discussion);
         } catch (Exception e) {
