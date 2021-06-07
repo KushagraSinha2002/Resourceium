@@ -28,6 +28,8 @@
 </template>
 
 <script>
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+
 export default {
   middleware: ['auth'],
   data() {
@@ -49,6 +51,7 @@ export default {
   },
   head: () => ({ title: 'Profile' }),
   mounted() {
+    this.$dayjs.extend(localizedFormat)
     const user = this.$auth.user
     this.formData = {
       ...user,
@@ -56,6 +59,7 @@ export default {
       password: '********',
       bio: user.bio ? user.bio : '',
     }
+    delete this.formData.imageURL
   },
   methods: {
     changeData(label, newData) {
@@ -66,12 +70,12 @@ export default {
       if (!this.changed) {
         return
       }
-      const date = this.$dayjs(this.formData.dateOfBirth, 'll')
+      const date = this.$dayjs(this.formData.dateOfBirth)
       if (!date.isValid()) {
         alert("Invalid date format. Should follow format: 'Apr 25, 2021'")
         return
       }
-      this.formData.dateOfBirth = date.toISOString(true)
+      this.formData.dateOfBirth = date.format('YYYY-MM-DD')
       this.loading = true
       await this.$axios.$put('/accounts/update', this.formData).then((resp) => {
         this.$auth.setUser(resp)
