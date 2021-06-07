@@ -1,9 +1,10 @@
 package com.bitlegion.server.socials;
 
 import java.util.Date;
-import java.util.Collection;
 
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +12,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -34,8 +34,9 @@ public class Post {
     private Folder folder;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "post")
-    private Collection<Discussion> discussions;
+    @ManyToOne
+    @JoinColumn(name = "discussion_id", nullable = false)
+    private Discussion discussion;
 
     public Integer getId() {
         return this.id;
@@ -61,18 +62,18 @@ public class Post {
         this.folder = folder;
     }
 
-    public Collection<Discussion> getDiscussions() {
-        return this.discussions;
+    public Discussion getDiscussion() {
+        return this.discussion;
     }
 
-    public void setDiscussions(Collection<Discussion> discussions) {
-        this.discussions = discussions;
+    public void setDiscussion(Discussion discussion) {
+        this.discussion = discussion;
     }
 
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", folder='" + getFolder()
-                + "'" + ", discussions='" + getDiscussions() + "'" + "}";
+                + "'" + ", discussion='" + getDiscussion() + "'" + "}";
     }
 
 }

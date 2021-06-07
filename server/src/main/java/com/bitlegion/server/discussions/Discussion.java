@@ -1,5 +1,8 @@
 package com.bitlegion.server.discussions;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -8,8 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.JoinColumn;
-import javax.persistence.CascadeType;
+import javax.persistence.OneToMany;
 
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.socials.Post;
@@ -26,11 +28,13 @@ public class Discussion {
     private String description;
 
     @ManyToMany(mappedBy = "discussions")
-    private Set<Account> accounts;
+    private Set<Account> accounts = new HashSet<Account>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "post_id", referencedColumnName = "id")
-    private Post post;
+    @OneToMany(mappedBy = "discussion")
+    private Collection<Post> posts = new ArrayList<Post>();
+
+    @ManyToOne
+    private Account createdBy;
 
     public Integer getId() {
         return this.id;
@@ -64,22 +68,27 @@ public class Discussion {
         this.accounts = accounts;
     }
 
-    public Post getPost() {
-        return this.post;
+    public Collection<Post> getPosts() {
+        return this.posts;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPosts(Collection<Post> posts) {
+        this.posts = posts;
+    }
+
+    public Account getCreatedBy() {
+        return this.createdBy;
+    }
+
+    public void setCreatedBy(Account createdBy) {
+        this.createdBy = createdBy;
     }
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", name='" + getName() + "'" +
-            ", description='" + getDescription() + "'" +
-            ", accounts='" + getAccounts() + "'" +
-            ", post='" + getPost() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", description='" + getDescription() + "'"
+                + ", accounts='" + getAccounts() + "'" + ", posts='" + getPosts() + "'" + ", createdBy='"
+                + getCreatedBy() + "'" + "}";
     }
+
 }
