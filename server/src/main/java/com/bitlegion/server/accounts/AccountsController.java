@@ -1,6 +1,7 @@
 package com.bitlegion.server.accounts;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 
@@ -43,12 +44,16 @@ public class AccountsController {
   @Autowired
   private Sleeper sleeper;
 
-  @PostMapping(path = "/register") // Map ONLY POST Requests
+  @GetMapping(path = "get-by-username")
+  public ResponseEntity<Collection<Account>> getByUsername(@RequestParam String username) {
+    Collection<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCase(username);
+    return ResponseEntity.status(HttpStatus.OK).body(accounts);
+  }
+
+  @PostMapping(path = "/register")
   public ResponseEntity<Object> addNewUser(@RequestParam String username, @RequestParam String email,
       @RequestParam String password, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateOfBirth,
       @RequestParam String firstName, @RequestParam String lastName, @RequestParam String country) {
-    // @ResponseBody means the returned String is the response, not a view name
-    // @RequestParam means it is a parameter from the GET or POST request
     String message = "";
 
     ArrayList<String> errors = passwordValidator.validate(password);
