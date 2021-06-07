@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.socials.Post;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Discussion {
@@ -29,9 +30,11 @@ public class Discussion {
 
     private String description;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "discussions")
     private Set<Account> accounts = new HashSet<Account>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "discussion")
     private Collection<Post> posts = new ArrayList<Post>();
 
