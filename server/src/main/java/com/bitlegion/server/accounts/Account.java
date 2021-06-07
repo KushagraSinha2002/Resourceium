@@ -198,6 +198,10 @@ public class Account {
         this.favorites.add(favorite);
     }
 
+    public String getImageURL() {
+        return "https://picsum.photos/seed/" + this.getUsername() + "/300";
+    }
+
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
