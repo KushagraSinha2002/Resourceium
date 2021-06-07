@@ -27,10 +27,14 @@ export default {
       links: [
         { name: 'Dashboard', path: 'dashboard', icon: 'pie-chart' },
         { name: 'Explorer', path: 'folders', icon: 'file' },
-        { name: 'Discussions', path: 'discussions', icon: 'message-circle' },
-        { name: 'Profile', path: 'profile', icon: 'user' },
+        {
+          name: 'Discussions',
+          path: 'socials-discussions',
+          icon: 'message-circle',
+        },
+        { name: 'Users', path: 'socials-users', icon: 'users' },
         { name: 'FAQs', path: 'faq', icon: 'help-circle' },
-        { name: 'Your Account', path: 'profile', icon: 'user-plus' },
+        { name: 'Edit profile', path: 'profile-edit', icon: 'edit' },
       ],
     }
   },
