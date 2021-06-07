@@ -41,7 +41,7 @@ public class DiscussionController {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
             String description = reqBody.get("description");
             String name = reqBody.get("name");
-            if (discussionRepository.findByName(name).isPresent()) {
+            if (discussionRepository.findByNameIgnoreCase(name).isPresent()) {
                 return ResponseEntity.badRequest().body("A discussion with this name already exists");
             }
             Discussion discussion = new Discussion();
