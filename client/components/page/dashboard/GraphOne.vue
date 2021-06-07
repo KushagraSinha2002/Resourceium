@@ -1,5 +1,10 @@
 <template>
   <div v-if="graphData">
+    <div
+      class="font-serif text-2xl font-semibold text-center sm:text-3xl lg:text-4xl"
+    >
+      Files uploaded for the past 7 days
+    </div>
     <page-dashboard-line
       :data="graphData"
       :options="options"
@@ -18,11 +23,7 @@ export default {
         maintainAspectRatio: false,
         legend: { display: false },
         title: {
-          display: true,
-          text: `Files uploaded by ${this.$auth.user.username}`,
-          fontSize: 24,
-          fontColor: '#120201',
-          fontFamily: 'Oxygen Mono',
+          display: false,
         },
         tooltips: {
           backgroundColor: '#7527a8',
@@ -58,7 +59,7 @@ export default {
       datasets: [
         {
           data: Object.values(response),
-          backgroundColor: 'rgba(169, 209, 232, 0.4)',
+          backgroundColor: 'rgba(150, 56, 220, 0.37)',
           borderCapStyle: 'round',
           borderJoinStyle: 'round',
           label: 'Files uploaded',
