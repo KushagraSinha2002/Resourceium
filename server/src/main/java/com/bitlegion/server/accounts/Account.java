@@ -199,7 +199,7 @@ public class Account {
     }
 
     public String getImageURL() {
-        return "https://picsum.photos/seed/" + this.getUsername() + "/300";
+        return "https://picsum.photos/seed/" + this.getId() + "/300";
     }
 
     @Override

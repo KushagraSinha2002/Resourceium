@@ -93,6 +93,10 @@ public class Discussion {
         return this.createdBy;
     }
 
+    public String getImageURL() {
+        return "https://picsum.photos/seed/" + this.getId() + "/500";
+    }
+
     public void setCreatedBy(Account createdBy) {
         this.createdBy = createdBy;
     }
