@@ -77,6 +77,10 @@ public class Discussion {
         this.accounts.add(account);
     }
 
+    public Integer getParticipants() {
+        return this.accounts.size();
+    }
+
     public Collection<Post> getPosts() {
         return this.posts;
     }
