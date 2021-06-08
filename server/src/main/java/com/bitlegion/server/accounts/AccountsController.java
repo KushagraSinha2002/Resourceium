@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-@Controller // This means that this class is a Controller
-@RequestMapping(path = "/accounts") // This means URLs start with /demo (after Application path)
+@Controller
+@RequestMapping(path = "/accounts")
 @CrossOrigin
 public class AccountsController {
   @Autowired // This means to get the bean called userRepository
@@ -43,6 +44,16 @@ public class AccountsController {
 
   @Autowired
   private Sleeper sleeper;
+
+  @GetMapping(path = "/@{username}")
+  public ResponseEntity<Account> getAccountDetails(@PathVariable String username) {
+    Optional<Account> maybeAccount = accountRepository.findByUsername(username);
+    if (maybeAccount.isEmpty()) {
+      return ResponseEntity.notFound().build();
+    } else {
+      return ResponseEntity.status(HttpStatus.OK).body(maybeAccount.get());
+    }
+  }
 
   @GetMapping(path = "/get-by-username")
   public ResponseEntity<Collection<Account>> getByUsername(@RequestParam String username) {
