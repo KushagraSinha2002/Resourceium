@@ -74,14 +74,14 @@ export default {
       const folder = this.folder
       let template = '<ol style="text-align: left">'
       template += `
-        <li>Files: <u>${folder.documents.length}</u></li>
-        <li>Uploaded: <u>${this.formatDate(folder.dateOfUpload)}</u></li>
-        <li>Updated: <u>${this.formatDate(folder.lastEdited)}</u></li>
+        <li>Files: ${folder.documents.length}</li>
+        <li>Uploaded: ${this.formatDate(folder.dateOfUpload)}</li>
+        <li>Updated: ${this.formatDate(folder.lastEdited)}</li>
       `
       if (folder.tags.length > 0) {
         const names = folder.tags.map((tag) => tag.name)
         template += `
-          <li>Tags: <u>${names.join(', ')}</u></li>
+          <li>Tags: ${names.join(', ')}</li>
         `
       }
       template += '</ol>'
