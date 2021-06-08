@@ -202,6 +202,15 @@ public class Account {
         return "https://picsum.photos/seed/" + this.getId() + "/300";
     }
 
+    public Integer getDocumentCount() {
+        int sum = 0;
+        Collection<Folder> folders = this.getFolders();
+        for (Folder f : folders) {
+            sum = sum + f.getDocuments().size();
+        }
+        return sum;
+    }
+
     @Override
     public String toString() {
         return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
