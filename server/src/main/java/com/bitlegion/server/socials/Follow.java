@@ -7,21 +7,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 import com.bitlegion.server.accounts.Account;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "follower_id", "following_id" }))
 public class Follow {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "follower_id", referencedColumnName = "id")
     private Account follower;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "following_id", referencedColumnName = "id")
     private Account following;
 
@@ -51,11 +54,8 @@ public class Follow {
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", follower='" + getFollower() + "'" +
-            ", following='" + getFollowing() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", follower='" + getFollower() + "'" + ", following='" + getFollowing()
+                + "'" + "}";
     }
-    
+
 }
