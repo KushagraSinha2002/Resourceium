@@ -9,10 +9,15 @@
     />
 
     <div class="leading-none truncate font-styled-code">
-      <div class="text-lg text-black">
-        {{ $auth.user.firstName }}
-      </div>
-      <div>{{ $auth.user.lastName }}</div>
+      <NuxtLink
+        :to="{
+          name: 'socials-users-username',
+          params: { username: `@${$auth.user.username}` },
+        }"
+        class="text-lg text-black hover:underline"
+      >
+        @{{ $auth.user.username }}
+      </NuxtLink>
     </div>
   </div>
 </template>
