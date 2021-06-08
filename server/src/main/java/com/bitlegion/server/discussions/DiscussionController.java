@@ -72,8 +72,14 @@ public class DiscussionController {
             discussion.setName(discussionDetails.getName());
             discussion.setDescription(discussionDetails.getDescription());
             discussionRepository.save(discussion);
+            Account account = token.getAccount();
+            account.addDiscussion(discussion);
+            accountRepository.save(account);
+
+            discussion.addAccount(account);
+            discussionRepository.save(discussion);
+
             String stringifiedUserIDs = discussionDetails.getUserIDs();
-            System.out.println(stringifiedUserIDs);
             if (!stringifiedUserIDs.isEmpty()) {
                 List<Integer> ids = Arrays.stream(stringifiedUserIDs.split(",")).map(Integer::parseInt)
                         .collect(Collectors.toList());
@@ -82,6 +88,10 @@ public class DiscussionController {
                     acc.addDiscussion(discussion);
                     accountRepository.save(acc);
                 });
+                accounts.forEach(acc -> {
+                    discussion.addAccount(acc);
+                });
+                discussionRepository.save(discussion);
             }
             return ResponseEntity.status(HttpStatus.OK).body(discussion);
         } catch (Exception e) {
