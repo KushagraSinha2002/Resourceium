@@ -11,7 +11,7 @@
         class="w-full h-full transform scale-110 rounded-full sm:rounded-15px sm:mx-0"
       />
       <div
-        class="absolute top-0 right-0 flex items-center justify-center w-10 h-10 mx-auto transition-transform duration-300 transform rounded-full shadow-2xl cursor-pointer ring-cream-white sm:left-0 sm:right-0 sm:top-auto -bottom-8 ring hover:scale-105"
+        class="absolute top-0 right-0 flex items-center justify-center w-10 h-10 mx-auto transition duration-700 transform rounded-full shadow-2xl cursor-pointer ring-cream-white sm:left-0 sm:right-0 sm:top-auto -bottom-8 ring hover:scale-105"
         :class="[getFollowingStatus ? 'bg-red-400' : 'bg-emerald-500']"
         @click="toggleFollowing"
       >
@@ -87,7 +87,12 @@ export default {
   },
   methods: {
     async toggleFollowing() {
-      await this.$axios.$post(`/follow/toggle/${this.account.id}`)
+      const id = this.account.id
+      if (id === this.$auth.user.id) {
+        alert('You can not follow yourself.')
+        return
+      }
+      await this.$axios.$post(`/follow/toggle/${id}`)
       this.$emit('refreshStatus')
     },
   },
