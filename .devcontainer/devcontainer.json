@@ -28,7 +28,6 @@
         "VISUAL": "code --wait",
         "DEVELOPR_DATABASE_NAMES": "server_db|website-db",
         "DEVELOPR_DATABASE_USERS": "username",
-        "VUE_APP_BACKEND_URL": "http://127.0.0.1:8000/graphql/",
         "STORAGE_SERVER": "http://127.0.0.1:8080/",
         "API_URL": "http://127.0.0.1:8000/"
     },
