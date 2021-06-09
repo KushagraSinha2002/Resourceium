@@ -77,12 +77,16 @@ public class Discussion {
         this.accounts.add(account);
     }
 
-    public Integer getParticipants() {
+    public Integer getNumParticipants() {
         return this.accounts.size();
     }
 
     public Collection<Post> getPosts() {
         return this.posts;
+    }
+
+    public Integer getNumPosts() {
+        return this.posts.size();
     }
 
     public void setPosts(Collection<Post> posts) {
