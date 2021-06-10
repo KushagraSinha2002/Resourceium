@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +19,12 @@ import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.socials.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 @Entity
+@Data
+@NoArgsConstructor
 public class Discussion {
 
     @Id
@@ -38,35 +44,21 @@ public class Discussion {
     @OneToMany(mappedBy = "discussion")
     private Collection<Post> posts = new ArrayList<Post>();
 
+    private String inviteString;
+
     @ManyToOne
     private Account createdBy;
 
-    public Integer getId() {
-        return this.id;
-    }
-
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Set<Account> getAccounts() {
-        return this.accounts;
     }
 
     public void setAccounts(Set<Account> accounts) {
@@ -75,10 +67,6 @@ public class Discussion {
 
     public void addAccount(Account account) {
         this.accounts.add(account);
-    }
-
-    public Integer getNumParticipants() {
-        return this.accounts.size();
     }
 
     public Collection<Post> getPosts() {
@@ -93,10 +81,6 @@ public class Discussion {
         this.posts = posts;
     }
 
-    public Account getCreatedBy() {
-        return this.createdBy;
-    }
-
     public String getImageURL() {
         return "https://picsum.photos/seed/" + this.getId() + "/500";
     }
@@ -105,11 +89,14 @@ public class Discussion {
         this.createdBy = createdBy;
     }
 
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", description='" + getDescription() + "'"
-                + ", accounts='" + getAccounts() + "'" + ", posts='" + getPosts() + "'" + ", createdBy='"
-                + getCreatedBy() + "'" + "}";
+    public String getInviteString() {
+        return this.inviteString;
+    }
+
+    public void setInviteString() {
+        String str = UUID.randomUUID().toString();
+        str = str.substring(0, Math.min(str.length(), 7));
+        this.inviteString = str;
     }
 
 }

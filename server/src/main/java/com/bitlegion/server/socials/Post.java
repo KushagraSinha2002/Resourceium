@@ -15,10 +15,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import com.bitlegion.server.uploads.Folder;
+import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.discussions.Discussion;
 
 @Entity
+@Data
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -27,7 +33,7 @@ public class Post {
 
     @Temporal(TemporalType.DATE)
     @CreationTimestamp
-    private Date dateOfUpload;
+    private Date creationDate;
 
     @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "post")
@@ -38,42 +44,24 @@ public class Post {
     @JoinColumn(name = "discussion_id", nullable = false)
     private Discussion discussion;
 
-    public Integer getId() {
-        return this.id;
-    }
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
+    private Account sharedBy;
 
     public void setId(Integer id) {
         this.id = id;
     }
 
-    public Date getDateOfUpload() {
-        return this.dateOfUpload;
-    }
-
-    public void setDateOfUpload(Date dateOfUpload) {
-        this.dateOfUpload = dateOfUpload;
-    }
-
-    public Folder getFolder() {
-        return this.folder;
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
     }
 
     public void setFolder(Folder folder) {
         this.folder = folder;
     }
 
-    public Discussion getDiscussion() {
-        return this.discussion;
-    }
-
     public void setDiscussion(Discussion discussion) {
         this.discussion = discussion;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", folder='" + getFolder()
-                + "'" + ", discussion='" + getDiscussion() + "'" + "}";
     }
 
 }
