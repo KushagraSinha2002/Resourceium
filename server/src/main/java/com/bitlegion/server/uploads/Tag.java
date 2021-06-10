@@ -14,6 +14,11 @@ import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 public class Tag {
 
@@ -30,40 +35,4 @@ public class Tag {
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Folder> folders = new HashSet<Folder>();
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getColour() {
-        return this.colour;
-    }
-
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
-
-    public Set<Folder> getFolders() {
-        return this.folders;
-    }
-
-    public void setFolders(Set<Folder> folders) {
-        this.folders = folders;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", name='" + getName() + "'" + ", colour='" + getColour() + "'" + "}";
-    }
 }

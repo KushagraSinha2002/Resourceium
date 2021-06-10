@@ -26,6 +26,11 @@ import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 public class Account {
     @Id
@@ -69,26 +74,6 @@ public class Account {
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "account")
     private Token token;
 
-    public String getPassword() {
-        return this.password;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public Token getToken() {
-        return this.token;
-    }
-
-    public void setToken(Token token) {
-        this.token = token;
-    }
-
     public void setPassword(String password) {
         try {
             this.password = PasswordHash.createHash(password).toString();
@@ -106,92 +91,12 @@ public class Account {
         }
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return this.firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public Set<Discussion> getDiscussions() {
-        return this.discussions;
-    }
-
-    public void setDiscussions(Set<Discussion> discussions) {
-        this.discussions = discussions;
-    }
-
     public void addDiscussion(Discussion discussion) {
         this.discussions.add(discussion);
     }
 
-    public Collection<Favorite> getFavorites() {
-        return this.favorites;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Date getDateOfBirth() {
-        return this.dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getBio() {
-        return this.bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public Collection<Folder> getFolders() {
-        return this.folders;
-    }
-
-    public void setFolders(Set<Folder> folders) {
-        this.folders = folders;
-    }
-
     public void addFolder(Folder folder) {
         this.folders.add(folder);
-    }
-
-    public void setFavorites(Set<Favorite> favorites) {
-        this.favorites = favorites;
     }
 
     public void addFavorite(Favorite favorite) {
@@ -211,12 +116,4 @@ public class Account {
         return sum;
     }
 
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", firstName='" + getFirstName() + "'" + ", lastName='" + getLastName()
-                + "'" + ", username='" + getUsername() + "'" + ", dateOfBirth='" + getDateOfBirth() + "'" + ", email='"
-                + getEmail() + "'" + ", bio='" + getBio() + "'" + ", country='" + getCountry() + "'" + ", password='"
-                + getPassword() + "'" + ", discussions='" + getDiscussions() + "'" + ", folders='" + getFolders() + "'"
-                + ", favorites='" + getFavorites() + "'" + "}";
-    }
 }

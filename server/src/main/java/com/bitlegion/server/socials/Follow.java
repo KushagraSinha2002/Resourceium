@@ -12,6 +12,11 @@ import javax.persistence.UniqueConstraint;
 
 import com.bitlegion.server.accounts.Account;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "follower_id", "following_id" }))
 public class Follow {
@@ -27,35 +32,5 @@ public class Follow {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "following_id", referencedColumnName = "id")
     private Account following;
-
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Account getFollower() {
-        return this.follower;
-    }
-
-    public void setFollower(Account follower) {
-        this.follower = follower;
-    }
-
-    public Account getFollowing() {
-        return this.following;
-    }
-
-    public void setFollowing(Account following) {
-        this.following = following;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", follower='" + getFollower() + "'" + ", following='" + getFollowing()
-                + "'" + "}";
-    }
 
 }

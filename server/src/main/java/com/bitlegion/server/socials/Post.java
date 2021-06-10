@@ -22,9 +22,9 @@ import com.bitlegion.server.uploads.Folder;
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.discussions.Discussion;
 
-@Entity
 @Data
 @NoArgsConstructor
+@Entity
 public class Post {
 
     @Id
@@ -47,21 +47,5 @@ public class Post {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account sharedBy;
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
-    }
-
-    public void setDiscussion(Discussion discussion) {
-        this.discussion = discussion;
-    }
 
 }

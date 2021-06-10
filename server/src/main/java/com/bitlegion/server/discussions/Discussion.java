@@ -22,9 +22,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
+@Entity
 public class Discussion {
 
     @Id
@@ -49,48 +49,16 @@ public class Discussion {
     @ManyToOne
     private Account createdBy;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
-    }
-
     public void addAccount(Account account) {
         this.accounts.add(account);
-    }
-
-    public Collection<Post> getPosts() {
-        return this.posts;
     }
 
     public Integer getNumPosts() {
         return this.posts.size();
     }
 
-    public void setPosts(Collection<Post> posts) {
-        this.posts = posts;
-    }
-
     public String getImageURL() {
         return "https://picsum.photos/seed/" + this.getId() + "/500";
-    }
-
-    public void setCreatedBy(Account createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public String getInviteString() {
-        return this.inviteString;
     }
 
     public void setInviteString() {

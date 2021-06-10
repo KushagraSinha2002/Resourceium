@@ -30,6 +30,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 public class Folder {
 
@@ -83,109 +88,12 @@ public class Folder {
         this.getDocuments().remove(document);
     }
 
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getTitle() {
-        return this.title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Date getDateOfUpload() {
-        return this.dateOfUpload;
-    }
-
-    public void setDateOfUpload(Date dateOfUpload) {
-        this.dateOfUpload = dateOfUpload;
-    }
-
-    public Date getLastEdited() {
-        return this.lastEdited;
-    }
-
-    public void setLastEdited(Date lastEdited) {
-        this.lastEdited = lastEdited;
-    }
-
-    public Set<Tag> getTags() {
-        return this.tags;
-    }
-
-    public void setTags(Set<Tag> tags) {
-        this.tags = tags;
-    }
-
     public void addTag(Tag tag) {
         this.tags.add(tag);
     }
 
     public void removeTag(Tag tag) {
         this.tags.remove(tag);
-    }
-
-    public Account getAccount() {
-        return this.account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public Collection<Document> getDocuments() {
-        return this.documents;
-    }
-
-    public void setDocuments(Collection<Document> documents) {
-        this.documents = documents;
-    }
-
-    public Collection<Favorite> getFavorites() {
-        return this.favorites;
-    }
-
-    public void setFavorites(Collection<Favorite> favorites) {
-        this.favorites = favorites;
-    }
-
-    public Collection<Liked> getLiked() {
-        return this.liked;
-    }
-
-    public void setLiked(Collection<Liked> liked) {
-        this.liked = liked;
-    }
-
-    public Post getPost() {
-        return this.post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", title='" + getTitle()
-                + "'" + ", dateOfUpload='" + getDateOfUpload() + "'" + ", lastEdited='" + getLastEdited() + "'"
-                + ", tags='" + getTags() + "'" + ", account='" + getAccount() + "'" + ", documents='" + getDocuments()
-                + "'" + ", favorites='" + getFavorites() + "'" + ", liked='" + getLiked() + "'" + ", post='" + getPost()
-                + "'" + "}";
     }
 
 }

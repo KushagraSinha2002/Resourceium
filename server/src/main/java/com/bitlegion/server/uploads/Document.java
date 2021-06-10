@@ -17,6 +17,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 public class Document {
     @Id
@@ -43,83 +48,12 @@ public class Document {
     // store the filesize
     private double size = 0;
 
-    public double getSize() {
-        return this.size;
-    }
-
-    public void setSize(double size) {
-        this.size = size;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Date getDateOfUpload() {
-        return this.dateOfUpload;
-    }
-
-    public Long getStorageID() {
-        return this.storageID;
-    }
-
-    public void setStorageID(Long storageID) {
-        this.storageID = storageID;
-    }
-
-    public void setDateOfUpload(Date dateOfUpload) {
-        this.dateOfUpload = dateOfUpload;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Document(String name, String url, Integer id) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Document() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
     public String getUrl() {
         return "files/download/" + this.getStorageID();
     }
 
     public String getDeleteUrl() {
         return "files/delete/" + this.getStorageID();
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Folder getFolder() {
-        return this.folder;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", description='" + getDescription() + "'" + ", dateOfUpload='"
-                + getDateOfUpload() + "'" + ", storageID='" + getStorageID() + "'" + ", name='" + getName() + "'"
-                + ", folder='" + getFolder().getTitle() + "'" + "}";
     }
 
 }

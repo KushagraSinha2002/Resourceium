@@ -11,6 +11,11 @@ import javax.persistence.ManyToOne;
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.uploads.Folder;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
 @Entity
 public class Liked {
 
@@ -25,35 +30,5 @@ public class Liked {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
-
-    public Integer getId() {
-        return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Account getAccount() {
-        return this.account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public Folder getFolder() {
-        return this.folder;
-    }
-
-    public void setFolder(Folder folder) {
-        this.folder = folder;
-    }
-
-    @Override
-    public String toString() {
-        return "{" + " id='" + getId() + "'" + ", account='" + getAccount() + "'" + ", folder='" + getFolder() + "'"
-                + "}";
-    }
 
 }
