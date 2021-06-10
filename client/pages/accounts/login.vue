@@ -78,12 +78,22 @@
 <script>
 export default {
   data() {
-    return {
-      loading: false,
-      formData: {
-        username: '',
-        password: '',
-      },
+    if (process.env.NODE_ENV !== 'production') {
+      return {
+        loading: false,
+        formData: {
+          username: 'admin',
+          password: 'a##AB12345QW',
+        },
+      }
+    } else {
+      return {
+        loading: false,
+        formData: {
+          username: '',
+          password: '',
+        },
+      }
     }
   },
   head: () => ({ title: 'Login' }),

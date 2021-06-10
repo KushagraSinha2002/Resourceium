@@ -11,6 +11,7 @@
       :is="textarea ? 'textarea' : 'input'"
       :id="name"
       ref="inputBox"
+      :value="value"
       :type="inputType"
       :name="name"
       rows="3"

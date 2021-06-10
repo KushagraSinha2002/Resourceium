@@ -104,18 +104,34 @@ import { countries } from 'countries-list'
 
 export default {
   data() {
-    return {
-      loading: false,
-      formData: {
-        username: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        dateOfBirth: '',
-        country: '',
-        password: '',
-        password2: '',
-      },
+    if (process.env.NODE_ENV !== 'production') {
+      return {
+        loading: false,
+        formData: {
+          username: 'admin',
+          firstName: 'first',
+          lastName: 'last',
+          email: 'email@email.com',
+          dateOfBirth: '2001-11-11',
+          country: 'India',
+          password: 'a##AB12345QW',
+          password2: 'a##AB12345QW',
+        },
+      }
+    } else {
+      return {
+        loading: false,
+        formData: {
+          username: '',
+          firstName: '',
+          lastName: '',
+          email: '',
+          dateOfBirth: '',
+          country: '',
+          password: '',
+          password2: '',
+        },
+      }
     }
   },
   head: () => ({ title: 'Register' }),
