@@ -1,5 +1,5 @@
 <template>
-  <div class="my-5">
+  <div>
     <page-folders-files-container></page-folders-files-container>
   </div>
 </template>
