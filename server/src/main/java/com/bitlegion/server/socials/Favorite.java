@@ -13,16 +13,16 @@ import com.bitlegion.server.uploads.Folder;
 
 @Entity
 public class Favorite {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
 
@@ -52,11 +52,8 @@ public class Favorite {
 
     @Override
     public String toString() {
-        return "{" +
-            " id='" + getId() + "'" +
-            ", account='" + getAccount() + "'" +
-            ", folder='" + getFolder() + "'" +
-            "}";
+        return "{" + " id='" + getId() + "'" + ", account='" + getAccount() + "'" + ", folder='" + getFolder() + "'"
+                + "}";
     }
-    
+
 }
