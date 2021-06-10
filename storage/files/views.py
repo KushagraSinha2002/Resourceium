@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from rest_framework import status
 from rest_framework.parsers import MultiPartParser
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -18,6 +19,7 @@ class IndexView(TemplateView):
 
 class FileUploadView(APIView):
     parser_classes = (MultiPartParser,)
+    permission_classes = (AllowAny,)
 
     def post(self, request, *args, **kwargs):
         file_obj = request.FILES["file"]
