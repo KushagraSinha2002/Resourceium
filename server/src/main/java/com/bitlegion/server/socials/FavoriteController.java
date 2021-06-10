@@ -1,5 +1,6 @@
 package com.bitlegion.server.socials;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +34,18 @@ public class FavoriteController {
 
     @Autowired
     private FavoriteRepository favoriteRepository;
+
+    /* Get all the favorites of this folder */
+    @GetMapping(path = "/{folderID}")
+    public ResponseEntity<Integer> getFollowersCount(@PathVariable Integer folderID) {
+        Optional<Folder> maybeFolder = folderRepository.findById(folderID);
+        if (maybeFolder.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Folder folder = maybeFolder.get();
+        Integer favorites = favoriteRepository.countByFolder(folder);
+        return ResponseEntity.status(HttpStatus.CREATED).body(favorites);
+    }
 
     @PostMapping(path = "/toggle/{folderID}")
     public ResponseEntity<?> toggleFollow(HttpServletRequest request, @PathVariable Integer folderID) {
