@@ -60,6 +60,7 @@ export default {
       bio: user.bio ? user.bio : '',
     }
     delete this.formData.imageURL
+    delete this.formData.documentCount
   },
   methods: {
     changeData(label, newData) {
