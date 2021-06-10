@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     path(
         "upload/<int:user_id>/<int:folder_id>",
-        views.FileUploadView.as_view(),
+        views.upload_view,
         name="upload_file",
     ),
     path(

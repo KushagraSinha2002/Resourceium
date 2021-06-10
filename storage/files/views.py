@@ -1,14 +1,11 @@
 from io import BytesIO
 
 from django.http import HttpResponse
+from django.http.response import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from rest_framework import status
-from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import AllowAny
-from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from . import models
 
@@ -17,20 +14,17 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 
-class FileUploadView(APIView):
-    parser_classes = (MultiPartParser,)
-    permission_classes = (AllowAny,)
-
-    def post(self, request, *args, **kwargs):
-        file_obj = request.FILES["file"]
-        obj = models.Upload.objects.create(
-            file=file_obj,
-            user_id=kwargs.get("user_id"),
-            folder_id=kwargs.get("folder_id"),
-            name=file_obj.name,
-        )
-        obj.save()
-        return Response(data={"storageID": obj.id}, status=status.HTTP_200_OK)
+@csrf_exempt
+def upload_view(request, user_id, folder_id):
+    file_obj = request.FILES["file"]
+    obj = models.Upload.objects.create(
+        file=file_obj,
+        user_id=user_id,
+        folder_id=folder_id,
+        name=file_obj.name,
+    )
+    obj.save()
+    return JsonResponse(data={"storageID": obj.id}, status=status.HTTP_201_CREATED)
 
 
 def download_view(_, storageID):
