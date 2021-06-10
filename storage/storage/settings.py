@@ -103,7 +103,7 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
 ]
-CORS_ORIGIN_WHITELIST = ("http://127.0.0.1:3000", "http://localhost:3000")
+CORS_ORIGIN_WHITELIST = ["http://127.0.0.1:3000", "http://localhost:3000"]
 TIME_ZONE = "Asia/Kolkata"
 DATABASES = {
     "default": {
@@ -124,6 +124,7 @@ if not DEBUG:
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
     ALLOWED_HOSTS = [".pythonanywhere.com"]
+    CORS_ORIGIN_WHITELIST.append(".herokuapp.com")
 # development only settings
 if DEBUG:
     ALLOWED_HOSTS += ["*"]
