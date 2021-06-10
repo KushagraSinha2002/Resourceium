@@ -124,7 +124,10 @@ if not DEBUG:
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
     ALLOWED_HOSTS = [".pythonanywhere.com"]
-    CORS_ORIGIN_WHITELIST.append(".herokuapp.com")
+    CORS_ORIGIN_WHITELIST.append(
+        "http://resourceium.herokuapp.com",
+        "https://resourceium.herokuapp.com",
+    )
 # development only settings
 if DEBUG:
     ALLOWED_HOSTS += ["*"]
