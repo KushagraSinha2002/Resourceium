@@ -1,6 +1,5 @@
 package com.bitlegion.server.socials;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import com.bitlegion.server.accounts.Account;
