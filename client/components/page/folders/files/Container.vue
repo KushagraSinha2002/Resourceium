@@ -1,5 +1,8 @@
 <template>
   <div v-if="folder" class="flex flex-col h-full">
+    <page-folders-files-action-bar
+      :folder-id="folder.id"
+    ></page-folders-files-action-bar>
     <div class="w-10/12 mx-auto sm:w-2/3 xl:w-1/2">
       <page-folders-files-upload-icon
         :folder="folder"
