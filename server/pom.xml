@@ -73,10 +73,10 @@
                 <groupId>org.liquibase</groupId>
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <configuration>
-                    <changeLogFile>src/main/resources/liquibase-changeLog.xml</changeLogFile>
+                    <changeLogFile>src/main/resources/liquibase-master.xml</changeLogFile>
                     <url>${env.JDBC_DATABASE_URL}</url>
                     <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                    <!-- <propertyFile>src/main/resources/liquibase.properties</propertyFile> -->
+                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
             <plugin>
