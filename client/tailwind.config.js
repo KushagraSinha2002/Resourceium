@@ -14,6 +14,9 @@ module.exports = {
   ],
   theme: {
     extend: {
+      transitionProperty: {
+        spacing: 'margin, padding',
+      },
       animation: {
         'spin-slow': 'spin 2.5s linear infinite',
       },
