@@ -26,16 +26,22 @@
     </div>
     <form
       v-if="tags.length < 6"
-      class="flex items-center space-x-3"
+      class="items-center md:space-x-3 md:flex"
       @submit.prevent="addTag"
     >
-      <v-swatches v-model="colour" show-fallback class="mt-1"></v-swatches>
-      <input
-        v-model="name"
-        type="text"
-        class="block rounded-md appearance-none ring focus:outline-none"
-        required
-      />
+      <div class="flex items-center space-x-3">
+        <v-swatches
+          v-model="colour"
+          show-fallback
+          class="inline mt-1"
+        ></v-swatches>
+        <input
+          v-model="name"
+          type="text"
+          class="inline rounded-md appearance-none ring focus:outline-none"
+          required
+        />
+      </div>
       <button
         type="submit"
         class="font-semibold text-purple-800 underline font-poppins"
