@@ -17,11 +17,18 @@
       </div>
     </div>
     <div class="flex flex-col items-center md:flex-row-reverse group">
-      <img
-        :src="require('~/assets/images/share-folder.png')"
-        alt="favorite icon"
-        class="cursor-pointer h-9 md:h-12"
-      />
+      <NuxtLink
+        :to="{
+          name: 'socials-discussions-share',
+          query: { folderId },
+        }"
+      >
+        <img
+          :src="require('~/assets/images/share-folder.png')"
+          alt="favorite icon"
+          class="cursor-pointer h-9 md:h-12"
+        />
+      </NuxtLink>
       <div
         class="mr-1 text-2xl font-semibold text-center duration-300 font-poppins group-hover:mr-2 transition-spacing"
       >
