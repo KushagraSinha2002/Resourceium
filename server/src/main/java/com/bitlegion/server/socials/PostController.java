@@ -17,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,6 +39,18 @@ public class PostController {
 
     @Autowired
     private FolderRepository folderRepository;
+
+    /* Get post count of this folder */
+    @GetMapping(path = "/{folderID}")
+    public ResponseEntity<Integer> getPostsCount(@PathVariable Integer folderID) {
+        Optional<Folder> maybeFolder = folderRepository.findById(folderID);
+        if (maybeFolder.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Folder folder = maybeFolder.get();
+        Integer posts = postRepository.countByFolder(folder);
+        return ResponseEntity.status(HttpStatus.CREATED).body(posts);
+    }
 
     @PostMapping("/create/{folderID}/{discussionID}")
     public @ResponseBody ResponseEntity<Post> createPost(HttpServletRequest request, @PathVariable Integer folderID,
