@@ -2,8 +2,8 @@
   <NuxtLink
     v-tippy
     :to="{
-      name: 'socials-discussions-name',
-      params: { name: discussion.name },
+      name: 'socials-discussions-id',
+      params: { id: discussion.id },
     }"
     :content="getToolTip"
     class="flex items-center w-full duration-500 mx-auto transition-transform transform group hover:-translate-y-0.5 md:w-10/12 lg:w-full xl:w-10/12 2xl:w-full"
