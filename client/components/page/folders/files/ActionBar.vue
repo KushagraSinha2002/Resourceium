@@ -52,6 +52,7 @@ export default {
   },
   async fetch() {
     this.favorites = await this.$axios.$get(`/favorite/${this.folderId}`)
+    this.shares = await this.$axios.$get(`/post/${this.folderId}`)
   },
   methods: {
     async toggleFavorite() {
