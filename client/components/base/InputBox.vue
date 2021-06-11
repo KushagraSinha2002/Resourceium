@@ -17,6 +17,7 @@
       rows="3"
       :placeholder="placeholderText"
       class="w-full px-4 py-2 transition bg-transparent border appearance-none resize-none hover:shadow-lg rounded-15px border-dark-black border-opacity-40 focus:outline-none focus:border-blue-300"
+      :autocomplete="!noAutoComplete ? 'on' : 'off'"
       :required="!notRequired"
       @input="handleInput($event.target.value)"
     />
@@ -59,6 +60,11 @@ export default {
     },
     focusOnRender: {
       // If set to true, the input box will be focused when it is rendered on screen
+      type: Boolean,
+      default: false,
+    },
+    noAutoComplete: {
+      // If set to true, the input box will be not show autocomplete suggestions
       type: Boolean,
       default: false,
     },
