@@ -17,14 +17,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.socials.Favorite;
 import com.bitlegion.server.socials.Liked;
-import com.bitlegion.server.socials.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -81,10 +79,6 @@ public class Folder {
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked = new ArrayList<Liked>();
-
-    @OneToOne
-    @JoinColumn(name = "post_id")
-    private Post post;
 
     public void addDocument(Document document) {
         this.getDocuments().add(document);

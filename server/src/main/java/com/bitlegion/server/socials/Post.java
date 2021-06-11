@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.CascadeType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
@@ -40,7 +40,8 @@ public class Post {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "post")
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
 
     @EqualsAndHashCode.Exclude
