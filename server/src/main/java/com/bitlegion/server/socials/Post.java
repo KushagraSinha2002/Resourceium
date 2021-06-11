@@ -33,9 +33,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date creationDate;
+    private Date creationTime;
 
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
