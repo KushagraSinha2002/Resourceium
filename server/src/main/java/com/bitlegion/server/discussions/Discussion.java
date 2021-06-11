@@ -20,7 +20,9 @@ import com.bitlegion.server.socials.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -34,17 +36,21 @@ public class Discussion {
     @Column(unique = true)
     private String name;
 
+    private String inviteString;
+
     private String description;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @ManyToMany(mappedBy = "discussions")
     private Set<Account> accounts = new HashSet<Account>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "discussion")
     private Collection<Post> posts = new ArrayList<Post>();
-
-    private String inviteString;
 
     @ManyToOne
     private Account createdBy;

@@ -16,7 +16,9 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import com.bitlegion.server.uploads.Folder;
 import com.bitlegion.server.accounts.Account;
@@ -35,10 +37,14 @@ public class Post {
     @CreationTimestamp
     private Date creationDate;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "post")
     private Folder folder;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "discussion_id", nullable = false)

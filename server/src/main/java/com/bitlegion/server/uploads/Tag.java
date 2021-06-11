@@ -15,7 +15,9 @@ import javax.persistence.ManyToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -31,6 +33,8 @@ public class Tag {
 
     private String colour;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @ManyToMany(mappedBy = "tags", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Set<Folder> folders = new HashSet<Folder>();

@@ -27,12 +27,15 @@ import com.bitlegion.server.uploads.Folder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
 @Entity
 public class Account {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -57,19 +60,27 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @ManyToMany
     @JsonIgnore
     @JoinTable(name = "discussion_account", joinColumns = @JoinColumn(name = "account_id"), inverseJoinColumns = @JoinColumn(name = "discussion_id"))
     private Set<Discussion> discussions = new HashSet<Discussion>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private Set<Folder> folders = new HashSet<Folder>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "account")
     private Set<Favorite> favorites = new HashSet<Favorite>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToOne(cascade = CascadeType.REMOVE, mappedBy = "account")
     private Token token;
@@ -93,6 +104,7 @@ public class Account {
 
     public void addDiscussion(Discussion discussion) {
         this.discussions.add(discussion);
+        System.out.println(this.discussions);
     }
 
     public void addFolder(Folder folder) {

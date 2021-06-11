@@ -31,7 +31,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -68,10 +70,14 @@ public class Folder {
     @OneToMany(mappedBy = "folder")
     private Collection<Document> documents = new ArrayList<Document>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<Favorite> favorites = new ArrayList<Favorite>();
 
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked = new ArrayList<Liked>();
