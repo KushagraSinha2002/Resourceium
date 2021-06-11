@@ -28,12 +28,17 @@
           <div>Already have a Resourceium account?</div>
           <div>Find it here.</div>
         </NuxtLink>
-        <base-input-box
-          v-model="formData.username"
-          name="username"
-          placeholder-text="Username"
-          focus-on-render
-        ></base-input-box>
+        <div>
+          <base-input-box
+            v-model="formData.username"
+            name="username"
+            placeholder-text="Username"
+            focus-on-render
+          ></base-input-box>
+          <div v-if="usernameValidator" class="font-serif text-sm text-red-500">
+            Username can contain only alphabets and digits.
+          </div>
+        </div>
         <div class="flex flex-wrap items-center space-y-1 sm:space-y-0">
           <div class="w-full sm:pr-2 sm:w-1/2">
             <base-input-box
@@ -93,6 +98,7 @@
           type="submit"
           text="Register"
           :loading="loading"
+          :disabled="usernameValidator"
         ></base-loading-button>
       </form>
     </div>
@@ -143,6 +149,10 @@ export default {
       }
       countryList.sort((val1, val2) => val1.localeCompare(val2))
       return countryList
+    },
+    usernameValidator() {
+      const nameRegex = /^[a-zA-Z0-9]+$/
+      return !nameRegex.test(this.formData.username)
     },
   },
   methods: {
