@@ -63,6 +63,10 @@ public class Discussion {
         return this.posts.size();
     }
 
+    public Integer getNumParticipants() {
+        return this.accounts.size();
+    }
+
     public String getImageURL() {
         return "https://picsum.photos/seed/" + this.getId() + "/500";
     }
