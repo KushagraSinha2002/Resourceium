@@ -37,9 +37,6 @@ public class Post {
     @CreationTimestamp
     private Date creationTime;
 
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonIgnore
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
