@@ -10,6 +10,8 @@ import org.springframework.data.repository.CrudRepository;
 public interface FolderRepository extends CrudRepository<Folder, Integer> {
     public Collection<Folder> findAllByAccount(Account account);
 
+    public Integer countByAccount(Account account);
+
     public Collection<Folder> findByAccount(Account account);
 
     public Collection<Folder> findByAccountAndTitle(Account account, String title);
