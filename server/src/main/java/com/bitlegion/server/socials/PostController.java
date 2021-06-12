@@ -13,6 +13,10 @@ import com.bitlegion.server.uploads.Folder;
 import com.bitlegion.server.uploads.FolderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -50,6 +55,20 @@ public class PostController {
         Folder folder = maybeFolder.get();
         Integer posts = postRepository.countByFolder(folder);
         return ResponseEntity.status(HttpStatus.CREATED).body(posts);
+    }
+
+    /* Get sorted posts of this discussion, with limits */
+    @GetMapping(path = "/discussion/{discussionID}")
+    public ResponseEntity<Page<Post>> getPostsByDiscussion(@PathVariable Integer discussionID,
+            @RequestParam(defaultValue = "0") Integer page) {
+        Optional<Discussion> maybeDiscussion = discussionRepository.findById(discussionID);
+        if (maybeDiscussion.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        // we always want 10 posts at a time
+        Pageable pageable = PageRequest.of(page, 10, Sort.by("creationTime").descending());
+        Page<Post> posts = postRepository.findAll(pageable);
+        return ResponseEntity.ok().body(posts);
     }
 
     @PostMapping("/create/{folderID}/{discussionID}")
