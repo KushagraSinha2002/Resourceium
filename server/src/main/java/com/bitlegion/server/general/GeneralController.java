@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.TokenChecker;
+import com.bitlegion.server.discussions.DiscussionRepository;
 import com.bitlegion.server.uploads.Document;
 import com.bitlegion.server.uploads.DocumentRepository;
 import com.bitlegion.server.uploads.FolderRepository;
@@ -37,6 +38,9 @@ public class GeneralController {
 
     @Autowired
     private DocumentRepository documentRepository;
+
+    @Autowired
+    private DiscussionRepository discussionRepository;
 
     @Autowired
     private FolderRepository folderRepository;
@@ -76,8 +80,8 @@ public class GeneralController {
             double size = documents.stream().mapToDouble(o -> o.getSize()).sum();
             map.put("size", (long) size);
             map.put("files", (long) documents.size());
-            map.put("discussions", (long) account.getDiscussions().size());
-            map.put("folders", (long) folderRepository.findAllByAccount(account).size());
+            map.put("discussions", (long) discussionRepository.countByAccounts(account));
+            map.put("folders", (long) folderRepository.countByAccount(account));
             sleeper.pause(1500);
             return ResponseEntity.ok().body(map);
         } catch (Exception e) {
