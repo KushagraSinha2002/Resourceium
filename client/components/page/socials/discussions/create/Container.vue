@@ -56,7 +56,7 @@
     </div>
     <base-loading-button
       type="submit"
-      text="Submit"
+      text="Create"
       :loading="loading"
       class="w-full lg:w-10/12"
     ></base-loading-button>
@@ -114,8 +114,8 @@ export default {
         })
         await sleep(1000)
         this.$router.push({
-          name: 'socials-discussions-name',
-          params: { name: resp.name },
+          name: 'socials-discussions-id',
+          params: { id: resp.id },
         })
       } catch {
         this.$addAlert({
