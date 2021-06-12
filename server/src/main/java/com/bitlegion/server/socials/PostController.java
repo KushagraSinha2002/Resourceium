@@ -65,9 +65,10 @@ public class PostController {
         if (maybeDiscussion.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        Discussion discussion = maybeDiscussion.get();
         // we always want 10 posts at a time
         Pageable pageable = PageRequest.of(page, 10, Sort.by("creationTime").descending());
-        Page<Post> posts = postRepository.findAll(pageable);
+        Page<Post> posts = postRepository.findAllByDiscussion(discussion, pageable);
         return ResponseEntity.ok().body(posts);
     }
 
