@@ -104,7 +104,6 @@ public class Account {
 
     public void addDiscussion(Discussion discussion) {
         this.discussions.add(discussion);
-        System.out.println(this.discussions);
     }
 
     public void addFolder(Folder folder) {
