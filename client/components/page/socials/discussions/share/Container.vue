@@ -4,13 +4,21 @@
   >
     <form class="flex-none">
       <base-input-box
-        v-model="discussionName"
+        v-model="formData.name"
         name="name"
         placeholder-text="Enter discussion name"
         class="w-full"
         focus-on-render
         no-hide-label
         no-auto-complete
+      ></base-input-box>
+      <base-input-box
+        v-model="formData.text"
+        name="text"
+        placeholder-text="Post text"
+        class="w-full"
+        textarea
+        no-hide-label
       ></base-input-box>
     </form>
     <div class="flex flex-col flex-grow overflow-x-hidden overflow-y-auto">
@@ -58,7 +66,7 @@ export default {
     return {
       discussions: [],
       filteredDiscussions: [],
-      discussionName: '',
+      formData: { name: '', text: '' },
       selected: [],
     }
   },
@@ -88,7 +96,7 @@ export default {
       const folderID = this.$route.query.folderId
       for (const id of this.selected) {
         const url = `/post/create/${folderID}/${id}`
-        await this.$axios.$post(url)
+        await this.$axios.$post(url, { text: this.formData.text })
       }
       this.$router.push({ name: 'socials-discussions' })
     },
