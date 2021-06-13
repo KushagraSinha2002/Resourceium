@@ -80,6 +80,10 @@ public class Folder {
     @OneToMany(mappedBy = "folder")
     private Collection<Liked> liked = new ArrayList<Liked>();
 
+    public Integer getDocumentsCount() {
+        return this.getDocuments().size();
+    }
+
     public void addDocument(Document document) {
         this.getDocuments().add(document);
     }
