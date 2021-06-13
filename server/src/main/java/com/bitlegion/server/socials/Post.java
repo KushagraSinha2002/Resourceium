@@ -41,6 +41,8 @@ public class Post {
     @JoinColumn(name = "folder_id", referencedColumnName = "id")
     private Folder folder;
 
+    private String text;
+
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @JsonIgnore

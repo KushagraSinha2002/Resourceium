@@ -1,5 +1,6 @@
 package com.bitlegion.server.socials;
 
+import java.util.HashMap;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
 import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.discussions.DiscussionRepository;
+import com.bitlegion.server.general.Sleeper;
 import com.bitlegion.server.uploads.Folder;
 import com.bitlegion.server.uploads.FolderRepository;
 
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,6 +47,9 @@ public class PostController {
 
     @Autowired
     private FolderRepository folderRepository;
+
+    @Autowired
+    private Sleeper sleeper;
 
     /* Get post count of this folder */
     @GetMapping(path = "/{folderID}")
@@ -66,6 +72,7 @@ public class PostController {
             return ResponseEntity.notFound().build();
         }
         Discussion discussion = maybeDiscussion.get();
+        sleeper.pause(300);
         // we always want 10 posts at a time
         Pageable pageable = PageRequest.of(page, 10, Sort.by("creationTime").descending());
         Page<Post> posts = postRepository.findAllByDiscussion(discussion, pageable);
@@ -74,7 +81,7 @@ public class PostController {
 
     @PostMapping("/create/{folderID}/{discussionID}")
     public @ResponseBody ResponseEntity<Post> createPost(HttpServletRequest request, @PathVariable Integer folderID,
-            @PathVariable Integer discussionID) {
+            @PathVariable Integer discussionID, @RequestBody(required = false) HashMap<String, String> reqBody) {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
             Optional<Folder> maybeFolder = folderRepository.findById(folderID);
@@ -85,10 +92,13 @@ public class PostController {
             Folder folder = maybeFolder.get();
             Discussion discussion = maybeDiscussion.get();
             Account sharedBy = token.getAccount();
+            String text = reqBody.get("text");
             Post post = new Post();
             post.setFolder(folder);
             post.setDiscussion(discussion);
             post.setSharedBy(sharedBy);
+            if (!text.isEmpty())
+                post.setText(text);
             postRepository.save(post);
             return ResponseEntity.status(HttpStatus.OK).body(post);
         } catch (Exception e) {
