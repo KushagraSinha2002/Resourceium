@@ -40,6 +40,11 @@ public class DiscussionController {
     @Autowired
     private AccountRepository accountRepository;
 
+    @GetMapping("/{discussionID}")
+    public @ResponseBody Discussion getDiscussion(@PathVariable Integer discussionID) {
+        return discussionRepository.findById(discussionID).get();
+    }
+
     @GetMapping("/all")
     public @ResponseBody Iterable<Discussion> getListDiscussions() {
         return discussionRepository.findAll();
