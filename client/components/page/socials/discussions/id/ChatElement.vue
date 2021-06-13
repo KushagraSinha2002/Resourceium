@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex p-2 my-4 space-x-3 bg-gray-100 rounded-15px"
+    class="flex p-2 my-4 space-x-3 bg-gray-100 rounded-15px group"
     :data-id="post.id"
     :data-creation-time="post.creationTime"
     :data-shared-by="post.sharedBy.username"
@@ -30,7 +30,7 @@
       <div v-if="post.text" class="pb-2 italic">{{ post.text }}</div>
       <NuxtLink
         :to="{ name: 'folders-folderId', params: { folderId: post.folder.id } }"
-        class="flex items-center space-x-2"
+        class="flex items-center space-x-2 border-b-2 border-transparent border-dotted group-hover:border-black"
       >
         <ig-icon name="folder" size="sm"></ig-icon>
         <div>
