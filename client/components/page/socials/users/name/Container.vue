@@ -21,13 +21,21 @@ export default {
   },
   async fetch() {
     const username = this.$route.params.username
-    const details = await this.$axios.$get(`/accounts/${username}`)
-    this.account = details
-    const id = details.id
-    const followers = await this.$axios.$get(`/follow/followers/${id}`)
-    this.followers = followers
-    const following = await this.$axios.$get(`/follow/following/${id}`)
-    this.following = following
+    try {
+      const details = await this.$axios.$get(`/accounts/${username}`)
+      this.account = details
+      const id = details.id
+      const followers = await this.$axios.$get(`/follow/followers/${id}`)
+      this.followers = followers
+      const following = await this.$axios.$get(`/follow/following/${id}`)
+      this.following = following
+    } catch {
+      const error = this.$root.error
+      error({
+        statusCode: 404,
+        message: 'This user does not exist',
+      })
+    }
   },
 }
 </script>

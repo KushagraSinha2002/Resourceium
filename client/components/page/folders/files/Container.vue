@@ -61,9 +61,17 @@ export default {
   },
   methods: {
     async fetchFolder() {
-      const folderId = this.$route.params.folderId
-      const resp = await this.$axios.$get(`/folders/folder/${folderId}`)
-      this.folder = resp
+      try {
+        const folderId = this.$route.params.folderId
+        const resp = await this.$axios.$get(`/folders/folder/${folderId}`)
+        this.folder = resp
+      } catch {
+        const error = this.$root.error
+        error({
+          statusCode: 404,
+          message: 'This folder does not exist',
+        })
+      }
     },
   },
 }
