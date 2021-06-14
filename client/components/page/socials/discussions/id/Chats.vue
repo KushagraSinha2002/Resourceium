@@ -61,11 +61,13 @@ export default {
         this.setUpInterSectionObserver()
       })
     })
+    this.interval = window.setInterval(this.fetchLatest, 3000)
   },
   destroyed() {
     if (this.listEndObserver) {
       this.listEndObserver.disconnect()
     }
+    clearInterval(this.interval)
   },
   methods: {
     recordScrollPosition() {
@@ -120,6 +122,13 @@ export default {
       const id = this.$route.params.id
       const url = withQuery(`/post/discussion/${id}`, { page: pageNumber })
       return this.$axios.$get(url)
+    },
+    async fetchLatest() {
+      const id = this.$route.params.id
+      const resp = await this.$axios.$get(`/post/discussion/${id}/last`)
+      if (resp.id !== this.posts[this.posts.length - 1].id) {
+        this.posts.push(resp)
+      }
     },
   },
 }
