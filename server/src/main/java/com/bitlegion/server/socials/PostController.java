@@ -79,6 +79,24 @@ public class PostController {
         return ResponseEntity.ok().body(posts);
     }
 
+    /* Get the last post of this discussion */
+    @GetMapping(path = "/discussion/{discussionID}/last")
+    public ResponseEntity<Post> getLastPostByDiscussion(@PathVariable Integer discussionID,
+            @RequestParam(defaultValue = "0") Integer page) {
+        Optional<Discussion> maybeDiscussion = discussionRepository.findById(discussionID);
+        if (maybeDiscussion.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Discussion discussion = maybeDiscussion.get();
+        sleeper.pause(300);
+        Optional<Post> maybePost = postRepository.findFirstByDiscussionOrderByCreationTimeDesc(discussion);
+        if (maybePost.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        Post post = maybePost.get();
+        return ResponseEntity.ok().body(post);
+    }
+
     @PostMapping("/create/{folderID}/{discussionID}")
     public @ResponseBody ResponseEntity<Post> createPost(HttpServletRequest request, @PathVariable Integer folderID,
             @PathVariable Integer discussionID, @RequestBody(required = false) HashMap<String, String> reqBody) {

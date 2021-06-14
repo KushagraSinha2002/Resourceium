@@ -1,5 +1,7 @@
 package com.bitlegion.server.socials;
 
+import java.util.Optional;
+
 import com.bitlegion.server.discussions.Discussion;
 import com.bitlegion.server.uploads.Folder;
 
@@ -14,5 +16,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     public Page<Post> findAllByDiscussion(Discussion discussion, Pageable pageable);
 
     public Page<Post> findAllByOrderByCreationTimeAsc(Pageable pageable);
+
+    public Optional<Post> findFirstByDiscussionOrderByCreationTimeDesc(Discussion discussion);
 
 }
