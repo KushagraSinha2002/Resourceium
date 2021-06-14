@@ -71,7 +71,7 @@ export default {
     }
   },
   watch: {
-    discussionName(val) {
+    'formData.name'(val) {
       const find = val.toLowerCase()
       this.filteredDiscussions = this.discussions.filter((d) =>
         d.name.toLowerCase().includes(find)
