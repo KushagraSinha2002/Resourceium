@@ -64,6 +64,34 @@ public class DiscussionController {
         return account.getDiscussions();
     }
 
+    @PostMapping("/join")
+    public @ResponseBody ResponseEntity<?> joinDiscussion(HttpServletRequest request,
+            @RequestParam String inviteString) {
+        try {
+            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            Optional<Discussion> maybeDiscussion = discussionRepository.findByInviteString(inviteString);
+            if (maybeDiscussion.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            Account account = token.getAccount();
+            Discussion discussion = maybeDiscussion.get();
+
+            if (discussion.getCreatedBy().equals(account)) {
+                return ResponseEntity.ok().body(discussion);
+            }
+
+            discussion.addAccount(account);
+            discussionRepository.save(discussion);
+
+            account.addDiscussion(discussion);
+            accountRepository.save(account);
+            return ResponseEntity.ok().body(discussion);
+        } catch (Exception e) {
+            System.out.println(e.getMessage() + e.getStackTrace()[0].toString());
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping("/create")
     public @ResponseBody ResponseEntity<?> createDiscussion(HttpServletRequest request,
             @RequestBody DiscussionDetails discussionDetails) {
