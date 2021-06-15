@@ -1,14 +1,8 @@
 <template>
   <div
-    class="flex items-center justify-center px-2 py-1 space-x-8 cursor-pointer md:py-3 rounded-xl bg-primary border border-white my-10 mx-12"
+    class="flex items-center justify-center px-2 py-1 mx-12 my-10 space-x-8 transition-transform duration-300 transform border shadow-2xl cursor-pointer md:py-3 rounded-xl bg-primary border-warm-gray-600 hover:scale-105"
     @click="logout()"
   >
-    <!-- <ig-icon
-      name="power"
-      variant="black"
-      size="lg"
-      class="transition-transform transform hover:scale-110"
-    ></ig-icon> -->
     <div class="text-xl text-white font-poppins">Logout</div>
   </div>
 </template>
