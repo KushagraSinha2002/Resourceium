@@ -30,6 +30,7 @@
     "filesize": "^6.3.0",
     "ignisnents": "^1.2.1",
     "nuxt": "^2.15.3",
+    "nuxt-clipboard2": "^0.2.1",
     "ufo": "^0.7.2",
     "vague-date": "^0.2.1",
     "vue-autosuggest": "^2.2.0",
