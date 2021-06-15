@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.bitlegion.server.general.Sleeper;
 import com.bitlegion.server.socials.FollowRepository;
 
-import org.javatuples.Triplet;
+import org.javatuples.Quartet;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -193,15 +193,16 @@ public class AccountsController {
   }
 
   @GetMapping(path = "/all")
-  public @ResponseBody ArrayList<Triplet<String, Integer, Integer>> getAllUsers(HttpServletRequest request) {
-    // username, following, followers
-    ArrayList<Triplet<String, Integer, Integer>> data = new ArrayList<>();
+  public @ResponseBody ArrayList<Quartet<String, String, Integer, Integer>> getAllUsers(HttpServletRequest request) {
+    // username, imageURL, following, followers
+    ArrayList<Quartet<String, String, Integer, Integer>> data = new ArrayList<>();
     Iterable<Account> accounts = accountRepository.findAll();
     accounts.forEach(account -> {
       String username = account.getUsername();
+      String imageURL = account.getImageURL();
       Integer followings = followRepository.countByFollower(account);
       Integer followers = followRepository.countByFollowing(account);
-      Triplet<String, Integer, Integer> accountData = new Triplet<>(username, followings, followers);
+      Quartet<String, String, Integer, Integer> accountData = new Quartet<>(username, imageURL, followings, followers);
       data.add(accountData);
     });
     return data;
