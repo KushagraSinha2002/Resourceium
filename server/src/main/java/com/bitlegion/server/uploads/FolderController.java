@@ -91,12 +91,16 @@ public class FolderController {
         try {
             Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
             String title = reqBody.get("title");
+            String description = reqBody.get("description");
             if (!folderRepository.findByAccountAndTitle(token.getAccount(), title).isEmpty()) {
                 return ResponseEntity.badRequest().body("A folder with this name already exists.");
             }
             Folder folder = new Folder();
             folder.setTitle(title);
             folder.setAccount(token.getAccount());
+            if (!description.isEmpty()) {
+                folder.setDescription(description);
+            }
             folderRepository.save(folder);
             return ResponseEntity.status(HttpStatus.OK).body(folder);
         } catch (Exception e) {
