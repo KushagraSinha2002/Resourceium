@@ -1,7 +1,7 @@
 <template>
-  <div class="flex w-full h-full">
+  <div class="relative flex w-full h-full">
     <page-folders-create-folder-icon
-      class="fixed z-20 bottom-3 right-3"
+      class=""
       @refreshFolders="fetchFolders()"
     ></page-folders-create-folder-icon>
     <div v-if="!$fetchState.pending" class="w-full h-full">
