@@ -13,6 +13,10 @@ public interface FollowRepository extends CrudRepository<Follow, Integer> {
 
     public Collection<Follow> findAllByFollowing(Account following);
 
+    public Integer countByFollowing(Account following);
+
     public Collection<Follow> findAllByFollower(Account follower);
+
+    public Integer countByFollower(Account follower);
 
 }
