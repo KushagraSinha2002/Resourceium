@@ -136,3 +136,5 @@ if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
     INSTALLED_APPS.append("django_extensions")
     SHELL_PLUS = "ipython"
+
+DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
