@@ -8,7 +8,9 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import com.bitlegion.server.general.Sleeper;
+import com.bitlegion.server.socials.FollowRepository;
 
+import org.javatuples.Triplet;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,6 +43,9 @@ public class AccountsController {
 
   @Autowired
   private PasswordValidator passwordValidator;
+
+  @Autowired
+  private FollowRepository followRepository;
 
   @Autowired
   private Sleeper sleeper;
@@ -188,7 +193,17 @@ public class AccountsController {
   }
 
   @GetMapping(path = "/all")
-  public @ResponseBody Iterable<Account> getAllUsers(HttpServletRequest request) {
-    return accountRepository.findAll();
+  public @ResponseBody ArrayList<Triplet<String, Integer, Integer>> getAllUsers(HttpServletRequest request) {
+    // username, following, followers
+    ArrayList<Triplet<String, Integer, Integer>> data = new ArrayList<>();
+    Iterable<Account> accounts = accountRepository.findAll();
+    accounts.forEach(account -> {
+      String username = account.getUsername();
+      Integer followings = followRepository.countByFollower(account);
+      Integer followers = followRepository.countByFollowing(account);
+      Triplet<String, Integer, Integer> accountData = new Triplet<>(username, followings, followers);
+      data.add(accountData);
+    });
+    return data;
   }
 }
