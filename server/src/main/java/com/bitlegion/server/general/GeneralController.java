@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path = "/core")
 @CrossOrigin
 public class GeneralController {
+
     @Autowired
     private AccountRepository accountRepository;
 
