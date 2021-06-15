@@ -11,6 +11,8 @@ public interface DiscussionRepository extends CrudRepository<Discussion, Integer
 
     public Optional<Discussion> findByNameIgnoreCase(String name);
 
+    public Optional<Discussion> findByInviteString(String inviteString);
+
     public Collection<Discussion> findAllByNameContainingIgnoreCase(String name);
 
     public Integer countByAccounts(Account account);
