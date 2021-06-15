@@ -54,6 +54,8 @@ export default {
     '@nuxtjs/dayjs',
     // https://saintplay.github.io
     'vue-swatches/nuxt',
+    // https://github.com/webcore-it/nuxt-clipboard2
+    'nuxt-clipboard2',
   ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
