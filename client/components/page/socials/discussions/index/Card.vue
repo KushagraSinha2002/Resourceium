@@ -36,9 +36,9 @@
         </div>
       </div>
       <div
-        class="flex items-center justify-center flex-none flex-shrink-0 w-8 h-8 font-bold text-white bg-red-500 rounded-r-lg font-poppins"
+        class="flex items-center justify-center flex-none flex-shrink-0 w-8 h-8 font-bold text-white rounded-r-lg font-poppins"
       >
-        12
+        <ig-icon name="chevrons-right"></ig-icon>
       </div>
     </div>
   </NuxtLink>

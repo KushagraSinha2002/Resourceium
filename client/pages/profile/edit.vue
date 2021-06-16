@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center justify-center p-6 bg-cream-white">
     <div
-      class="flex flex-col px-8 py-4 mt-24 space-y-6 bg-warm-gray-800 md:mt-0 rounded-15px md:w-11/12 lg:w-2/3"
+      class="flex flex-col px-8 py-4 mt-24 space-y-6 bg-light-black md:mt-0 rounded-15px md:w-11/12 lg:w-2/3"
     >
       <div
         class="pb-2 text-3xl border-b-2 border-gray-100 rounded-b-sm md:text-4xl text-steel-100 font-poppins"

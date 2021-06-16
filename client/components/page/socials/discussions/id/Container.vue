@@ -5,7 +5,7 @@
     >
       <div
         v-if="discussion"
-        class="flex-1 text-3xl text-left underline md:text-4xl text-warm-gray-800 lg:text-center"
+        class="flex-1 text-3xl text-left underline md:text-4xl text-warm-gray-800"
       >
         {{ discussion.name }}
       </div>
