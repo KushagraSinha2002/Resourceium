@@ -106,6 +106,10 @@ public class Account {
         this.discussions.add(discussion);
     }
 
+    public void removeDiscussion(Discussion discussion) {
+        this.discussions.remove(discussion);
+    }
+
     public void addFolder(Folder folder) {
         this.folders.add(folder);
     }
