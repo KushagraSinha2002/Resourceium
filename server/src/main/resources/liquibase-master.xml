@@ -1,12 +1,226 @@
-<?xml version="1.1" encoding="UTF-8"?>
-
-<databaseChangeLog
-  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
-  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
-        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
-
-  <include file="src/main/resources/liquibase-0.xml" />
-
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.10.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+    <changeSet author="developr (generated)" id="1623838439533-1">
+        <createTable tableName="token">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="token_pkey"/>
+            </column>
+            <column name="string" type="VARCHAR(255)"/>
+            <column name="account_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-2">
+        <createTable tableName="discussion_account">
+            <column name="account_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="discussion_account_pkey"/>
+            </column>
+            <column name="discussion_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="discussion_account_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-3">
+        <createTable tableName="favorite">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="favorite_pkey"/>
+            </column>
+            <column name="account_id" type="INTEGER"/>
+            <column name="folder_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-4">
+        <createTable tableName="liked">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="liked_pkey"/>
+            </column>
+            <column name="account_id" type="INTEGER"/>
+            <column name="folder_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-5">
+        <createTable tableName="follow">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="follow_pkey"/>
+            </column>
+            <column name="follower_id" type="INTEGER"/>
+            <column name="following_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-6">
+        <createTable tableName="folder_tags">
+            <column name="folder_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="folder_tags_pkey"/>
+            </column>
+            <column name="tag_id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="folder_tags_pkey"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-7">
+        <createTable tableName="document">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="document_pkey"/>
+            </column>
+            <column name="date_of_upload" type="TIMESTAMP WITHOUT TIME ZONE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="size" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="storageid" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="folder_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-8">
+        <createTable tableName="tag">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tag_pkey"/>
+            </column>
+            <column name="colour" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-9">
+        <createTable tableName="account">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="account_pkey"/>
+            </column>
+            <column name="bio" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+            <column name="date_of_birth" type="date"/>
+            <column name="email" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-10">
+        <createTable tableName="post">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="post_pkey"/>
+            </column>
+            <column name="creation_date" type="date"/>
+            <column name="discussion_id" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="INTEGER"/>
+            <column name="creation_time" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="post_id" type="INTEGER"/>
+            <column name="folder_id" type="INTEGER"/>
+            <column name="text" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-11">
+        <createTable tableName="discussion">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="discussion_pkey"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="invite_string" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="created_by_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-12">
+        <createTable tableName="folder">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="folder_pkey"/>
+            </column>
+            <column name="date_of_upload" type="date"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="last_edited" type="TIMESTAMP WITHOUT TIME ZONE"/>
+            <column name="title" type="VARCHAR(255)"/>
+            <column name="account_id" type="INTEGER"/>
+            <column name="post_id" type="INTEGER"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-13">
+        <addUniqueConstraint columnNames="follower_id, following_id" constraintName="ukfb7ln73htigy8q3cx7ebyho3c" tableName="follow"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-14">
+        <createIndex indexName="uk_jjg58qx7a08ain6l50312ugjn" tableName="document" unique="true">
+            <column name="storageid"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-15">
+        <createIndex indexName="uk_1wdpsed5kna2y38hnbgrnhi5b" tableName="tag" unique="true">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-16">
+        <addForeignKeyConstraint baseColumnNames="following_id" baseTableName="follow" constraintName="fk3p4y9ghyxbcl8n2egyxjx1k5e" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-17">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="post" constraintName="fke5hjewhnd6trrdgt8i6uapkhy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-18">
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="discussion" constraintName="fkfhtrnssrm666lx1acclltponx" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-19">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="token" constraintName="fkftkstvcfb74ogw02bo5261kno" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-20">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="discussion_account" constraintName="fkk1683q5ajg1ybgboib0fwpm3h" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-21">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="liked" constraintName="fkm4n436w3ehmrpff3dc7cl8g5c" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-22">
+        <addForeignKeyConstraint baseColumnNames="follower_id" baseTableName="follow" constraintName="fkr2kqnskllhun8dgwitqljvdyh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-23">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="favorite" constraintName="fksskuoi6u8b6tykfj5jy1wng9r" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-24">
+        <addForeignKeyConstraint baseColumnNames="account_id" baseTableName="folder" constraintName="fkt4r7tie4qst9vmoxakurexh2d" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="account" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-25">
+        <addUniqueConstraint columnNames="username" constraintName="uk_gex1lmaqpg0ir5g1f5eftyaa1" tableName="account"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-26">
+        <addUniqueConstraint columnNames="email" constraintName="uk_q0uja26qgu1atulenwup9rxyr" tableName="account"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-27">
+        <addForeignKeyConstraint baseColumnNames="discussion_id" baseTableName="post" constraintName="fkmhf8tso6aaqf6jvr7ue4y65il" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="discussion" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-28">
+        <addForeignKeyConstraint baseColumnNames="discussion_id" baseTableName="discussion_account" constraintName="fkqvi0m69n5muq6tgbwfmbajdnk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="discussion" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-29">
+        <addUniqueConstraint columnNames="name" constraintName="uk_8atiou53wmjov911aq6wgcsuu" tableName="discussion"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-30">
+        <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="folder" constraintName="fkmixqeb1o5kqp86lbv4jw6yi0a" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="post" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-31">
+        <addForeignKeyConstraint baseColumnNames="folder_id" baseTableName="favorite" constraintName="fksqkiubwn7eb17ufy0aks83xlt" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="folder" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-32">
+        <addForeignKeyConstraint baseColumnNames="folder_id" baseTableName="liked" constraintName="fkputowjvrde5v16aao9hrsqsne" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="folder" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-33">
+        <addForeignKeyConstraint baseColumnNames="tag_id" baseTableName="folder_tags" constraintName="fkkqrcd2n7pnsfp1iykwackt13y" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="tag" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-34">
+        <addForeignKeyConstraint baseColumnNames="folder_id" baseTableName="folder_tags" constraintName="fkt02lgxuq3xcfhhaxp4eoa2yy8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="folder" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-35">
+        <addForeignKeyConstraint baseColumnNames="folder_id" baseTableName="document" constraintName="fkfgao4bvuaqv7qwlvv456p5xuh" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="folder" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-36">
+        <addForeignKeyConstraint baseColumnNames="folder_id" baseTableName="post" constraintName="fk5cbw7y4oboeg8n0iqajesjb8h" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="folder" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-37">
+        <addForeignKeyConstraint baseColumnNames="post_id" baseTableName="post" constraintName="fk9lml5fxm60nbdbbu7jtj3p6lf" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="folder" validate="true"/>
+    </changeSet>
+    <changeSet author="developr (generated)" id="1623838439533-38">
+        <createSequence cacheSize="1" cycle="false" dataType="bigint" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="hibernate_sequence" startValue="1"/>
+    </changeSet>
 </databaseChangeLog>
