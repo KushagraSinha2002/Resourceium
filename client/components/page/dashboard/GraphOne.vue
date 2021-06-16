@@ -3,7 +3,7 @@
     <div
       class="font-serif text-2xl font-semibold text-center sm:text-3xl lg:text-4xl"
     >
-      Files uploaded for the past 7 days
+      Files uploaded for the past 7 days for all users
     </div>
     <page-dashboard-line
       :data="graphData"
