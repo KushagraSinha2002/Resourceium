@@ -22,7 +22,6 @@ import javax.persistence.TemporalType;
 
 import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.socials.Favorite;
-import com.bitlegion.server.socials.Liked;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -73,12 +72,6 @@ public class Folder {
     @JsonIgnore
     @OneToMany(mappedBy = "folder")
     private Collection<Favorite> favorites = new ArrayList<Favorite>();
-
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonIgnore
-    @OneToMany(mappedBy = "folder")
-    private Collection<Liked> liked = new ArrayList<Liked>();
 
     public Integer getDocumentsCount() {
         return this.getDocuments().size();
