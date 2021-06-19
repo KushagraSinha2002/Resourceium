@@ -168,10 +168,12 @@ public class AccountsController {
     }
   }
 
+  // TODO: Fix implementation. Password being set to empty string
   @PutMapping(path = "/update")
   public ResponseEntity<Object> updateUser(HttpServletRequest request, @RequestBody Account account) {
     try {
       tokenChecker.checkAndReturnTokenOrRaiseException(request);
+
       accountRepository.save(account);
       System.out.println(account.getDateOfBirth());
       return ResponseEntity.status(HttpStatus.OK).body(account);
