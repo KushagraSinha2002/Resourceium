@@ -10,6 +10,8 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 
     public Optional<Account> findByUsername(String username);
 
+    public Optional<Account> findByUsernameAndEmail(String username, String email);
+
     public Collection<Account> findAllByUsernameContainingIgnoreCase(String username);
 
 }
