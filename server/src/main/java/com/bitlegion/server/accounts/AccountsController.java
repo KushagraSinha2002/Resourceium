@@ -186,6 +186,20 @@ public class AccountsController {
     }
   }
 
+  /* Removed password change capabilities from this endpoint */
+  @PostMapping(path = "/change-password")
+  public ResponseEntity<?> changeUserPassword(@RequestParam String username, @RequestParam String email,
+      @RequestParam String password) {
+    Optional<Account> maybeAccount = accountRepository.findByUsernameAndEmail(username, email);
+    if (maybeAccount.isEmpty()) {
+      return ResponseEntity.badRequest().body("No such user found");
+    }
+    Account account = maybeAccount.get();
+    account.setPassword(password);
+    accountRepository.save(account);
+    return ResponseEntity.status(HttpStatus.OK).body(account);
+  }
+
   @GetMapping(path = "/details")
   public ResponseEntity<Account> getUserDetails(HttpServletRequest request) {
     try {
