@@ -136,7 +136,8 @@ export default {
           property: 'string',
           type: 'Token',
           name: 'Authorization',
-          maxAge: 60 * 60 * 24,
+          // 7 days
+          maxAge: 60 * 60 * 24 * 7,
         },
       },
     },
