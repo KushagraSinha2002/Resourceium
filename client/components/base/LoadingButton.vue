@@ -1,7 +1,7 @@
 <template>
   <button
     :id="`loading-button__${text.toLowerCase()}`"
-    class="flex justify-center py-2 space-x-3 transition duration-300 transform rounded-15px hover:scale-105 sm:py-3 focus:outline-none bg-primary ring-black ring-1 disabled:bg-gray-700"
+    class="flex justify-center py-2 space-x-3 transition duration-300 transform rounded-15px hover:scale-105 sm:py-3 focus:outline-none bg-primary ring-black ring-1 disabled:bg-gray-700 disabled:pointer-events-none"
     :disabled="disabled"
   >
     <div v-if="!loading" class="text-white">{{ text }}</div>
