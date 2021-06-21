@@ -168,14 +168,17 @@ public class AccountsController {
     }
   }
 
-  // TODO: Fix implementation. Password being set to empty string
+  /* Removed password change capabilities from this endpoint */
   @PutMapping(path = "/update")
-  public ResponseEntity<Object> updateUser(HttpServletRequest request, @RequestBody Account account) {
+  public ResponseEntity<Object> updateUser(HttpServletRequest request, @RequestBody AccountEditDetails account) {
     try {
-      tokenChecker.checkAndReturnTokenOrRaiseException(request);
-
-      accountRepository.save(account);
-      System.out.println(account.getDateOfBirth());
+      Account originalAccount = tokenChecker.checkAndReturnTokenOrRaiseException(request).getAccount();
+      originalAccount.setBio(account.getBio());
+      originalAccount.setDateOfBirth(account.getDateOfBirth());
+      originalAccount.setFirstName(account.getFirstName());
+      originalAccount.setLastName(account.getLastName());
+      originalAccount.setCountry(account.getCountry());
+      accountRepository.save(originalAccount);
       return ResponseEntity.status(HttpStatus.OK).body(account);
     } catch (Exception e) {
       System.out.println(e.getMessage());

@@ -44,7 +44,6 @@ export default {
         email: '',
         id: '',
         bio: '',
-        password: '',
         username: '',
       },
     }
@@ -56,11 +55,11 @@ export default {
     this.formData = {
       ...user,
       dateOfBirth: this.$dayjs(user.dateOfBirth).format('ll'),
-      password: '********',
       bio: user.bio ? user.bio : '',
     }
     delete this.formData.imageURL
     delete this.formData.documentCount
+    delete this.formData.password
   },
   methods: {
     changeData(label, newData) {

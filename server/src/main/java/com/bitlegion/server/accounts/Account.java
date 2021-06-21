@@ -131,4 +131,8 @@ public class Account {
         return sum;
     }
 
+    public void setRawPassword(String password) {
+        this.password = password;
+    }
+
 }
