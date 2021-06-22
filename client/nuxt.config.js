@@ -1,3 +1,5 @@
+import redirectSSL from 'redirect-ssl'
+
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
@@ -70,6 +72,12 @@ export default {
       poll: 1000,
     },
   },
+  serverMiddleware: [
+    // Will register redirect-ssl npm package
+    redirectSSL.create({
+      enabled: process.env.NODE_ENV === 'production',
+    }),
+  ],
   target: 'server',
   googleFonts: {
     families: {
