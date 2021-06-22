@@ -16,11 +16,20 @@
       </div>
     </div>
     <NuxtLink
+      v-if="!$auth.loggedIn"
       id="link-register-button"
       :to="{ name: 'accounts-register' }"
       class="flex justify-center px-5 py-4 space-x-3 text-white transition duration-300 transform font-poppins rounded-15px hover:scale-105 sm:py-3 focus:outline-none bg-primary ring-black ring-1"
     >
       Sign up for Resourceium
+    </NuxtLink>
+    <NuxtLink
+      v-else
+      id="link-register-button"
+      :to="{ name: 'dashboard' }"
+      class="flex justify-center px-5 py-4 space-x-3 text-white transition duration-300 transform font-poppins rounded-15px hover:scale-105 sm:py-3 focus:outline-none bg-primary ring-black ring-1"
+    >
+      Dashboard
     </NuxtLink>
   </div>
 </template>

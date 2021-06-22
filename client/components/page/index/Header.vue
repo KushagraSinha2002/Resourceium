@@ -31,13 +31,12 @@
           </NuxtLink>
         </div>
         <div v-else>
-          <NuxtLink
-            id="link-dashboard"
-            class="text-primary font-poppins hover:underline"
-            :to="{ name: 'dashboard' }"
+          <div
+            class="cursor-pointer text-primary font-poppins hover:underline"
+            @click="logout()"
           >
-            Dashboard
-          </NuxtLink>
+            Logout
+          </div>
         </div>
       </div>
     </div>

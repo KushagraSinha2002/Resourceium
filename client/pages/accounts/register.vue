@@ -192,6 +192,7 @@ export default {
           this.$addAlert({
             message,
             type: 'danger',
+            timeOut: 4000,
           })
         })
       this.loading = false
