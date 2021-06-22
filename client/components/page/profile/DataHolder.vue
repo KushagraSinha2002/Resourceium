@@ -12,7 +12,7 @@
       <PenToolIcon
         v-if="determineEditable"
         class="text-blue-500 cursor-pointer"
-        @click.native="changeData()"
+        @click="changeData()"
       ></PenToolIcon>
     </div>
   </div>
