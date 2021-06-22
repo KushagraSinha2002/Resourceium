@@ -5,8 +5,8 @@
     <form class="flex-none">
       <base-input-box
         v-model="formData.name"
-        name="name"
-        placeholder-text="Enter discussion name"
+        name="search"
+        placeholder-text="Search discussion"
         class="w-full"
         focus-on-render
         no-hide-label
