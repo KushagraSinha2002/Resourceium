@@ -35,6 +35,7 @@
     "vague-date": "^0.2.1",
     "vue-autosuggest": "^2.2.0",
     "vue-chartjs": "3.5.1",
+    "vue-feather-icons": "^5.1.0",
     "vue-number-animation": "^1.0.5",
     "vue-swatches": "^2.1.1",
     "vue-tippy": "v4"
