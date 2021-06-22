@@ -12,6 +12,7 @@
     ],
     "postCreateCommand": "script.sh && ${containerWorkspaceFolder}/.devcontainer/setup-deps",
     "remoteEnv": {
+        "DISABLE_SSL": "1",
         "DJANGO_SECRET_KEY": "yEPrCbAmUYOocagvSlXbUhqQJMoaIAEjszUrKznJmEJBnNJZVr",
         "DJANGO_DEBUG": "1",
         "DJANGO_DATABASE_ENGINE": "django.db.backends.postgresql",

@@ -75,7 +75,9 @@ export default {
   serverMiddleware: [
     // Will register redirect-ssl npm package
     redirectSSL.create({
-      enabled: process.env.NODE_ENV === 'production',
+      enabled:
+        process.env.NODE_ENV === 'production' &&
+        process.env.DISABLE_SSL !== '1',
     }),
   ],
   target: 'server',
