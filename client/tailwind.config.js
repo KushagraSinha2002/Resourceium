@@ -1,17 +1,8 @@
-const ignisnents = require('ignisnents/dist/tailwind-preset.js')
+const colors = require('tailwindcss/colors')
 
 module.exports = {
-  darkMode: 'class', // or 'media' or 'class'
+  darkMode: 'class',
   mode: 'jit',
-  presets: [ignisnents],
-  purge: [
-    'components/**/*.vue',
-    'layouts/**/*.vue',
-    'pages/**/*.vue',
-    'plugins/**/*.js',
-    'nuxt.config.js',
-    'node_modules/ignisnents/src/components/**/*.vue',
-  ],
   theme: {
     extend: {
       transitionProperty: {
@@ -26,6 +17,12 @@ module.exports = {
         'styled-code': ['Oxygen Mono', 'monospace'],
       },
       colors: {
+        'warm-gray': colors.warmGray,
+        'true-gray': colors.trueGray,
+        emerald: colors.emerald,
+        lime: colors.lime,
+        amber: colors.amber,
+        rose: colors.rose,
         primary: '#502427',
         'light-black': '#333333',
         'dark-black': '#1D1D1F',
@@ -72,9 +69,6 @@ module.exports = {
         '15px': '15px',
       },
     },
-  },
-  variants: {
-    extend: {},
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
