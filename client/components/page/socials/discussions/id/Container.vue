@@ -9,13 +9,11 @@
       >
         {{ discussion.name }}
       </div>
-      <ig-icon
-        name="users"
-        variant="black"
-        size="lg"
-        class="flex-none cursor-pointer lg:hidden"
-        @click.native="sidebarOpen = !sidebarOpen"
-      ></ig-icon>
+      <UsersIcon
+        size="32"
+        class="flex-none text-black cursor-pointer lg:hidden"
+        @click="sidebarOpen = !sidebarOpen"
+      ></UsersIcon>
     </div>
     <div v-if="discussion" class="relative flex flex-1 overflow-hidden">
       <div
@@ -41,7 +39,10 @@
 </template>
 
 <script>
+import { UsersIcon } from 'vue-feather-icons'
+
 export default {
+  components: { UsersIcon },
   data() {
     return {
       discussion: null,

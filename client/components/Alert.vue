@@ -9,12 +9,7 @@
         :style="{ width: `${width}%` }"
         class="absolute inset-x-0 top-0 h-1 bg-black"
       ></div>
-      <ig-icon
-        :name="getIconName"
-        class="h-10"
-        no-size
-        variant="black"
-      ></ig-icon>
+      <component :is="getIconName" size="2x"></component>
       <div class="text-xs font-semibold md:text-lg font-poppins">
         <div v-if="typeof message == 'string'">
           <div>{{ message }}</div>
@@ -30,10 +25,16 @@
 </template>
 
 <script>
+import { InfoIcon, AlertTriangleIcon, CheckIcon } from 'vue-feather-icons'
 import { mapState, mapActions } from 'vuex'
 import { sleep } from '../utils/sleep.js'
 
 export default {
+  components: {
+    InfoIcon,
+    AlertTriangleIcon,
+    CheckIcon,
+  },
   data() {
     return {
       width: 0,
@@ -47,10 +48,10 @@ export default {
       type: (state) => state.alerts.type,
     }),
     getIconName() {
-      if (this.type === 'info') return 'info'
-      if (this.type === 'danger') return 'alert-triangle'
-      if (this.type === 'success') return 'check'
-      return 'alert-triangle'
+      if (this.type === 'info') return 'InfoIcon'
+      if (this.type === 'danger') return 'AlertTriangleIcon'
+      if (this.type === 'success') return 'CheckIcon'
+      return 'AlertTriangleIcon'
     },
   },
   async mounted() {

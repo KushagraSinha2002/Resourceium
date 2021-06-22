@@ -31,20 +31,21 @@
       </NuxtLink>
     </div>
     <div v-if="showSidebar" class="sm:hidden" @click="toggleSidebarMutation()">
-      <ig-icon
-        :name="show ? 'x' : 'menu'"
-        no-color
-        class="text-white"
-        size="lg"
-      ></ig-icon>
+      <component
+        :is="show ? 'XIcon' : 'MenuIcon'"
+        class="text-warm-gray-100"
+        size="2x"
+      ></component>
     </div>
   </div>
 </template>
 
 <script>
+import { XIcon, MenuIcon } from 'vue-feather-icons'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
+  components: { XIcon, MenuIcon },
   data() {
     return {
       socials: [

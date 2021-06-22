@@ -32,7 +32,7 @@
         :to="{ name: 'folders-folderId', params: { folderId: post.folder.id } }"
         class="flex items-center space-x-2 border-b-2 border-transparent border-dotted group-hover:border-black"
       >
-        <ig-icon name="folder" size="sm"></ig-icon>
+        <FolderIcon size="18" class="text-rose-600"></FolderIcon>
         <div>
           <span class="text-lg text-gray-800">
             {{ post.folder.documentsCount }}
@@ -47,11 +47,13 @@
     </div>
   </div>
 </template>
-
+z
 <script>
+import { FolderIcon } from 'vue-feather-icons'
 import * as vagueDate from 'vague-date'
 
 export default {
+  components: { FolderIcon },
   props: {
     post: { type: Object, required: true },
   },

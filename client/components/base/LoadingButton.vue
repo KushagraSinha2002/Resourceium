@@ -5,17 +5,15 @@
     :disabled="disabled"
   >
     <div v-if="!loading" class="text-white">{{ text }}</div>
-    <ig-icon
-      v-else
-      name="loader"
-      class="text-white animate-spin-slow"
-      no-color
-    ></ig-icon>
+    <LoaderIcon v-else class="text-white animate-spin-slow"></LoaderIcon>
   </button>
 </template>
 
 <script>
+import { LoaderIcon } from 'vue-feather-icons'
+
 export default {
+  components: { LoaderIcon },
   props: {
     text: {
       type: String,

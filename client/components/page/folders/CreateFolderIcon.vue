@@ -8,16 +8,14 @@
     </div>
     <div v-if="showPrompt" class="absolute inset-0 flex">
       <form
-        class="relative flex flex-col p-4 m-auto space-y-2 cursor-pointer bg-warm-gray-700 md:p-6 rounded-15px"
+        class="relative flex flex-col p-4 mx-4 my-auto space-y-2 cursor-pointer bg-warm-gray-700 md:p-6 rounded-15px sm:mx-auto"
         @submit.prevent="createFolder()"
       >
-        <ig-icon
-          name="x"
-          no-size
+        <XIcon
           variant="secondary"
-          class="absolute h-6 top-2 right-2 md:h-8"
-          @click.native="closeCreateFolderPrompt()"
-        ></ig-icon>
+          class="absolute h-6 text-gray-100 top-2 right-2 md:h-8"
+          @click="closeCreateFolderPrompt()"
+        ></XIcon>
         <base-input-box
           v-model="title"
           name="folder-title"
@@ -41,9 +39,11 @@
 </template>
 
 <script>
+import { XIcon } from 'vue-feather-icons'
 import { sleep } from '~/utils/sleep.js'
 
 export default {
+  components: { XIcon },
   data() {
     return {
       showPrompt: false,

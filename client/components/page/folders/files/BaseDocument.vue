@@ -11,14 +11,14 @@
         :href="getFileUrl"
         title="Download File"
       >
-        <ig-icon name="download" variant="primary"></ig-icon>
+        <DownloadIcon class="text-blue-500"></DownloadIcon>
       </a>
       <div
         class="flex items-center justify-center rounded-full cursor-pointer hover:bg-black hover:bg-opacity-20 h-9 w-9"
         title="Delete File"
         @click.stop.prevent="deleteFile"
       >
-        <ig-icon name="trash" variant="danger"></ig-icon>
+        <TrashIcon class="text-red-500"></TrashIcon>
       </div>
     </div>
     <div
@@ -55,12 +55,14 @@
 
 <script>
 import path from 'path'
+import { DownloadIcon, TrashIcon } from 'vue-feather-icons'
 import filesize from 'filesize'
 import { cleanDoubleSlashes } from 'ufo'
 import EXTENSIONS from '~/utils/extensions.json'
 import { sleep } from '~/utils/sleep.js'
 
 export default {
+  components: { DownloadIcon, TrashIcon },
   props: {
     file: { type: Object, required: true },
   },

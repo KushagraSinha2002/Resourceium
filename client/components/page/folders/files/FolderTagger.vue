@@ -12,14 +12,13 @@
           class="flex items-end justify-end w-10 h-10 p-0.5 rounded-lg"
           :style="{ backgroundColor: tag.colour }"
         >
-          <ig-icon
+          <TrashIcon
             name="trash"
-            no-color
             class="text-black transition-transform origin-bottom-right transform cursor-pointer hover:scale-110"
-            size="sm"
+            size="20"
             :title="`Delete tag ${tag.name}`"
-            @click.native="removeTag(tag.id)"
-          ></ig-icon>
+            @click="removeTag(tag.id)"
+          ></TrashIcon>
         </div>
         <div>{{ tag.name }}</div>
       </div>
@@ -53,7 +52,10 @@
 </template>
 
 <script>
+import { TrashIcon } from 'vue-feather-icons'
+
 export default {
+  components: { TrashIcon },
   props: {
     folderId: { type: Number, required: true },
   },

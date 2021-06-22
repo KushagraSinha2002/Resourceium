@@ -21,13 +21,11 @@
         :key="account.id"
         :data-account-id="account.id"
       >
-        <ig-icon
-          name="x"
-          variant="danger"
-          size="sm"
-          class="cursor-pointer"
-          @click.native="removeAccount(account.id)"
-        ></ig-icon>
+        <XIcon
+          size="20"
+          class="inline-block text-red-600 cursor-pointer"
+          @click="removeAccount(account.id)"
+        ></XIcon>
         <h2 class="inline text-warm-gray-800 font-poppins">
           <NuxtLink
             :to="{
@@ -63,7 +61,10 @@
 </template>
 
 <script>
+import { XIcon } from 'vue-feather-icons'
+
 export default {
+  components: { XIcon },
   props: { discussion: { type: Object, required: true } },
   data() {
     return {

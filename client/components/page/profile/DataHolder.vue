@@ -9,19 +9,20 @@
       <div class="truncate md:text-lg font-poppins text-warm-gray-200">
         {{ identifier }}
       </div>
-      <ig-icon
+      <PenToolIcon
         v-if="determineEditable"
-        name="pen-tool"
-        variant="primary"
-        class="cursor-pointer"
+        class="text-blue-500 cursor-pointer"
         @click.native="changeData()"
-      ></ig-icon>
+      ></PenToolIcon>
     </div>
   </div>
 </template>
 
 <script>
+import { PenToolIcon } from 'vue-feather-icons'
+
 export default {
+  components: { PenToolIcon },
   props: {
     identifier: {
       type: [String, Number],

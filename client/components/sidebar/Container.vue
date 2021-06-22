@@ -25,16 +25,16 @@ export default {
   data() {
     return {
       links: [
-        { name: 'Dashboard', path: 'dashboard', icon: 'pie-chart' },
-        { name: 'Explorer', path: 'folders', icon: 'file' },
+        { name: 'Dashboard', path: 'dashboard', icon: 'pie-chart-icon' },
+        { name: 'Explorer', path: 'folders', icon: 'file-icon' },
         {
           name: 'Discussions',
           path: 'socials-discussions',
-          icon: 'message-circle',
+          icon: 'message-circle-icon',
         },
-        { name: 'Users', path: 'socials-users', icon: 'users' },
-        { name: 'FAQs', path: 'faq', icon: 'help-circle' },
-        { name: 'Edit profile', path: 'profile-edit', icon: 'edit' },
+        { name: 'Users', path: 'socials-users', icon: 'users-icon' },
+        { name: 'FAQs', path: 'faq', icon: 'help-circle-icon' },
+        { name: 'Edit profile', path: 'profile-edit', icon: 'edit-icon' },
       ],
     }
   },

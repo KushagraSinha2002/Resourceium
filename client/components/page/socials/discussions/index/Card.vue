@@ -36,16 +36,19 @@
         </div>
       </div>
       <div
-        class="flex items-center justify-center flex-none flex-shrink-0 w-8 h-8 font-bold text-white rounded-r-lg font-poppins"
+        class="flex items-center justify-center flex-none flex-shrink-0 w-8 h-8 font-bold rounded-r-lg font-poppins"
       >
-        <ig-icon name="chevrons-right"></ig-icon>
+        <ChevronsRightIcon></ChevronsRightIcon>
       </div>
     </div>
   </NuxtLink>
 </template>
 
 <script>
+import { ChevronsRightIcon } from 'vue-feather-icons'
+
 export default {
+  components: { ChevronsRightIcon },
   props: { discussion: { type: Object, required: true } },
   computed: {
     getToolTip() {

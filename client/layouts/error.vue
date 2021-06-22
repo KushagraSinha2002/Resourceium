@@ -13,13 +13,10 @@
         :to="{ name: 'index' }"
         class="flex items-center mx-auto space-x-3 group"
       >
-        <ig-icon
-          name="home"
-          size="xl"
-          no-color
-          variant="success"
+        <HomeIcon
+          size="64"
           class="transition-transform duration-300 transform text-warm-gray-600 group-hover:scale-105"
-        ></ig-icon>
+        ></HomeIcon>
         <div
           class="text-xl text-warm-gray-600 font-poppins group-hover:underline"
         >
@@ -31,7 +28,10 @@
 </template>
 
 <script>
+import { HomeIcon } from 'vue-feather-icons'
+
 export default {
+  components: { HomeIcon },
   props: { error: { type: Object, required: true } },
 }
 </script>

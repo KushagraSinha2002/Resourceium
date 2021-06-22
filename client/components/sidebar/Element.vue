@@ -1,11 +1,6 @@
 <template>
   <NuxtLink :to="{ name: link.path }" class="flex items-center px-4 space-x-5">
-    <ig-icon
-      size="lg"
-      :name="link.icon"
-      no-color
-      class="text-cream-white"
-    ></ig-icon>
+    <component :is="link.icon" size="32" class="text-cream-white"></component>
     <div
       class="text-xl text-right uppercase hover:underline hover:text-blue-400 font-poppins text-warm-gray-200"
     >
@@ -15,7 +10,26 @@
 </template>
 
 <script>
+import {
+  PieChartIcon,
+  FileIcon,
+  MessageCircleIcon,
+  UsersIcon,
+  HelpCircleIcon,
+  EditIcon,
+} from 'vue-feather-icons'
+
 export default {
+  components: {
+    /* eslint-disable */
+    PieChartIcon,
+    FileIcon,
+    MessageCircleIcon,
+    UsersIcon,
+    HelpCircleIcon,
+    EditIcon,
+    /* eslint-enable */
+  },
   props: {
     link: {
       type: Object,

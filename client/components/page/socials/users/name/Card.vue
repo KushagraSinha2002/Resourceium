@@ -15,12 +15,10 @@
         :class="[getFollowingStatus ? 'bg-red-400' : 'bg-emerald-500']"
         @click="toggleFollowing"
       >
-        <ig-icon
-          :name="getFollowingStatus ? 'x' : 'plus'"
+        <component
+          :is="getFollowingStatus ? 'XIcon' : 'PlusIcon'"
           class="text-white"
-          no-color
-          size="base"
-        ></ig-icon>
+        ></component>
       </div>
     </div>
     <div class="flex items-center justify-center flex-1 mt-3 sm:mt-0">
@@ -71,7 +69,10 @@
 </template>
 
 <script>
+import { XIcon, PlusIcon } from 'vue-feather-icons'
+
 export default {
+  components: { XIcon, PlusIcon },
   props: {
     account: { type: Object, required: true },
     followers: { type: Array, required: true },

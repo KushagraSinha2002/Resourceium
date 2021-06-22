@@ -22,24 +22,22 @@
             title="Rename Folder"
             @click.stop.prevent="renameFolder"
           >
-            <ig-icon
+            <Edit3Icon
               title="Rename"
-              name="edit-3"
-              size="sm"
-              variant="primary"
-            ></ig-icon>
+              class="text-blue-400"
+              size="20"
+            ></Edit3Icon>
           </div>
           <div
             class="flex items-center justify-center rounded-full hover:bg-black hover:bg-opacity-20 h-7 w-7"
             title="Delete Folder"
             @click.stop.prevent="deleteFolder"
           >
-            <ig-icon
+            <TrashIcon
               title="Delete"
-              name="trash"
-              size="sm"
-              variant="danger"
-            ></ig-icon>
+              class="text-red-500"
+              size="20"
+            ></TrashIcon>
           </div>
         </div>
       </div>
@@ -54,10 +52,12 @@
 </template>
 
 <script>
+import { Edit3Icon, TrashIcon } from 'vue-feather-icons'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
 import { sleep } from '~/utils/sleep.js'
 
 export default {
+  components: { Edit3Icon, TrashIcon },
   props: {
     folder: {
       required: true,
