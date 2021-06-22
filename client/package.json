@@ -30,6 +30,7 @@
     "filesize": "^6.3.0",
     "nuxt": "^2.15.3",
     "nuxt-clipboard2": "^0.2.1",
+    "redirect-ssl": "^3.0.0",
     "ufo": "^0.7.2",
     "vague-date": "^0.2.1",
     "vue-autosuggest": "^2.2.0",
