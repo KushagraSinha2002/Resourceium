@@ -41,7 +41,7 @@ export default {
       filesCount: 0,
     }
   },
-  async fetch() {
+  async mounted() {
     const result = await this.$axios.$get('/core/stats')
     this.foldersCount = result.foldersCount
     this.filesCount = result.filesCount
