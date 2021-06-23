@@ -12,5 +12,6 @@ ENV STORAGE_SERVER=http://localhost:8080/
 ENV DJANGO_DEBUG=1
 ENV DJANGO_DATABASE_ENGINE=django.db.backends.postgresql
 ENV POSTGRES_USER=gitpod
+ENV DISABLE_SSL=1
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | sudo bash -s -- --to /usr/bin
