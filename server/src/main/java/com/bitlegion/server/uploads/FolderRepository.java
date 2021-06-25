@@ -16,5 +16,7 @@ public interface FolderRepository extends CrudRepository<Folder, Integer> {
 
     public Collection<Folder> findByAccountAndTitle(Account account, String title);
 
+    public Iterable<Folder> findAllByFavoritesAccount(Account account);
+
     public List<Folder> findByAccountOrderByLastEditedDesc(Account account);
 }

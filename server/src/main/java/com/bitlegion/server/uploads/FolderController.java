@@ -67,7 +67,19 @@ public class FolderController {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
 
+    @GetMapping("/user-favorite-folders")
+    public ResponseEntity<Iterable<Folder>> getListFavoriteFolders(HttpServletRequest request) {
+        try {
+            Token token = tokenChecker.checkAndReturnTokenOrRaiseException(request);
+            Iterable<Folder> folders = folderRepository.findAllByFavoritesAccount(token.getAccount());
+            sleeper.pause(2000);
+            return ResponseEntity.status(HttpStatus.OK).body(folders);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("/folder/{folderID}")
