@@ -54,6 +54,7 @@
 <script>
 import { Edit3Icon, TrashIcon } from 'vue-feather-icons'
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+import { cleanDoubleSlashes } from 'ufo'
 import { sleep } from '~/utils/sleep.js'
 
 export default {
@@ -96,6 +97,13 @@ export default {
           `All files inside will also be deleted. This action can not be reversed. Delete folder '${this.folder.title}'?`
         )
       ) {
+        // delete all files from storage server
+        for (const document of this.folder.documents) {
+          const deleteURL = cleanDoubleSlashes(
+            this.$config.storageServer + document.deleteUrl
+          )
+          await this.$axios.$delete(deleteURL)
+        }
         await this.$axios
           .$delete(`/folders/delete/${this.folder.id}`)
           .then(async () => {
