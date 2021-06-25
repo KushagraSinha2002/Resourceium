@@ -7,14 +7,24 @@
     >
       All Users
     </div>
-    <div
-      class="grid gap-6 my-5 md:my-10 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
-    >
-      <page-socials-users-index-card
-        v-for="(user, index) in users"
-        :key="index"
-        :user="user"
-      ></page-socials-users-index-card>
+    <div v-if="!$fetchState.pending" class="w-full h-full">
+      <div
+        v-if="users.length > 0"
+        class="grid gap-6 my-5 md:my-10 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4"
+      >
+        <page-socials-users-index-card
+          v-for="(user, index) in users"
+          :key="index"
+          :user="user"
+        ></page-socials-users-index-card>
+      </div>
+      <common-empty-data v-else>
+        <span>Seems like there are no other users.</span>
+        <span>Maybe invite others to join?.</span>
+      </common-empty-data>
+    </div>
+    <div v-else class="flex items-center justify-center w-full h-full">
+      <base-show-loading></base-show-loading>
     </div>
   </div>
 </template>
