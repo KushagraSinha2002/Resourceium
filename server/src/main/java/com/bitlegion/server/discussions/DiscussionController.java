@@ -13,6 +13,7 @@ import com.bitlegion.server.accounts.Account;
 import com.bitlegion.server.accounts.AccountRepository;
 import com.bitlegion.server.accounts.Token;
 import com.bitlegion.server.accounts.TokenChecker;
+import com.bitlegion.server.general.Sleeper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,9 @@ public class DiscussionController {
 
     @Autowired
     private AccountRepository accountRepository;
+
+    @Autowired
+    private Sleeper sleeper;
 
     @GetMapping("/{discussionID}")
     public @ResponseBody Discussion getDiscussion(@PathVariable Integer discussionID) {
@@ -110,6 +114,7 @@ public class DiscussionController {
     public @ResponseBody Iterable<Discussion> getListDiscussionsByAccount(HttpServletRequest request,
             @PathVariable Integer accountID) {
         Optional<Account> maybeAccount = accountRepository.findById(accountID);
+        sleeper.pause(5000);
         Account account = maybeAccount.get();
         return account.getDiscussions();
     }

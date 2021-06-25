@@ -224,6 +224,7 @@ public class AccountsController {
       Quartet<String, String, Integer, Integer> accountData = new Quartet<>(username, imageURL, followings, followers);
       data.add(accountData);
     });
+    sleeper.pause(5000);
     return data;
   }
 }
