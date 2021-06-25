@@ -1,6 +1,5 @@
 package com.bitlegion.server.socials;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,25 +35,25 @@ public class FollowController {
 
     /* Get all the followers of this account */
     @GetMapping(path = "/followers/{accountID}")
-    public ResponseEntity<Collection<Follow>> getFollowers(@PathVariable Integer accountID) {
+    public ResponseEntity<Iterable<Follow>> getFollowers(@PathVariable Integer accountID) {
         Optional<Account> maybeAccount = accountRepository.findById(accountID);
         if (maybeAccount.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Account account = maybeAccount.get();
-        Collection<Follow> followers = followRepository.findAllByFollowing(account);
+        Iterable<Follow> followers = followRepository.findAllByFollowing(account);
         return ResponseEntity.status(HttpStatus.CREATED).body(followers);
     }
 
     /* Get all the accounts this account follows */
     @GetMapping(path = "/following/{accountID}")
-    public ResponseEntity<Collection<Follow>> getFollowings(@PathVariable Integer accountID) {
+    public ResponseEntity<Iterable<Follow>> getFollowings(@PathVariable Integer accountID) {
         Optional<Account> maybeAccount = accountRepository.findById(accountID);
         if (maybeAccount.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         Account account = maybeAccount.get();
-        Collection<Follow> followings = followRepository.findAllByFollower(account);
+        Iterable<Follow> followings = followRepository.findAllByFollower(account);
         return ResponseEntity.status(HttpStatus.CREATED).body(followings);
     }
 

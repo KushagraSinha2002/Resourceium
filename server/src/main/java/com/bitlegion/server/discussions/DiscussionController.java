@@ -1,7 +1,6 @@
 package com.bitlegion.server.discussions;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -57,8 +56,8 @@ public class DiscussionController {
     }
 
     @GetMapping(path = "/get-by-name")
-    public ResponseEntity<Collection<Discussion>> getByName(@RequestParam String name) {
-        Collection<Discussion> discussions = discussionRepository.findAllByNameContainingIgnoreCase(name);
+    public ResponseEntity<Iterable<Discussion>> getByName(@RequestParam String name) {
+        Iterable<Discussion> discussions = discussionRepository.findAllByNameContainingIgnoreCase(name);
         return ResponseEntity.status(HttpStatus.OK).body(discussions);
     }
 

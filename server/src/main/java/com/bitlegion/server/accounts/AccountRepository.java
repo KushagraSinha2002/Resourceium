@@ -1,6 +1,5 @@
 package com.bitlegion.server.accounts;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
@@ -12,6 +11,6 @@ public interface AccountRepository extends CrudRepository<Account, Integer> {
 
     public Optional<Account> findByUsernameAndEmail(String username, String email);
 
-    public Collection<Account> findAllByUsernameContainingIgnoreCase(String username);
+    public Iterable<Account> findAllByUsernameContainingIgnoreCase(String username);
 
 }

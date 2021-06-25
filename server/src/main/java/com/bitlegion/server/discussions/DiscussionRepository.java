@@ -1,6 +1,5 @@
 package com.bitlegion.server.discussions;
 
-import java.util.Collection;
 import java.util.Optional;
 
 import com.bitlegion.server.accounts.Account;
@@ -13,7 +12,7 @@ public interface DiscussionRepository extends CrudRepository<Discussion, Integer
 
     public Optional<Discussion> findByInviteString(String inviteString);
 
-    public Collection<Discussion> findAllByNameContainingIgnoreCase(String name);
+    public Iterable<Discussion> findAllByNameContainingIgnoreCase(String name);
 
     public Integer countByAccounts(Account account);
 

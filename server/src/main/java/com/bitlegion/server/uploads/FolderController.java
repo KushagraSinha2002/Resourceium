@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +26,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.apache.hc.client5.http.classic.methods.HttpPost;
-import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
-import org.apache.hc.client5.http.impl.classic.HttpClients;
 
 class SortByDateOfUpload implements Comparator<Document> {
 
@@ -128,20 +124,13 @@ public class FolderController {
             Optional<Folder> maybeFolder = folderRepository.findById(folderID);
             if (maybeFolder.isEmpty()) {
                 return ResponseEntity.badRequest().body("The requested folder does not exist.");
-            } else {
-                Folder folder = maybeFolder.get();
-                List<Document> documents = documentRepository.findByFolder(folder);
-                for (int i = 0; i < documents.size(); i++) {
-                    CloseableHttpClient httpClient = HttpClients.createDefault();
-                    String URL = System.getenv("STORAGE_SERVER") + "files/delete/" + documents.get(i).getStorageID();
-                    HttpPost httpPost = new HttpPost(URL);
-                    httpClient.execute(httpPost);
-                }
-                // delete all associated documents
-                documentRepository.deleteAll(documents);
-                folderRepository.delete(folder);
-                return ResponseEntity.status(HttpStatus.OK).body("Folder deleted successfully!");
             }
+            Folder folder = maybeFolder.get();
+            Iterable<Document> documents = documentRepository.findByFolder(folder);
+            // delete all associated documents
+            documentRepository.deleteAll(documents);
+            folderRepository.delete(folder);
+            return ResponseEntity.status(HttpStatus.OK).body("Folder deleted successfully!");
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();

@@ -77,7 +77,7 @@ public class GeneralController {
         try {
             Account account = tokenChecker.checkAndReturnTokenOrRaiseException(request).getAccount();
             HashMap<String, Long> map = new HashMap<>();
-            List<Document> documents = documentRepository.findAllByFolderAccount(account);
+            List<Document> documents = (List<Document>) documentRepository.findAllByFolderAccount(account);
             double size = documents.stream().mapToDouble(o -> o.getSize()).sum();
             map.put("size", (long) size);
             map.put("files", (long) documents.size());
@@ -110,7 +110,7 @@ public class GeneralController {
             Date from = Date.from(now.toLocalDate().minusDays(i).atStartOfDay(ZoneId.systemDefault()).toInstant());
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("YYYY-MM-dd");
             String str = simpleDateFormat.format(from);
-            List<Document> documents = documentRepository.findAllByDateOfUploadBetween(from, end);
+            List<Document> documents = (List<Document>) documentRepository.findAllByDateOfUploadBetween(from, end);
             map.put(str, (long) documents.size());
         }
         return ResponseEntity.ok().body(map);

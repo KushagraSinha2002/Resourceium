@@ -1,7 +1,6 @@
 package com.bitlegion.server.accounts;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 
@@ -61,8 +60,8 @@ public class AccountsController {
   }
 
   @GetMapping(path = "/get-by-username")
-  public ResponseEntity<Collection<Account>> getByUsername(@RequestParam String username) {
-    Collection<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCase(username);
+  public ResponseEntity<Iterable<Account>> getByUsername(@RequestParam String username) {
+    Iterable<Account> accounts = accountRepository.findAllByUsernameContainingIgnoreCase(username);
     return ResponseEntity.status(HttpStatus.OK).body(accounts);
   }
 

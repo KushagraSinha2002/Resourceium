@@ -12,9 +12,9 @@ public interface FolderRepository extends CrudRepository<Folder, Integer> {
 
     public Integer countByAccount(Account account);
 
-    public Collection<Folder> findByAccount(Account account);
+    public Iterable<Folder> findByAccount(Account account);
 
-    public Collection<Folder> findByAccountAndTitle(Account account, String title);
+    public List<Folder> findByAccountAndTitle(Account account, String title);
 
     public Iterable<Folder> findAllByFavoritesAccount(Account account);
 
