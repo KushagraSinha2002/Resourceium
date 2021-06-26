@@ -3,11 +3,14 @@
     <page-folders-create-folder-icon
       @refreshFolders="fetchFolders()"
     ></page-folders-create-folder-icon>
+    <page-folders-search-folder-icon
+      @searchFolders="searchFolders"
+    ></page-folders-search-folder-icon>
     <page-folders-tabs
       v-model="selectedTab"
       :possible="possibleTabs"
     ></page-folders-tabs>
-    <div v-if="!loading" class="w-full mt-2">
+    <div v-if="!loading" class="w-full h-full mt-2">
       <div
         v-if="folders.length > 0"
         class="grid grid-cols-2 gap-4 px-2 py-5 sm:gap-6 bg-cream-white sm:px-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 2xl:grid-cols-7 auto-rows-max"
@@ -38,7 +41,7 @@ export default {
   data() {
     return {
       selectedTab: 'All',
-      possibleTabs: ['All', 'Favorites'],
+      possibleTabs: ['All', 'Favorites', 'Search'],
       folders: [],
       loading: false,
     }
@@ -50,34 +53,44 @@ export default {
   },
   watch: {
     async selectedTab() {
-      this.loading = true
       if (this.selectedTab === 'Favorites') {
         await this.fetchFavorites()
       } else if (this.selectedTab === 'All') {
         await this.fetchFolders()
       }
-      this.loading = false
     },
   },
   methods: {
-    async fetchFolders() {
-      const resp = await this.$axios.$get('/folders/user-folders')
-      resp.map((element) => {
+    transformFolders(folders) {
+      folders.map((element) => {
         element.dateOfUpload = this.$dayjs(element.dateOfUpload)
         element.lastEdited = this.$dayjs(element.lastEdited)
         return element
       })
-      this.folders = resp
+      return folders
+    },
+    async fetchFolders() {
       this.selectedTab = 'All'
+      this.loading = true
+      const resp = await this.$axios.$get('/folders/user-folders')
+      this.folders = this.transformFolders(resp)
+      this.loading = false
+    },
+    async searchFolders(tags) {
+      this.selectedTab = 'Search'
+      this.loading = true
+      const resp = await this.$axios.$get('/folders/by-tags', {
+        params: { tags },
+      })
+      this.folders = this.transformFolders(resp)
+      this.loading = false
     },
     async fetchFavorites() {
+      this.selectedTab = 'Favorites'
+      this.loading = true
       const resp = await this.$axios.$get('/folders/user-favorite-folders')
-      resp.map((element) => {
-        element.dateOfUpload = this.$dayjs(element.dateOfUpload)
-        element.lastEdited = this.$dayjs(element.lastEdited)
-        return element
-      })
-      this.folders = resp
+      this.folders = this.transformFolders(resp)
+      this.loading = false
     },
   },
 }
