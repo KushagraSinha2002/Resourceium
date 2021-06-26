@@ -7,7 +7,7 @@
     <div v-if="!$fetchState.pending" class="w-full h-full">
       <div v-if="discussions.length > 0" class="h-full">
         <div
-          class="flex-none my-5 text-3xl text-center md:px-10 text-true-gray-700 font-poppins md:text-5xl"
+          class="flex-none py-5 text-3xl text-center md:px-10 text-true-gray-700 font-poppins md:text-5xl"
         >
           All your discussions
         </div>
