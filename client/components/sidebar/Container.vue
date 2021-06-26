@@ -10,6 +10,7 @@
           v-for="(link, index) in links"
           :key="index"
           :link="link"
+          @click.native="closeSidebarMutation"
         >
         </sidebar-element>
       </div>
@@ -19,7 +20,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   data() {
@@ -41,6 +42,11 @@ export default {
   computed: {
     ...mapState({
       show: (state) => state.sidebar.show,
+    }),
+  },
+  methods: {
+    ...mapMutations({
+      closeSidebarMutation: 'sidebar/closeSidebar',
     }),
   },
 }

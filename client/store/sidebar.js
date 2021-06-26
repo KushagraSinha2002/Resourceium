@@ -6,4 +6,7 @@ export const mutations = {
   toggleSidebar(state) {
     state.show = !state.show
   },
+  closeSidebar(state) {
+    state.show = false
+  },
 }
