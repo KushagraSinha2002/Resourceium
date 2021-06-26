@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 class SortByDateOfUpload implements Comparator<Document> {
@@ -44,10 +45,10 @@ public class FolderController {
     private TokenChecker tokenChecker;
 
     @Autowired
-    private FolderRepository folderRepository;
+    private DocumentRepository documentRepository;
 
     @Autowired
-    private DocumentRepository documentRepository;
+    private FolderRepository folderRepository;
 
     @Autowired
     private Sleeper sleeper;
@@ -76,6 +77,23 @@ public class FolderController {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/by-tags")
+    public ResponseEntity<Iterable<Folder>> getListFoldersByTags(@RequestParam String tags) {
+        sleeper.pause(3000);
+        if (tags.isEmpty()) {
+            Iterable<Folder> folders = folderRepository.findAll();
+            sleeper.pause(2000);
+            return ResponseEntity.status(HttpStatus.OK).body(folders);
+        }
+        ArrayList<Folder> folders = new ArrayList<Folder>();
+        String[] requestedTags = tags.split(",");
+        for (String tag : requestedTags) {
+            Iterable<Folder> tagFolders = folderRepository.findAllByTagsNameContainingIgnoreCase(tag);
+            folders.addAll((Collection<? extends Folder>) tagFolders);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(folders);
     }
 
     @GetMapping("/folder/{folderID}")

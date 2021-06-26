@@ -19,4 +19,7 @@ public interface FolderRepository extends CrudRepository<Folder, Integer> {
     public Iterable<Folder> findAllByFavoritesAccount(Account account);
 
     public List<Folder> findByAccountOrderByLastEditedDesc(Account account);
+
+    public Iterable<Folder> findAllByTagsNameContainingIgnoreCase(String name);
+
 }
