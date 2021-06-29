@@ -190,7 +190,6 @@ public class GeneralController {
     // 'username_2': <total number of documents uploaded>,
     // 'username_3': <total number of documents uploaded>,
     // }
-    // TODO: COMPLETE IMPLEMENTATION
     @GetMapping(path = "/dashboard/graph/4")
     public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphFour() {
         HashMap<String, Long> map = new HashMap<>();
@@ -198,14 +197,6 @@ public class GeneralController {
             int numOfFolders = folderRepository.countByAccount(a);
             map.put(a.getUsername(), (long) numOfFolders);
         }
-        // this is the format in which the date is returned in
-        // map.put("username1", (long) 20);
-        // map.put("username2", (long) 0);
-        // map.put("username3", (long) 76);
-        // map.put("username4", (long) 90);
-        // map.put("username5", (long) 25);
-        // map.put("username6", (long) 12);
-        // map.put("username7", (long) 56);
         LinkedHashMap<String, Long> sortedMap = sortMap(map);
         return ResponseEntity.ok().body(sortedMap);
     }
