@@ -135,4 +135,8 @@ public class Account {
         this.password = password;
     }
 
+    public String getUsername()
+    {
+        return username;
+    }
 }

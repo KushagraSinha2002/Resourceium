@@ -3,6 +3,8 @@ package com.bitlegion.server.general;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.Date;
@@ -19,6 +21,7 @@ import com.bitlegion.server.accounts.TokenChecker;
 import com.bitlegion.server.discussions.DiscussionRepository;
 import com.bitlegion.server.uploads.Document;
 import com.bitlegion.server.uploads.DocumentRepository;
+import com.bitlegion.server.uploads.Folder;
 import com.bitlegion.server.uploads.FolderRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,14 +194,18 @@ public class GeneralController {
     @GetMapping(path = "/dashboard/graph/4")
     public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphFour() {
         HashMap<String, Long> map = new HashMap<>();
+        for (Account a : accountRepository.findAll()){
+            int numOfFolders = folderRepository.countByAccount(a);
+            map.put(a.getUsername(), (long) numOfFolders);
+        }
         // this is the format in which the date is returned in
-        map.put("username1", (long) 20);
-        map.put("username2", (long) 0);
-        map.put("username3", (long) 76);
-        map.put("username4", (long) 90);
-        map.put("username5", (long) 25);
-        map.put("username6", (long) 12);
-        map.put("username7", (long) 56);
+        // map.put("username1", (long) 20);
+        // map.put("username2", (long) 0);
+        // map.put("username3", (long) 76);
+        // map.put("username4", (long) 90);
+        // map.put("username5", (long) 25);
+        // map.put("username6", (long) 12);
+        // map.put("username7", (long) 56);
         LinkedHashMap<String, Long> sortedMap = sortMap(map);
         return ResponseEntity.ok().body(sortedMap);
     }
