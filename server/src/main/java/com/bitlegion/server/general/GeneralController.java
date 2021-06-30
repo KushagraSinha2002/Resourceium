@@ -198,6 +198,10 @@ public class GeneralController {
             map.put(a.getUsername(), (long) numOfFolders);
         }
         LinkedHashMap<String, Long> sortedMap = sortMap(map);
+        List<String> keys = new ArrayList<>(sortedMap.keySet());
+        for (int i=10;i<keys.size();i++) {
+            sortedMap.remove(keys.get(i));
+        }
         return ResponseEntity.ok().body(sortedMap);
     }
 
