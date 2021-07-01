@@ -1,10 +1,12 @@
 package com.bitlegion.server.general;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.Date;
@@ -21,9 +23,9 @@ import com.bitlegion.server.accounts.TokenChecker;
 import com.bitlegion.server.discussions.DiscussionRepository;
 import com.bitlegion.server.uploads.Document;
 import com.bitlegion.server.uploads.DocumentRepository;
-import com.bitlegion.server.uploads.Folder;
 import com.bitlegion.server.uploads.FolderRepository;
 
+import org.javatuples.Pair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,12 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+class SortByDocumentsCount implements Comparator<Pair<String, Long>> {
+    public int compare(Pair<String, Long> a, Pair<String, Long> b) {
+        return Long.compare(b.getValue1(), a.getValue1());
+    }
+}
 
 @Controller
 @RequestMapping(path = "/core")
@@ -182,32 +190,21 @@ public class GeneralController {
     }
 
     // This controller will be used to obtain at-most the top 10 user. The more
-    // documents a user has uploaded, the lower is their rank. The data MUST be
-    // returned in the following format:
-
-    // {
-    // 'username_1': <total number of documents uploaded>,
-    // 'username_2': <total number of documents uploaded>,
-    // 'username_3': <total number of documents uploaded>,
-    // }
+    // documents a user has uploaded, the lower is their rank.
     @GetMapping(path = "/dashboard/graph/4")
-    public @ResponseBody ResponseEntity<LinkedHashMap<String, Long>> dashboardGraphFour() {
-        HashMap<String, Long> map = new HashMap<>();
-        for (Account a : accountRepository.findAll()){
-            int numOfFolders = folderRepository.countByAccount(a);
-            map.put(a.getUsername(), (long) numOfFolders);
+    public @ResponseBody ResponseEntity<List<Pair<String, Long>>> dashboardGraphFour() {
+        List<Pair<String, Long>> allCounts = new ArrayList<>();
+        for (Account a : accountRepository.findAll()) {
+            Pair<String, Long> pair = Pair.with(a.getUsername(), (long) a.getDocumentCount());
+            allCounts.add(pair);
         }
-        LinkedHashMap<String, Long> sortedMap = sortMap(map);
-        List<String> keys = new ArrayList<>(sortedMap.keySet());
-        map.clear();
-        for (int i=10 ; i<keys.size() ; i++) {
-            sortedMap.remove(keys.get(i));
-            keys.remove(i);
+        Collections.sort(allCounts, new SortByDocumentsCount());
+        List<Pair<String, Long>> resp = new ArrayList<>();
+        Iterator<Pair<String, Long>> iterator = allCounts.iterator();
+        for (int i = 0; i < 10 && iterator.hasNext(); i++) {
+            resp.add(allCounts.get(i));
         }
-        for (int j=0 ; j<10 ; j++) {
-            map.put(keys.get(j) ,(long) sortedMap.get(j));
-        }
-        return ResponseEntity.ok().body(sortedMap);
+        return ResponseEntity.ok().body(resp);
     }
 
     private LinkedHashMap<String, Long> sortMap(HashMap<String, Long> unsorted) {
