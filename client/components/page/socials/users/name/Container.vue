@@ -77,11 +77,10 @@ export default {
       const following = await this.$axios.$get(`/follow/following/${id}`)
       this.followings = following
     } catch {
-      const error = this.$nuxt.error
-      error({
-        statusCode: 404,
-        message: 'This user does not exist',
-      })
+      if (process.server) {
+        this.$nuxt.context.res.statusCode = 404
+      }
+      throw new Error('This user does not exist')
     }
   },
 }

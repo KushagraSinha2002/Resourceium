@@ -66,11 +66,10 @@ export default {
         const resp = await this.$axios.$get(`/folders/folder/${folderId}`)
         this.folder = resp
       } catch {
-        const error = this.$nuxt.error
-        error({
-          statusCode: 404,
-          message: 'This folder does not exist',
-        })
+        if (process.server) {
+          this.$nuxt.context.res.statusCode = 404
+        }
+        throw new Error('This folder does not exist')
       }
     },
   },
