@@ -6,7 +6,7 @@
       <NuxtLink
         id="link-faq"
         :to="{ name: 'faq' }"
-        class="font-thin font-poppins hover:underline"
+        class="font-thin pointer-events-none font-poppins hover:underline"
       >
         Why Resourceium?
       </NuxtLink>
