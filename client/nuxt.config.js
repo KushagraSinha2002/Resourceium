@@ -37,8 +37,8 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
-    // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss',
+    // https://github.com/windicss/nuxt-windicss-module
+    'nuxt-windicss',
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)

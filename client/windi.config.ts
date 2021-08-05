@@ -1,8 +1,15 @@
-const colors = require('tailwindcss/colors')
+import { defineConfig } from 'windicss/helpers'
+import colors from 'windicss/colors'
 
-module.exports = {
+const PRODUCTION = process.env.NODE_ENV !== 'production'
+
+export default defineConfig({
   darkMode: 'class',
   mode: 'jit',
+  extract: {
+    include: ['**/*.{vue,html,jsx,tsx,scss,css}'],
+    exclude: ['node_modules', '.git', 'dist', 'personal'],
+  },
   theme: {
     extend: {
       transitionProperty: {
@@ -70,8 +77,10 @@ module.exports = {
       },
     },
   },
-  plugins: [
-    require('@tailwindcss/line-clamp'),
-    require('tailwindcss-debug-screens'),
-  ],
-}
+  shortcuts: {
+    'debug-screens': PRODUCTION
+      ? 'before:bottom-0 before:left-0 before:fixed before:z-[2147483647] before:px-1 before:text-12px before:bg-black before:text-white before:shadow-xl @sm:before:content-["screen:sm"] @md:before:content-["screen:md"] @lg:before:content-["screen:lg"] @xl:before:content-["screen:xl"] @2xl:before:content-["screen:2xl"] <sm:before:content-["screen:none"]'
+      : '',
+  },
+  plugins: [require('windicss/plugin/line-clamp')],
+})
