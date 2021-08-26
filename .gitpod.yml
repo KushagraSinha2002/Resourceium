@@ -33,9 +33,10 @@ vscode:
   extensions:
     - redhat.java
     - octref.vetur
-    - bradlc.vscode-tailwindcss
     - dbaeumer.vscode-eslint
     - eamodio.gitlens
     - mhutchie.git-graph
     - cweijan.vscode-database-client2
     - ms-python.python
+    - esbenp.prettier-vscode
+    - voorjaar.windicss-intellisense
