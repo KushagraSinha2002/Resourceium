@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+import dj_database_url
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -119,15 +121,16 @@ STATIC_ROOT = BASE_DIR / "static"
 MEDIA_ROOT = "media"
 # production only settings
 if not DEBUG:
+    DATABASES["default"] = dj_database_url.config(conn_max_age=600)
     PASSWORD_HASHERS.insert(
         0,
         "django.contrib.auth.hashers.Argon2PasswordHasher",
     )
-    ALLOWED_HOSTS = [".pythonanywhere.com"]
+    ALLOWED_HOSTS = [".ignisda.tech"]
     CORS_ORIGIN_WHITELIST.extend(
         [
-            "http://resourceium.herokuapp.com",
-            "https://resourceium.herokuapp.com",
+            "http://resourceium.ignisda.tech",
+            "https://resourceium.ignisda.tech",
         ]
     )
 # development only settings
